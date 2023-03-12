@@ -1,13 +1,10 @@
+import ChatBox from "../components/ChatBox";
 import "../styles/globals.css";
 function App() {
   return (
-    <div className="text-black-200">
-      Chat Bot Turbo
-      <div className="container mx-auto border border-dashed">
-        <div className="w-1/2 h-screen">
-          <p className="text-sm">Hello, I'm ChatGPT! Ask me anything!</p>
-        </div>
-      </div>
+    <div className="h-screen w-screen  text-black-300">
+      <h1 className="text-center font-bold">Chat Bot Turbo</h1>
+      <ChatBox />
     </div>
   );
 }
