@@ -2,15 +2,14 @@ import React from "react";
 import Message from "../components/Message";
 const ChatBox = () => {
   return (
-    <div
-      className="container text-sm mx-auto w-[90%] h-[85%]
+    <section
+      className="container text-sm mx-auto w-[90%] h-[80%]
     max-w-4xl"
     >
       <div
         className="flex flex-col w-full h-full px-2 
-    border-4 border-dashed overflow-y-auto"
+    border-4 border-solid overflow-y-auto bg-black"
       >
-        <Message />
         <Message />
         <Message />
         <Message />
@@ -24,7 +23,7 @@ const ChatBox = () => {
 
         <button className="w-[30%] rounded border-4">Submit</button>
       </div>
-    </div>
+    </section>
   );
 };
 
