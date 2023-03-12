@@ -1,10 +1,13 @@
 import React from "react";
 
-const Message = () => {
+const Message = ({ item }) => {
+  const aiLayout = "bg-[#40414f] px-5 py-5";
+  const userLayout = "bg-[#343541] px-5 py-5 text-right";
+  const layout = item.sender === "ChatGPT" ? aiLayout : userLayout;
+
   return (
     <>
-      <p className="bg-green-100">Hello, I'm ChatGPT! Ask me anything!</p>
-      <p className="bg-blue-200 text-right">What is Javascript?</p>
+      <p className={layout}>{item.message}</p>
     </>
   );
 };
