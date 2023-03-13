@@ -1,27 +1,62 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Message from "../components/Message";
+import { processMessageToChatGPT } from "../functions/processMessage";
+
+console.log(import.meta.env.API_KEY);
 const ChatBox = () => {
-  const DUMMY_CONVO = [
+  const [messages, setMessages] = useState([
     {
       message: "Hello, I'm ChatGPT! Ask me anything!",
       sentTime: "just now",
       sender: "ChatGPT",
     },
-    {
-      message: "What is Javascript",
-      sentTime: "just now",
+  ]);
+
+  const promptInputRef = useRef();
+  const chatRef = useRef(null);
+
+  const [isTyping, setIsTyping] = useState(false);
+
+  const handleSend = async (event) => {
+    const newMessage = {
+      message: promptInputRef.current.value,
+      direction: "outgoing",
       sender: "user",
-    },
-    {
-      message:
-        "JavaScript is a high-level, dynamic, and interpreted programming language that is commonly used for creating interactive and dynamic web pages. It is a client-side language, meaning that it runs on the user's web browser rather than on a web server.",
-      sentTime: "juest now",
-      sender: "ChatGPT",
-    },
-  ];
-  const handleSubmit = () => {
-    console.log("Hello");
+    };
+    console.log(promptInputRef.current.value);
+
+    const newMessages = [...messages, newMessage];
+
+    setMessages(newMessages);
+    console.log(messages);
+    // Initial system message to determine ChatGPT functionality
+    // How it responds, how it talks, etc.
+    setIsTyping(true);
+    promptInputRef.current.value = "";
+
+    promptInputRef.current.focus();
+
+    const log = await processMessageToChatGPT(
+      newMessages,
+      setMessages,
+      setIsTyping
+    );
   };
+
+  const handleKeyEnter = (event) => {
+    if (event.key === "Enter") {
+      handleSend();
+    }
+  };
+
+  const scrollToBottom = () => {
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <section
       className="container text-sm mx-auto w-[90%] h-[80%]
@@ -30,21 +65,23 @@ const ChatBox = () => {
       <div
         className="flex flex-col w-full h-full 
     border-4 border-solid overflow-y-auto bg-[#343541]"
+        ref={chatRef}
       >
-        {DUMMY_CONVO.map((message, i) => {
-          return <Message item={message} key={i} />;
+        {messages.map((message, i) => {
+          return <Message model={message} key={i} />;
         })}
       </div>
       <div className="flex flex-row justify-center">
         <textarea
           className="flex-1 w-auto border text-black"
           placeholder="Enter Text here..."
-          htmlFor="btn-submit"
+          ref={promptInputRef}
+          onKeyDown={handleKeyEnter}
         ></textarea>
 
         <button
-          onClick={handleSubmit}
-          id="btn-submit"
+          onClick={handleSend}
+          id="btnSubmit"
           className="w-[30%] rounded border-4 text-black"
         >
           Submit
