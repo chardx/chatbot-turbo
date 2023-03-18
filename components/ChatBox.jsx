@@ -50,10 +50,16 @@ const ChatBox = () => {
   };
 
   const scrollToBottom = () => {
+    console.log("scrollToBottom called");
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   };
 
+  // setInterval(() => {
+  //   scrollToBottom();
+  // }, 1000);
+
   useEffect(() => {
+    console.log("useEffect called");
     scrollToBottom();
   }, [messages]);
 
@@ -68,7 +74,14 @@ const ChatBox = () => {
         ref={chatRef}
       >
         {messages.map((message, i) => {
-          return <Message model={message} key={i} />;
+          return (
+            <Message
+              model={message}
+              key={i}
+              scrollToBottom={scrollToBottom}
+              isTyping={isTyping}
+            />
+          );
         })}
       </div>
       <div className="flex flex-row justify-center">
