@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../components/Message";
 import { processMessageToChatGPT } from "../functions/processMessage";
+import { useTypewriter } from "react-simple-typewriter";
 
-console.log(import.meta.env.API_KEY);
 const ChatBox = () => {
   const [messages, setMessages] = useState([
     {
@@ -11,6 +11,12 @@ const ChatBox = () => {
       sender: "ChatGPT",
     },
   ]);
+
+  const [text, { isDone }] = useTypewriter({
+    words: [" ..."],
+    loop: 0,
+    typeSpeed: 120,
+  });
 
   const promptInputRef = useRef();
   const chatRef = useRef(null);
@@ -54,10 +60,6 @@ const ChatBox = () => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   };
 
-  // setInterval(() => {
-  //   scrollToBottom();
-  // }, 1000);
-
   useEffect(() => {
     console.log("useEffect called");
     scrollToBottom();
@@ -75,14 +77,20 @@ const ChatBox = () => {
       >
         {messages.map((message, i) => {
           return (
-            <Message
-              model={message}
-              key={i}
-              scrollToBottom={scrollToBottom}
-              isTyping={isTyping}
-            />
+            <>
+              <Message
+                key={i}
+                model={message}
+                messages={messages}
+                scrollToBottom={scrollToBottom}
+                isTyping={isTyping}
+              />
+            </>
           );
         })}
+        <div>
+          <p className="text-4xl">{isTyping && text}</p>
+        </div>
       </div>
       <div className="flex flex-row justify-center">
         <textarea
