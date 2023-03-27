@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../components/Message";
-import { processMessageToChatGPT } from "../functions/processMessage";
-import { useTypewriter } from "react-simple-typewriter";
+import { processMessageToChatGPT } from "../utils/processMessage";
+import ChatLoad from "./ChatLoad";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([
@@ -12,16 +12,10 @@ const ChatBox = () => {
     },
   ]);
 
-  const [text, { isDone }] = useTypewriter({
-    words: [" ..."],
-    loop: 0,
-    typeSpeed: 120,
-  });
-
   const promptInputRef = useRef();
   const chatRef = useRef(null);
 
-  const [isTyping, setIsTyping] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSend = async (event) => {
     const newMessage = {
@@ -37,7 +31,7 @@ const ChatBox = () => {
     console.log(messages);
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
-    setIsTyping(true);
+    setLoading(true);
     promptInputRef.current.value = "";
 
     promptInputRef.current.focus();
@@ -45,7 +39,7 @@ const ChatBox = () => {
     const log = await processMessageToChatGPT(
       newMessages,
       setMessages,
-      setIsTyping
+      setLoading
     );
   };
 
@@ -83,14 +77,11 @@ const ChatBox = () => {
                 model={message}
                 messages={messages}
                 scrollToBottom={scrollToBottom}
-                isTyping={isTyping}
               />
             </>
           );
         })}
-        <div>
-          <p className="text-4xl">{isTyping && text}</p>
-        </div>
+        <div>{loading && <ChatLoad />}</div>
       </div>
       <div className="flex flex-row justify-center">
         <textarea

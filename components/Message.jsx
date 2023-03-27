@@ -1,50 +1,38 @@
-import React, { useEffect } from "react";
-import { useTypewriter } from "react-simple-typewriter";
+import React, { useEffect, useCallback } from "react";
 import CodeBlock from "./CodeBlock";
+import { useTypewriter } from "react-simple-typewriter";
+import { shallowEqual } from "shallow-equal";
 
-const Message = ({ model, scrollToBottom, isTyping }) => {
-  const [text, { isDone }] = useTypewriter({
-    words: [model.message],
-    loop: 1,
-    typeSpeed: 5,
-  });
+const displayResponse = (chat) => {
+  if (chat.message.includes("```") && chat.sender === "ChatGPT") {
+    const gptResponse = chat.message.split(/```([\s\S]*)```/);
+    for (let i = 1; i < gptResponse.length; i += 2) {
+      gptResponse[i] = <CodeBlock key={i} code={gptResponse[i]} />;
+      return gptResponse;
+    }
+  }
+  return chat.message;
+};
 
+const Message = ({ model }) => {
   const aiLayout = "bg-[#40414f] px-5 py-5";
   const userLayout = "bg-[#343541] px-5 py-5 text-right";
   const layout = model.sender === "ChatGPT" ? aiLayout : userLayout;
 
-  useEffect(() => {
-    if (isDone) {
-      scrollToBottom();
-    }
-  }, [isDone]);
+  // const [text, { isDone }] = useTypewriter({
+  //   words: displayResponse(model),
+  //   loop: 1,
+  //   typeSpeed: 5,
+  // });
 
-  // regular expression to check if message contains code
-  const codeRegex = /(```\s([\s\S]*?)\s```)/;
+  // // useEffect(() => {
+  // //   if (isDone) {
+  // //     // displayTextArray();
+  // //     scrollToBottom();
+  // //   }
+  // // }, [isDone]);
 
-  // split message into code and text sections
-  const sections = model.message.split(codeRegex);
-
-  const messageEvaluation = sections.map((section, index) => {
-    // check if section is code
-    if (section.match(/```\s([\s\S]*?)\s```/)) {
-      // extract language and code from backticks
-      const [_, language, value] = section.match(/```(.*)\n([\s\S]*?)```/);
-
-      return <CodeBlock key={index} language={language} value={value} />;
-    } else {
-      return <p key={index}>{section}</p>;
-    }
-  });
-
-  return (
-    <div className={layout}>
-      {model.sender === "ChatGPT" && !isTyping
-        ? messageEvaluation
-        : // text
-          model.message}
-    </div>
-  );
+  return <div className={layout}>{displayResponse(model)}</div>;
 };
 
 export default Message;

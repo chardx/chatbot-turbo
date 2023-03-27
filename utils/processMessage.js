@@ -8,7 +8,7 @@ const systemMessage = {
     content: "Please act as a Friendly Customer service nglish grammar expert and correct any grammar and spelling errors in my writing. On respond a corrected version and revised in the best way possible.",
 };
 
-export const processMessageToChatGPT = async (chatMessages, setMessages, setIsTyping) => {
+export const processMessageToChatGPT = async (chatMessages, setMessages, setLoading) => {
     // role: user or assistant
 
     let apiMessages = chatMessages.map((messageObject) => {
@@ -43,7 +43,7 @@ export const processMessageToChatGPT = async (chatMessages, setMessages, setIsTy
                     sender: "ChatGPT",
                 },
             ]);
-            setIsTyping(false);
+            setLoading(false);
             console.log(data.choices[0].message.content);
 
         })
