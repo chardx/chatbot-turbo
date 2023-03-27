@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import CodeBlock from "./CodeBlock";
+import CodeBlock from "./CodeBlock/CodeBlock";
 import { useTypewriter } from "react-simple-typewriter";
 import { shallowEqual } from "shallow-equal";
 
