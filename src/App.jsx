@@ -1,4 +1,6 @@
 import ChatBox from "../components/ChatBox";
+import AI_List from "../components/SideBarRow/AI_List";
+import ChatHistory from "../components/SideBarRow/ChatHistory";
 import "../styles/globals.css";
 function App() {
   return (
@@ -7,7 +9,17 @@ function App() {
         <h1 className="font-medium text-2xl">Chat Bot Turbo</h1>
       </header>
 
-      <ChatBox />
+      <div className="flex">
+        <aside className="w-1/12 h-screen bg-gray-100">
+          <ChatHistory />
+        </aside>
+        <main className="w-10/12 h-screen bg-gray-200">
+          <ChatBox />
+        </main>
+        <aside className="w-1/12 h-screen bg-gray-100">
+          <AI_List />
+        </aside>
+      </div>
     </div>
   );
 }

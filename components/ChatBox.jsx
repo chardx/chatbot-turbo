@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../components/Message";
+import Image from "../components/Image";
 import { processMessageToChatGPT } from "../utils/processMessage";
+import { processImage } from "../utils/processImage";
 import ChatLoad from "./ChatLoad";
 
 const ChatBox = () => {
@@ -14,6 +16,7 @@ const ChatBox = () => {
 
   const promptInputRef = useRef();
   const chatRef = useRef(null);
+  let imageUrl = null;
 
   const [loading, setLoading] = useState(false);
 
@@ -24,6 +27,8 @@ const ChatBox = () => {
       sender: "user",
     };
     console.log(promptInputRef.current.value);
+
+    //Check if New Message contains a command to create image
 
     const newMessages = [...messages, newMessage];
 
@@ -36,11 +41,22 @@ const ChatBox = () => {
 
     promptInputRef.current.focus();
 
-    const log = await processMessageToChatGPT(
-      newMessages,
-      setMessages,
-      setLoading
-    );
+    console.log(newMessage.message.includes("image"));
+    if (newMessage.message.includes("image")) {
+      console.log("image command detected");
+      imageUrl = await processImage(
+        newMessage.message,
+        newMessages,
+        setMessages,
+        setLoading
+      );
+    } else {
+      const log = await processMessageToChatGPT(
+        newMessages,
+        setMessages,
+        setLoading
+      );
+    }
   };
 
   const handleKeyEnter = (event) => {
@@ -78,9 +94,13 @@ const ChatBox = () => {
                 messages={messages}
                 scrollToBottom={scrollToBottom}
               />
+              {message.isImage && (
+                <Image url={message.image} alt={message.alt} />
+              )}
             </>
           );
         })}
+
         <div>{loading && <ChatLoad />}</div>
       </div>
       <div className="flex flex-row justify-center">
