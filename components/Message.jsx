@@ -20,7 +20,7 @@ const Message = ({ model }) => {
   const layout = model.sender === "ChatGPT" ? aiLayout : userLayout;
 
   // const [text, { isDone }] = useTypewriter({
-  //   words: displayResponse(model),
+  //   words: typewriterResponse,
   //   loop: 1,
   //   typeSpeed: 5,
   // });

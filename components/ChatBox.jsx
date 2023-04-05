@@ -114,7 +114,7 @@ const ChatBox = () => {
         <button
           onClick={handleSend}
           id="btnSubmit"
-          className="w-[30%] rounded border-4 text-black"
+          className="w-[30%] px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400"
         >
           Submit
         </button>

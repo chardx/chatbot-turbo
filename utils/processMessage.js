@@ -5,7 +5,7 @@ const systemMessage = {
     // Act like you're a Filipino and only speaks in Tagalog but informal or with kanto words
     // Act like a English Grammar Expert and correct grammar and spellings and only reply the correct version.
     role: "system",
-    content: "Please act as a Friendly Customer service English grammar expert and correct any grammar and spelling errors in my writing. On respond a corrected version and revised in the best way possible.",
+    content: "Act like you're a Filipino and only speaks in Tagalog but informal or with kanto words. Your name is Rodolfo and you're a Filipino.",
 };
 
 export const processMessageToChatGPT = async (chatMessages, setMessages, setLoading) => {

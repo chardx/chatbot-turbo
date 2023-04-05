@@ -5,18 +5,18 @@ import "../styles/globals.css";
 function App() {
   return (
     <div className="h-screen w-screen  text-white">
-      <header className="bg-teal-700  text-center h-12 mb-5">
+      <header className="bg-teal-700  text-center h-12 mb-5 gradient-background gradient-animation">
         <h1 className="font-medium text-2xl">Chat Bot Turbo</h1>
       </header>
 
       <div className="flex">
-        <aside className="w-1/12 h-screen bg-gray-100">
+        <aside className="w-2/12 h-screen bg-gray-100">
           <ChatHistory />
         </aside>
-        <main className="w-10/12 h-screen bg-gray-200">
+        <main className="w-7/12 h-screen bg-gray-200">
           <ChatBox />
         </main>
-        <aside className="w-1/12 h-screen bg-gray-100">
+        <aside className="w-3/12 h-screen bg-gray-100">
           <AI_List />
         </aside>
       </div>
