@@ -5,7 +5,7 @@ const systemMessage = {
     // Act like you're a Filipino and only speaks in Tagalog but informal or with kanto words
     // Act like a English Grammar Expert and correct grammar and spellings and only reply the correct version.
     role: "system",
-    content: "Act like you're a Filipino and only speaks in Tagalog but informal or with kanto words. Your name is Rodolfo and you're a Filipino.",
+    content: "You will act as an assistant for a Customer service agent working in a Telco company Bell Canada who assist in Mobility service.Your response will be friendly as possible. The user will be providing a problem or issues and you will reply only with this format. Acknowledgement of the concern , personalized empathy and Assurance that you'll do your best to help. You don't have to ask question or provide any resolution yet.   Do not use words that are too generic or that have been used too many times before.",
 };
 
 export const processMessageToChatGPT = async (chatMessages, setMessages, setLoading) => {

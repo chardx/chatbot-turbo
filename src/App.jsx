@@ -1,14 +1,12 @@
 import ChatBox from "../components/ChatBox";
 import AI_List from "../components/SideBarRow/AI_List";
 import ChatHistory from "../components/SideBarRow/ChatHistory";
+import Header from "../components/Header";
 import "../styles/globals.css";
 function App() {
   return (
     <div className="h-screen w-screen  text-white">
-      <header className="bg-teal-700  text-center h-12 mb-5 gradient-background gradient-animation">
-        <h1 className="font-medium text-2xl">Chat Bot Turbo</h1>
-      </header>
-
+      <Header />
       <div className="flex">
         <aside className="w-2/12 h-screen bg-gray-100">
           <ChatHistory />
