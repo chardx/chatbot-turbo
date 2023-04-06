@@ -4,15 +4,27 @@ import Image from "../components/Image";
 import { processMessageToChatGPT } from "../utils/processMessage";
 import { processImage } from "../utils/processImage";
 import ChatLoad from "./ChatLoad";
+import { useSelector } from "react-redux";
 
 const ChatBox = () => {
+  const activeAI = useSelector((state) => state.activeAI);
+  const listOfAI = useSelector((state) => state.aiRoles);
+  const initialMessage = useSelector((state) => state.initialMessage);
+  console.log(initialMessage);
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: initialMessage,
       sentTime: "just now",
       sender: "ChatGPT",
     },
   ]);
+
+  //updates the initial Message whenever new AI is selected
+  useEffect(() => {
+    const newMessages = [...messages];
+    newMessages[0].message = initialMessage;
+    setMessages(newMessages);
+  }, [initialMessage]);
 
   const promptInputRef = useRef();
   const chatRef = useRef(null);
@@ -41,7 +53,6 @@ const ChatBox = () => {
 
     promptInputRef.current.focus();
 
-    console.log(newMessage.message.includes("image"));
     if (newMessage.message.includes("image")) {
       console.log("image command detected");
       imageUrl = await processImage(
@@ -54,7 +65,9 @@ const ChatBox = () => {
       const log = await processMessageToChatGPT(
         newMessages,
         setMessages,
-        setLoading
+        setLoading,
+        activeAI,
+        listOfAI
       );
     }
   };
