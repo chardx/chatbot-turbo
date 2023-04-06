@@ -1,22 +1,25 @@
 import React from "react";
+import { aiActions } from "../../store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-const AI_Roles = ({
-  AIName,
-  id,
-  activeAI,
-  description,
-  content,
-  onHandleClick,
-}) => {
+const AI_Roles = ({ AIName, id, description, content }) => {
+  const dispatch = useDispatch();
+  const activeAI = useSelector((state) => state.activeAI);
+
+  //Check if the current component is Active AI
   const isActive = activeAI === id;
 
+  const handleUpdateActiveAI = (id) => {
+    dispatch(aiActions.update(id));
+  };
   return (
     <li>
       <div
         className={`flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-lg transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl ${
           isActive ? "border-l-4 border-green-500" : ""
         }`}
-        onClick={() => onHandleClick(id)}
+        onClick={() => handleUpdateActiveAI(id)}
       >
         <div className="flex items-center space-x-4">
           <img
