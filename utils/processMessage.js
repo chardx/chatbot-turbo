@@ -3,13 +3,13 @@ const API_KEY = import.meta.env.VITE_API_KEY
 const setupActiveAIRole = async (activeAI, listOfAI) => {
 
     const activeAIRole = listOfAI.find(ai => ai.id === activeAI);
-    console.log(activeAIRole);
+
     // this returns an object format that is only accepted by OpenAI API
     return {
         role: "system",
         content: activeAIRole.content
     }
-    
+
 }
 
 export const processMessageToChatGPT = async (chatMessages, setMessages, setLoading, activeAI, listOfAI) => {
@@ -49,7 +49,7 @@ export const processMessageToChatGPT = async (chatMessages, setMessages, setLoad
                 },
             ]);
             setLoading(false);
-            console.log(data.choices[0].message.content);
+            // console.log(data.choices[0].message.content);
 
         })
         .catch((error) => console.log(error));

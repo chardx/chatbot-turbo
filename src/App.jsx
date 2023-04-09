@@ -3,6 +3,7 @@ import AI_List from "../components/SideBarRow/AI_List";
 import ChatHistory from "../components/SideBarRow/ChatHistory";
 import Header from "../components/Header";
 import "../styles/globals.css";
+
 function App() {
   // const [activeAI, setActiveAI] = useState("r1");
 

@@ -4,7 +4,7 @@ import AI_Role from "./AI_Role";
 
 const AI_List = () => {
   const [showScrollbar, setShowScrollbar] = useState(false);
-  const listOfAI = useSelector((state) => state.aiRoles);
+  const listOfAI = useSelector((state) => state.ai.aiRoles);
   useEffect(() => {
     const container = document.getElementById("ai-container");
     setShowScrollbar(container.scrollHeight > container.clientHeight);

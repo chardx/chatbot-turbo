@@ -5,12 +5,13 @@ import { processMessageToChatGPT } from "../utils/processMessage";
 import { processImage } from "../utils/processImage";
 import ChatLoad from "./ChatLoad";
 import { useSelector } from "react-redux";
+import SubmitForm from "./SubmitForm";
 
 const ChatBox = () => {
-  const activeAI = useSelector((state) => state.activeAI);
-  const listOfAI = useSelector((state) => state.aiRoles);
-  const initialMessage = useSelector((state) => state.initialMessage);
-  console.log(initialMessage);
+  const activeAI = useSelector((state) => state.ai.activeAI);
+  const listOfAI = useSelector((state) => state.ai.aiRoles);
+  const initialMessage = useSelector((state) => state.ai.initialMessage);
+  // console.log(initialMessage);
   const [messages, setMessages] = useState([
     {
       message: initialMessage,
@@ -38,14 +39,14 @@ const ChatBox = () => {
       direction: "outgoing",
       sender: "user",
     };
-    console.log(promptInputRef.current.value);
+    // console.log(promptInputRef.current.value);
 
     //Check if New Message contains a command to create image
 
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    console.log(messages);
+    // console.log(messages);
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
     setLoading(true);
@@ -54,7 +55,6 @@ const ChatBox = () => {
     promptInputRef.current.focus();
 
     if (newMessage.message.includes("image")) {
-      console.log("image command detected");
       imageUrl = await processImage(
         newMessage.message,
         newMessages,
@@ -62,7 +62,7 @@ const ChatBox = () => {
         setLoading
       );
     } else {
-      const log = await processMessageToChatGPT(
+      await processMessageToChatGPT(
         newMessages,
         setMessages,
         setLoading,
@@ -116,22 +116,11 @@ const ChatBox = () => {
 
         <div>{loading && <ChatLoad />}</div>
       </div>
-      <div className="flex flex-row justify-center">
-        <textarea
-          className="flex-1 w-auto border text-black"
-          placeholder="Enter Text here..."
-          ref={promptInputRef}
-          onKeyDown={handleKeyEnter}
-        ></textarea>
-
-        <button
-          onClick={handleSend}
-          id="btnSubmit"
-          className="w-[30%] px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400"
-        >
-          Submit
-        </button>
-      </div>
+      <SubmitForm
+        inputRef={promptInputRef}
+        onHandleSend={handleSend}
+        onHandleKeyEnter={handleKeyEnter}
+      />
     </section>
   );
 };

@@ -1,11 +1,11 @@
 import React from "react";
-import { aiActions } from "../../store";
+import { aiActions } from "../../store/ai";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const AI_Roles = ({ AIName, id, description, content }) => {
   const dispatch = useDispatch();
-  const activeAI = useSelector((state) => state.activeAI);
+  const activeAI = useSelector((state) => state.ai.activeAI);
 
   //Check if the current component is Active AI
   const isActive = activeAI === id;
