@@ -4,12 +4,21 @@ import { useTypewriter } from "react-simple-typewriter";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
 
-const Message = ({ model }) => {
+const Message = ({ messageContent }) => {
   const dispatch = useDispatch();
 
+  console.log("Richard: " + messageContent.sender);
   const aiLayout = "bg-[#40414f] px-5 py-5";
   const userLayout = "bg-[#343541] px-5 py-5 text-right";
-  const isGPT = model.sender === "ChatGPT";
+
+  let isGPT;
+  // messageContent.sender === "ChatGPT";
+  if (messageContent.sender === "ChatGPT") {
+    isGPT = true;
+  } else {
+    isGPT = false;
+  }
+
   const layout = isGPT ? aiLayout : userLayout;
 
   const displayResponse = useCallback(
@@ -29,13 +38,13 @@ const Message = ({ model }) => {
       dispatch(textToSpeechActions.updateText(chat.message));
       return chat.message;
     },
-    [model.message]
+    [messageContent.message]
   );
 
   return (
     <div className={layout}>
-      {isGPT ? displayResponse(model) : model.message}
-      {/* {isGPT && <VoiceCommand message={model.message} />} */}
+      {isGPT ? displayResponse(messageContent) : messageContent.message}
+      {/* {isGPT && <VoiceCommand message={messageContent.message} />} */}
     </div>
   );
 };

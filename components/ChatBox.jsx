@@ -1,24 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../components/Message";
 import Image from "../components/Image";
+import ChatLoad from "./ChatLoad";
+import SubmitForm from "./SubmitForm";
+import { useSelector } from "react-redux";
 import { processMessageToChatGPT } from "../utils/processMessage";
 import { processImage } from "../utils/processImage";
-import ChatLoad from "./ChatLoad";
-import { useSelector } from "react-redux";
-import SubmitForm from "./SubmitForm";
+import { processGoogleSearch } from "../utils/googleSearch";
 
 const ChatBox = () => {
+  //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const initialMessage = useSelector((state) => state.ai.initialMessage);
-  // console.log(initialMessage);
+
+  //State
   const [messages, setMessages] = useState([
     {
       message: initialMessage,
       sentTime: "just now",
       sender: "ChatGPT",
+      isImage: false,
+      image: "",
+      alt: "",
     },
   ]);
+  const [loading, setLoading] = useState(false);
+
+  //Refs
+  const promptInputRef = useRef();
+  const chatRef = useRef(null);
 
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
@@ -27,49 +38,41 @@ const ChatBox = () => {
     setMessages(newMessages);
   }, [initialMessage]);
 
-  const promptInputRef = useRef();
-  const chatRef = useRef(null);
   let imageUrl = null;
-
-  const [loading, setLoading] = useState(false);
 
   const handleSend = async (event) => {
     const newMessage = {
       message: promptInputRef.current.value,
       direction: "outgoing",
       sender: "user",
+      isImage: false,
     };
-    // console.log(promptInputRef.current.value);
-
-    //Check if New Message contains a command to create image
 
     const newMessages = [...messages, newMessage];
-
     setMessages(newMessages);
-    // console.log(messages);
+
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
     setLoading(true);
     promptInputRef.current.value = "";
-
     promptInputRef.current.focus();
 
+    let chatGPTResponse;
     if (newMessage.message.includes("image")) {
-      imageUrl = await processImage(
-        newMessage.message,
-        newMessages,
-        setMessages,
-        setLoading
-      );
+      chatGPTResponse = await processImage(newMessage.message);
+    } else if (newMessage.message.includes("google")) {
+      chatGPTResponse = await processGoogleSearch(newMessage.message);
     } else {
-      await processMessageToChatGPT(
+      chatGPTResponse = await processMessageToChatGPT(
         newMessages,
-        setMessages,
-        setLoading,
         activeAI,
         listOfAI
       );
     }
+
+    //Add GPTResponse to Messages
+    setMessages([...newMessages, chatGPTResponse]);
+    setLoading(false);
   };
 
   const handleKeyEnter = (event) => {
@@ -78,14 +81,8 @@ const ChatBox = () => {
     }
   };
 
-  const scrollToBottom = () => {
-    console.log("scrollToBottom called");
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
-  };
-
   useEffect(() => {
-    console.log("useEffect called");
-    scrollToBottom();
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [messages]);
 
   return (
@@ -98,21 +95,19 @@ const ChatBox = () => {
     border-4 border-solid overflow-y-auto bg-[#343541]"
         ref={chatRef}
       >
-        {messages.map((message, i) => {
-          return (
-            <>
-              <Message
-                key={i}
-                model={message}
-                messages={messages}
-                scrollToBottom={scrollToBottom}
-              />
-              {message.isImage && (
-                <Image url={message.image} alt={message.alt} />
-              )}
-            </>
-          );
-        })}
+        {messages.length}
+        {messages &&
+          messages.map((message, i) => {
+            return (
+              <React.Fragment key={i}>
+                <Message messageContent={message} />
+                {message.isImage && (
+                  <p>Richard</p>
+                  // <Image url={message.image} alt={message.alt} />
+                )}
+              </React.Fragment>
+            );
+          })}
 
         <div>{loading && <ChatLoad />}</div>
       </div>

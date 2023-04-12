@@ -12,7 +12,7 @@ const setupActiveAIRole = async (activeAI, listOfAI) => {
 
 }
 
-export const processMessageToChatGPT = async (chatMessages, setMessages, setLoading, activeAI, listOfAI) => {
+export const processMessageToChatGPT = async (chatMessages, activeAI, listOfAI) => {
 
     const systemMessage = await setupActiveAIRole(activeAI, listOfAI);
     // role: user or assistant
@@ -41,15 +41,25 @@ export const processMessageToChatGPT = async (chatMessages, setMessages, setLoad
         .then((data) => data.json())
         .then((data) => {
             console.log(data);
-            setMessages([
-                ...chatMessages,
-                {
-                    message: data.choices[0].message.content,
-                    sender: "ChatGPT",
-                },
-            ]);
-            setLoading(false);
-            // console.log(data.choices[0].message.content);
+            // setMessages([
+            //     ...chatMessages,
+            //     {
+            //         message: data.choices[0].message.content,
+            //         sender: "ChatGPT",
+            //     },
+            // ]);
+            // setLoading(false);
+
+            /* Return GPT Response */
+            console.log(data.choices[0].message.content);
+            return {
+                message: data.choices[0].message.content,
+                sender: "ChatGPT",
+                isImage: false,
+                image: "",
+                alt: ""
+            }
+
 
         })
         .catch((error) => console.log(error));

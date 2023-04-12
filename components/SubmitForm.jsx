@@ -1,5 +1,6 @@
 import React from "react";
 import VoiceCommand from "./VoiceCommand";
+import SpeakCommand from "./SpeakCommand";
 const SubmitForm = ({ inputRef, onHandleSend, onHandleKeyEnter }) => {
   return (
     <div className="flex flex-row justify-center">
@@ -10,6 +11,7 @@ const SubmitForm = ({ inputRef, onHandleSend, onHandleKeyEnter }) => {
         onKeyDown={onHandleKeyEnter}
       ></textarea>
       <VoiceCommand className="w-2" />
+      <SpeakCommand className="w-2" />
       <button
         onClick={onHandleSend}
         id="btnSubmit"

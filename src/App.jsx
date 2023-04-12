@@ -5,16 +5,6 @@ import Header from "../components/Header";
 import "../styles/globals.css";
 
 function App() {
-  // const [activeAI, setActiveAI] = useState("r1");
-
-  // const handleAiSelect = (id) => {
-  //   setActiveAI(id);
-  // };
-
-  // useEffect(() => {
-  //   console.log(activeAI);
-  // }, [activeAI]);
-
   return (
     <div className="h-screen w-screen  text-white">
       <Header />
@@ -22,9 +12,9 @@ function App() {
         <aside className="w-2/12 h-screen bg-gray-100">
           <ChatHistory />
         </aside>
-        <main className="w-7/12 h-screen bg-gray-200">
+        <div className="w-7/12 h-screen bg-gray-200">
           <ChatBox />
-        </main>
+        </div>
         <aside className="w-3/12 h-screen bg-gray-100">
           <AI_List />
         </aside>
