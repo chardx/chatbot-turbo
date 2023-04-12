@@ -16,7 +16,6 @@ export const processGoogleSearch = async (prompt) => {
         return {
             message: data.results,
             sender: "ChatGPT",
-            isImage: false
         }
 
     } catch (error) {

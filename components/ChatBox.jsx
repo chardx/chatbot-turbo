@@ -3,7 +3,8 @@ import Message from "../components/Message";
 import Image from "../components/Image";
 import ChatLoad from "./ChatLoad";
 import SubmitForm from "./SubmitForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { messagesActions } from "../store/messages";
 import { processMessageToChatGPT } from "../utils/processMessage";
 import { processImage } from "../utils/processImage";
 import { processGoogleSearch } from "../utils/googleSearch";
@@ -14,17 +15,10 @@ const ChatBox = () => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const initialMessage = useSelector((state) => state.ai.initialMessage);
 
-  //State
-  const [messages, setMessages] = useState([
-    {
-      message: initialMessage,
-      sentTime: "just now",
-      sender: "ChatGPT",
-      isImage: false,
-      image: "",
-      alt: "",
-    },
-  ]);
+  const dispatch = useDispatch();
+
+  const messages = useSelector((state) => state.messages.messages);
+
   const [loading, setLoading] = useState(false);
 
   //Refs
@@ -34,11 +28,10 @@ const ChatBox = () => {
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
     const newMessages = [...messages];
-    newMessages[0].message = initialMessage;
-    setMessages(newMessages);
+    const updatedMessage = { ...newMessages[0], message: initialMessage };
+    newMessages[0] = updatedMessage;
+    dispatch(messagesActions.updateMessage(newMessages));
   }, [initialMessage]);
-
-  let imageUrl = null;
 
   const handleSend = async (event) => {
     const newMessage = {
@@ -49,7 +42,8 @@ const ChatBox = () => {
     };
 
     const newMessages = [...messages, newMessage];
-    setMessages(newMessages);
+    // setMessages(newMessages);
+    dispatch(messagesActions.updateMessage(newMessages));
 
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
@@ -71,7 +65,9 @@ const ChatBox = () => {
     }
 
     //Add GPTResponse to Messages
-    setMessages([...newMessages, chatGPTResponse]);
+    const updatedMessages = [...newMessages, chatGPTResponse];
+    console.log("New message:" + updatedMessages);
+    dispatch(messagesActions.updateMessage(updatedMessages));
     setLoading(false);
   };
 
@@ -95,15 +91,14 @@ const ChatBox = () => {
     border-4 border-solid overflow-y-auto bg-[#343541]"
         ref={chatRef}
       >
-        {messages.length}
         {messages &&
           messages.map((message, i) => {
             return (
               <React.Fragment key={i}>
                 <Message messageContent={message} />
-                {message.isImage && (
-                  <p>Richard</p>
-                  // <Image url={message.image} alt={message.alt} />
+
+                {message && message.isImage && (
+                  <Image url={message.image} alt={message.alt} />
                 )}
               </React.Fragment>
             );

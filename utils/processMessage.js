@@ -29,38 +29,24 @@ export const processMessageToChatGPT = async (chatMessages, activeAI, listOfAI) 
             ...apiMessages, // The messages from our chat with ChatGPT
         ],
     };
+    try {
 
-    await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            Authorization: "Bearer " + API_KEY,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(apiRequestBody),
-    })
-        .then((data) => data.json())
-        .then((data) => {
-            console.log(data);
-            // setMessages([
-            //     ...chatMessages,
-            //     {
-            //         message: data.choices[0].message.content,
-            //         sender: "ChatGPT",
-            //     },
-            // ]);
-            // setLoading(false);
-
-            /* Return GPT Response */
-            console.log(data.choices[0].message.content);
-            return {
-                message: data.choices[0].message.content,
-                sender: "ChatGPT",
-                isImage: false,
-                image: "",
-                alt: ""
-            }
-
-
-        })
-        .catch((error) => console.log(error));
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + API_KEY,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiRequestBody),
+        });
+        const data = await response.json()
+        /* Return GPT Response */
+        console.log(data.choices[0].message.content);
+        return {
+            message: data.choices[0].message.content,
+            sender: "ChatGPT",
+        }
+    } catch (error) {
+        console.log(error);
+    }
 };

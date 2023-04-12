@@ -7,18 +7,15 @@ import { textToSpeechActions } from "../store/textToSpeech";
 const Message = ({ messageContent }) => {
   const dispatch = useDispatch();
 
-  console.log("Richard: " + messageContent.sender);
+  if (!messageContent) {
+    return null;
+  }
+
+  console.log("Richard: " + messageContent);
   const aiLayout = "bg-[#40414f] px-5 py-5";
   const userLayout = "bg-[#343541] px-5 py-5 text-right";
 
-  let isGPT;
-  // messageContent.sender === "ChatGPT";
-  if (messageContent.sender === "ChatGPT") {
-    isGPT = true;
-  } else {
-    isGPT = false;
-  }
-
+  let isGPT = messageContent.sender === "ChatGPT";
   const layout = isGPT ? aiLayout : userLayout;
 
   const displayResponse = useCallback(

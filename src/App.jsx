@@ -2,6 +2,7 @@ import ChatBox from "../components/ChatBox";
 import AI_List from "../components/SideBarRow/AI_List";
 import ChatHistory from "../components/SideBarRow/ChatHistory";
 import Header from "../components/Header";
+import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import "../styles/globals.css";
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
           <ChatHistory />
         </aside>
         <div className="w-7/12 h-screen bg-gray-200">
-          <ChatBox />
+          <ErrorBoundary fallback={<p>Something went wrong</p>}>
+            <ChatBox />
+          </ErrorBoundary>
         </div>
         <aside className="w-3/12 h-screen bg-gray-100">
           <AI_List />
