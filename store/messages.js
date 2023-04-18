@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
-// const initialMessage = useSelector((state) => state.ai.initialMessage);
-
 //Initial state
 const initialMessagesState = {
     messages: [{
         message: "",
         sentTime: "just now",
         sender: "ChatGPT",
+
     }]
 }
 

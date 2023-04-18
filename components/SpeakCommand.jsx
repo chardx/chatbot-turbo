@@ -1,25 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
-function SpeakCommand({ isTextToSpeechEnabled, text }) {
-  const [audioSrc, setAudioSrc] = useState(null);
+const SpeakCommand = ({ promptInputRef }) => {
+  const [text, setText] = useState("");
+  const [microphoneOn, setMicrophoneOn] = useState(false);
+  const {
+    transcript,
+    resetTranscript,
+    listening,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
 
-  const getAudioSrc = async () => {
-    if (!isTextToSpeechEnabled) {
-      console.warn("Text-to-speech is not enabled.");
-      return;
-    }
-
-    // make API call to get audio file URL
-    const response = await fetch(`https://text-to-speech-api.com/text=${text}`);
-    const data = await response.json();
-
-    // set audioSrc state
-    setAudioSrc(data.audioSrc);
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+  
+  const handleListen = () => {
+    console.log("hey");
+    setMicrophoneOn(true);
+    SpeechRecognition.startListening();
   };
 
+  const handleStop = () => {
+    setMicrophoneOn(false);
+
+    setText(transcript);
+    promptInputRef.current.value = transcript;
+    console.log(transcript);
+    resetTranscript();
+
+    SpeechRecognition.stopListening();
+  };
+
+  useEffect(() => {
+    console.log(microphoneOn);
+  }, [microphoneOn]);
   return (
     <div>
-      <button onClick={getAudioSrc}>
+      <button onClick={handleStop}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="w-12 h-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </button>
+      <button onClick={handleListen}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -35,9 +71,8 @@ function SpeakCommand({ isTextToSpeechEnabled, text }) {
           />
         </svg>
       </button>
-      {audioSrc && <audio src={audioSrc} controls autoPlay />}
     </div>
   );
-}
+};
 
 export default SpeakCommand;

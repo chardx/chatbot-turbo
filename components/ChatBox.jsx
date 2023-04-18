@@ -72,7 +72,7 @@ const ChatBox = () => {
   };
 
   const handleKeyEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && promptInputRef.current.value) {
       handleSend();
     }
   };
