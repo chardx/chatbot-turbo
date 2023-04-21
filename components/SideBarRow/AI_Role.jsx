@@ -3,7 +3,7 @@ import { aiActions } from "../../store/ai";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const AI_Roles = ({ AIName, id, description, content }) => {
+const AI_Roles = ({ AIName, id, description, content, picture }) => {
   const dispatch = useDispatch();
   const activeAI = useSelector((state) => state.ai.activeAI);
 
@@ -24,7 +24,7 @@ const AI_Roles = ({ AIName, id, description, content }) => {
         <div className="flex items-center space-x-4">
           <img
             className="w-16 h-16 object-cover rounded-full"
-            src={`../../src/assets/pic2.png`}
+            src={`../..${picture}`}
             alt={AIName}
           />
           <div>

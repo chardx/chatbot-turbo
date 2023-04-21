@@ -33,6 +33,7 @@ const AI_List = () => {
                   AIName={role.AIName}
                   description={role.description}
                   content={role.content}
+                  picture={role.picture}
                 />
               );
             })}

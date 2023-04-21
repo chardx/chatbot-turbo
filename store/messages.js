@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+
 
 //Initial state
 const initialMessagesState = {
@@ -7,7 +7,6 @@ const initialMessagesState = {
         message: "",
         sentTime: "just now",
         sender: "ChatGPT",
-
     }]
 }
 

@@ -14,7 +14,7 @@ const ChatBox = () => {
   const activeAI = useSelector((state) => state.ai.activeAI);
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const initialMessage = useSelector((state) => state.ai.initialMessage);
-
+  const profilePic = useSelector((state) => state.ai.profilePic);
   const dispatch = useDispatch();
 
   const messages = useSelector((state) => state.messages.messages);
@@ -27,9 +27,16 @@ const ChatBox = () => {
 
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
-    const newMessages = [...messages];
-    const updatedMessage = { ...newMessages[0], message: initialMessage };
-    newMessages[0] = updatedMessage;
+    let newMessages = [...messages];
+    console.log(newMessages[0]);
+    const updatedMessage = {
+      ...newMessages[0],
+      message: initialMessage,
+    };
+
+    // Keep only the first message with the updated message value
+    newMessages = [updatedMessage];
+
     dispatch(messagesActions.updateMessage(newMessages));
   }, [initialMessage]);
 
@@ -95,7 +102,10 @@ const ChatBox = () => {
           messages.map((message, i) => {
             return (
               <React.Fragment key={i}>
-                <Message messageContent={message} />
+                <Message
+                  messageContent={message}
+                  activeProfilePic={profilePic}
+                />
 
                 {message && message.isImage && (
                   <Image url={message.image} alt={message.alt} />
