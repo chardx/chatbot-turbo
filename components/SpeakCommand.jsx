@@ -3,7 +3,9 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-const SpeakCommand = ({ promptInputRef }) => {
+import * as OpusRecorder from "../utils/whisper";
+
+const SpeakCommand = ({ promptInputRef, handleSend }) => {
   const [text, setText] = useState("");
   const [microphoneOn, setMicrophoneOn] = useState(false);
   const {
@@ -11,16 +13,20 @@ const SpeakCommand = ({ promptInputRef }) => {
     resetTranscript,
     listening,
     browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+  } = useSpeechRecognition({ continuous: true });
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
-  
+
   const handleListen = () => {
-    console.log("hey");
-    setMicrophoneOn(true);
-    SpeechRecognition.startListening();
+    if (!listening) {
+      setMicrophoneOn(true);
+      SpeechRecognition.startListening();
+    } else {
+      setMicrophoneOn(false);
+      SpeechRecognition.stopListening();
+    }
   };
 
   const handleStop = () => {
@@ -28,49 +34,60 @@ const SpeakCommand = ({ promptInputRef }) => {
 
     setText(transcript);
     promptInputRef.current.value = transcript;
+    // Automatic Submit
+    handleSend();
     console.log(transcript);
     resetTranscript();
 
     SpeechRecognition.stopListening();
   };
 
+  const handleSampleWhisper = async () => {
+    const result = await OpusRecorder.startRecording();
+    console.log(result);
+  };
+
   useEffect(() => {
     console.log(microphoneOn);
+    console.log("listening: " + listening);
   }, [microphoneOn]);
   return (
     <div>
-      <button onClick={handleStop}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="w-12 h-12"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </button>
-      <button onClick={handleListen}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="w-12 h-12"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-          />
-        </svg>
-      </button>
+      {microphoneOn ? (
+        <button onClick={handleStop}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-12 h-12 text-red-700"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z"
+            />
+          </svg>
+        </button>
+      ) : (
+        <button onClick={handleListen}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-12 h-12"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 };

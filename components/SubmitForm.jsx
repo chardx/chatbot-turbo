@@ -11,7 +11,11 @@ const SubmitForm = ({ inputRef, onHandleSend, onHandleKeyEnter }) => {
         onKeyDown={onHandleKeyEnter}
       ></textarea>
       <VoiceCommand className="w-2" />
-      <SpeakCommand className="w-2" promptInputRef={inputRef} />
+      <SpeakCommand
+        className="w-2"
+        promptInputRef={inputRef}
+        handleSend={onHandleSend}
+      />
       <button
         onClick={onHandleSend}
         id="btnSubmit"

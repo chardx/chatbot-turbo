@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 const voices = ['ErXwobaYiN019PkySvjV', 'EXAVITQu4vr4xnSDxMaL'];
 const ttsHeaders = {
@@ -10,7 +9,7 @@ export const processTextToSpeech11Labs = async (text, voiceIndex = 0) => {
   const ttsUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voices[voiceIndex]}`;
   const message = { text };
   try {
-    const response = await axios.post(ttsUrl, message, { headers: ttsHeaders });
+    const response = await fetch(ttsUrl, message, { headers: ttsHeaders });
     if (response.status === 200) {
       const audioUrl = URL.createObjectURL(new Blob([response.data], { type: 'audio/mpeg' }));
       // const audioSrc = `data:audio/mp3;base64,${audioUrl.toString(

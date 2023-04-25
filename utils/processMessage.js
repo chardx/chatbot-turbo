@@ -9,7 +9,6 @@ const setupActiveAIRole = async (activeAI, listOfAI) => {
         role: "system",
         content: activeAIRole.content
     }
-
 }
 
 export const processMessageToChatGPT = async (chatMessages, activeAI, listOfAI) => {

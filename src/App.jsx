@@ -21,6 +21,15 @@ function App() {
         <aside className="w-3/12 h-screen bg-gray-100">
           <AI_List />
         </aside>
+
+        <script
+          async
+          src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"
+        ></script>
+        <script
+          async
+          src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"
+        ></script>
       </div>
     </div>
   );
