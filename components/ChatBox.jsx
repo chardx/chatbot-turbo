@@ -88,7 +88,7 @@ const ChatBox = () => {
     //Save to FireStore
 
     const result = await onSaveConversation({
-      title: `Conversation with ${activeAI.AIName}`,
+      title: `${activeAI.AIName}`,
       id: conversation.id.toString(),
       dateCreated: conversation.dateCreated,
       selectedAI: activeAI.id,
