@@ -8,7 +8,7 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
   const activeAI = useSelector((state) => state.ai.activeAI);
 
   //Check if the current component is Active AI
-  const isActive = activeAI === id;
+  const isActive = activeAI.id === id;
 
   const handleUpdateActiveAI = (id) => {
     dispatch(aiActions.update(id));

@@ -109,22 +109,16 @@ const DUMMY_ROLES = [
 //Setting up Active AI and message
 const activeAI = "r9";
 
-const setInitialMessage = (id) => {
+const setActiveAI = (id) => {
     const activeAIRole = DUMMY_ROLES.find(ai => ai.id === id);
     const initialMessage = `Hi I am ${activeAIRole.AIName} ${activeAIRole.description}`
-    return initialMessage;
+    return { ...activeAIRole, initialMessage }
+
 }
 
-const getProfilePic = (id) => {
-    const activeAIRole = DUMMY_ROLES.find(ai => ai.id === id);
-    const activeProfilePic = activeAIRole.picture
-    return activeProfilePic;
-}
 
 const initialState = {
-    activeAI,
-    initialMessage: setInitialMessage(activeAI),
-    profilePic: getProfilePic(activeAI),
+    activeAI: setActiveAI(activeAI),
     aiRoles: DUMMY_ROLES
 
 }
@@ -134,10 +128,7 @@ const aiSlice = createSlice({
     initialState,
     reducers: {
         update(state, action) {
-            state.activeAI = action.payload
-            state.initialMessage = setInitialMessage(action.payload)
-            state.profilePic = getProfilePic(action.payload)
-
+            state.activeAI = setActiveAI(action.payload)
         }
     }
 });

@@ -9,16 +9,16 @@ import { processMessageToChatGPT } from "../functions/processMessage";
 import { processImage } from "../functions/processImage";
 import { processGoogleSearch } from "../functions/googleSearch";
 import { onSaveConversation } from "../services/firebaseService";
+import { v4 as uuidv4 } from "uuid";
 const ChatBox = () => {
   //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
   const listOfAI = useSelector((state) => state.ai.aiRoles);
-  const initialMessage = useSelector((state) => state.ai.initialMessage);
-  const profilePic = useSelector((state) => state.ai.profilePic);
+
   const dispatch = useDispatch();
 
   const messages = useSelector((state) => state.messages.messages);
-
+  const conversation = useSelector((state) => state.messages);
   const [loading, setLoading] = useState(false);
 
   //Refs
@@ -31,14 +31,23 @@ const ChatBox = () => {
     console.log(newMessages[0]);
     const updatedMessage = {
       ...newMessages[0],
-      message: initialMessage,
+      message: activeAI.initialMessage,
     };
 
     // Keep only the first message with the updated message value
     newMessages = [updatedMessage];
 
-    dispatch(messagesActions.updateMessage(newMessages));
-  }, [initialMessage]);
+    dispatch(
+      messagesActions.startNewConversation({
+        title: `Conversation with ${activeAI.AIName}`,
+        id: uuidv4(),
+        dateCreated: new Date().toLocaleString(),
+        selectedAI: activeAI.id,
+        userID: "chad",
+        messages: newMessages,
+      })
+    );
+  }, [activeAI]);
 
   const handleSend = async (event) => {
     const newMessage = {
@@ -78,7 +87,14 @@ const ChatBox = () => {
 
     //Save to FireStore
 
-    const result = await onSaveConversation(updatedMessages);
+    const result = await onSaveConversation({
+      title: `Conversation with ${activeAI.AIName}`,
+      id: conversation.id.toString(),
+      dateCreated: conversation.dateCreated,
+      selectedAI: activeAI.id,
+      userID: conversation.userID,
+      messages: updatedMessages,
+    });
     console.log(result);
     setLoading(false);
   };
@@ -109,7 +125,7 @@ const ChatBox = () => {
               <React.Fragment key={i}>
                 <Message
                   messageContent={message}
-                  activeProfilePic={profilePic}
+                  activeProfilePic={activeAI.picture}
                 />
 
                 {message && message.isImage && (

@@ -10,16 +10,12 @@ const VoiceCommand = () => {
   const textToSpeech = useSelector((state) => state.textToSpeech.text);
   const audioUrl = useSelector((state) => state.textToSpeech.audioUrl);
   const activeAI = useSelector((state) => state.ai.activeAI);
-  const aiRoles = useSelector((state) => state.ai.aiRoles);
 
   const dispatch = useDispatch();
   const audioRef = useRef();
 
   //get active Voice
-  const activeVoice = useMemo(
-    () => aiRoles.find((voice) => voice.id === activeAI).voice,
-    [activeAI]
-  );
+  const activeVoice = activeAI.voice;
 
   useEffect(() => {
     if (!isTextToSpeechEnabled) {
