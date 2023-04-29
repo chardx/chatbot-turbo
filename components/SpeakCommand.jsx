@@ -3,7 +3,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-import * as OpusRecorder from "../utils/whisper";
+import * as OpusRecorder from "../functions/whisper";
 
 const SpeakCommand = ({ promptInputRef, handleSend }) => {
   const [text, setText] = useState("");

@@ -2,8 +2,8 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
-import { processTextToSpeech } from "../utils/processTextToSpeech";
-import { processTextToSpeech11Labs } from "../utils/elevenLabsTTS";
+import { processTextToSpeech } from "../functions/processTextToSpeech";
+import { processTextToSpeech11Labs } from "../functions/elevenLabsTTS";
 
 const VoiceCommand = () => {
   const [isTextToSpeechEnabled, setIsTextToSpeechEnabled] = useState(false);
@@ -32,7 +32,7 @@ const VoiceCommand = () => {
 
       // TODO: Eleven Labs Implementation :
       // const audioSrc = await processTextToSpeech(textToSpeech);
-      console.log("I am audio src: " + audioSrc);
+
       return audioSrc;
     };
 
@@ -48,7 +48,6 @@ const VoiceCommand = () => {
 
   useEffect(() => {
     if (audioUrl) {
-      console.log(audioUrl);
       playAudio();
     } else {
       console.log("No audio url");

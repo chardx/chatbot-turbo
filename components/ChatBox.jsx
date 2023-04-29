@@ -5,10 +5,10 @@ import ChatLoad from "./ChatLoad";
 import SubmitForm from "./SubmitForm";
 import { useDispatch, useSelector } from "react-redux";
 import { messagesActions } from "../store/messages";
-import { processMessageToChatGPT } from "../utils/processMessage";
-import { processImage } from "../utils/processImage";
-import { processGoogleSearch } from "../utils/googleSearch";
-
+import { processMessageToChatGPT } from "../functions/processMessage";
+import { processImage } from "../functions/processImage";
+import { processGoogleSearch } from "../functions/googleSearch";
+import { onSaveConversation } from "../services/firebaseService";
 const ChatBox = () => {
   //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
@@ -75,6 +75,11 @@ const ChatBox = () => {
     const updatedMessages = [...newMessages, chatGPTResponse];
     console.log("New message:" + updatedMessages);
     dispatch(messagesActions.updateMessage(updatedMessages));
+
+    //Save to FireStore
+
+    const result = await onSaveConversation(updatedMessages);
+    console.log(result);
     setLoading(false);
   };
 
