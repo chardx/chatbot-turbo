@@ -11,6 +11,8 @@ import { processGoogleSearch } from "../functions/googleSearch";
 import { onSaveConversation } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 import { processStableDiffusion } from "../functions/processStableDiffusion";
+import { generateChatTitle } from "../functions/generateChatTitle";
+
 const ChatBox = () => {
   //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
@@ -88,10 +90,20 @@ const ChatBox = () => {
     console.log("New message:" + updatedMessages);
     dispatch(messagesActions.updateMessage(updatedMessages));
 
+    //Generate Title
+    const generateTitle = async () => {
+      // this function only run once within first 3 messages
+      if (updatedMessages.length > 3) return conversation.title;
+
+      const title = await generateChatTitle(updatedMessages);
+      dispatch(messagesActions.updateTitle(title.text));
+
+      return title.text;
+    };
     //Save to FireStore
 
     const result = await onSaveConversation({
-      title: `${activeAI.AIName}`,
+      title: await generateTitle(),
       id: conversation.id.toString(),
       dateCreated: conversation.dateCreated,
       selectedAI: activeAI.id,

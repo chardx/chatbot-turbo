@@ -32,6 +32,10 @@ const messagesSlice = createSlice({
 
             state.messages = [...action.payload]
         },
+        updateTitle(state, action) {
+
+            state.title = action.payload
+        },
 
     }
 });
