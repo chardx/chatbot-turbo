@@ -10,9 +10,11 @@ import { processImage } from "../functions/processImage";
 import { processGoogleSearch } from "../functions/googleSearch";
 import { onSaveConversation } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
+import { processStableDiffusion } from "../functions/processStableDiffusion";
 const ChatBox = () => {
   //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
+  const newAISelected = useSelector((state) => state.ai.newAISelected);
   const listOfAI = useSelector((state) => state.ai.aiRoles);
 
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ const ChatBox = () => {
         messages: newMessages,
       })
     );
-  }, [activeAI]);
+  }, [newAISelected]);
 
   const handleSend = async (event) => {
     const newMessage = {
@@ -69,7 +71,8 @@ const ChatBox = () => {
 
     let chatGPTResponse;
     if (newMessage.message.includes("image")) {
-      chatGPTResponse = await processImage(newMessage.message);
+      // chatGPTResponse = await processImage(newMessage.message);
+      chatGPTResponse = await processStableDiffusion(newMessage.message);
     } else if (newMessage.message.includes("google")) {
       chatGPTResponse = await processGoogleSearch(newMessage.message);
     } else {

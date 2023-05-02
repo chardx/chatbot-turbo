@@ -11,7 +11,7 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
   const isActive = activeAI.id === id;
 
   const handleUpdateActiveAI = (id) => {
-    dispatch(aiActions.update(id));
+    dispatch(aiActions.updateNewSelectedAI(id));
   };
   return (
     <li>
