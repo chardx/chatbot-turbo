@@ -15,7 +15,13 @@ export const generateChatTitle = async (messages) => {
 
         console.log(data)
         /* Return GPT Response */
-        return data.results
+        // // Remove trailing punctuation
+        const results = {
+            ...data.results,
+            text: data.results.text.replace(/[,.;:!?]$/, ""),
+        };
+        console.log(results);
+        return results
 
     } catch (error) {
         console.log(error)

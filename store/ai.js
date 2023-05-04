@@ -2,6 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const DUMMY_ROLES = [
     {
+        id: "r0",
+        AIName: "ChatGPT",
+        description: "Ask me anything!",
+        content:
+            "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.",
+        voice: "Matthew",
+        picture: "/src/assets/pic0.png"
+    },
+    {
         id: "r1",
         AIName: "Rodolpo",
         description: "Tropa mong malupet. Tanong ka pre kahit ano!",

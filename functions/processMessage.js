@@ -1,6 +1,6 @@
 const API_KEY = import.meta.env.VITE_API_KEY
-
-const setupActiveAIRole = async (activeAI, listOfAI) => {
+import { SSE } from "sse";
+const setupActiveAIRole = async (activeAI) => {
 
 
 
@@ -11,9 +11,9 @@ const setupActiveAIRole = async (activeAI, listOfAI) => {
     }
 }
 
-export const processMessageToChatGPT = async (chatMessages, activeAI, listOfAI) => {
+export const processMessageToChatGPT = async (chatMessages, activeAI) => {
 
-    const systemMessage = await setupActiveAIRole(activeAI, listOfAI);
+    const systemMessage = await setupActiveAIRole(activeAI);
     // role: user or assistant
     let apiMessages = chatMessages.map((messageObject) => {
         let role = messageObject.role === "ChatGPT" ? "assistant" : "user";
@@ -29,6 +29,17 @@ export const processMessageToChatGPT = async (chatMessages, activeAI, listOfAI) 
         ],
     };
     try {
+
+        let source = new SSE(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${API_KEY}`,
+            },
+            method: "POST",
+            payload: JSON.stringify(data),
+        });
+
+
 
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",

@@ -24,7 +24,7 @@ const ChatList = ({ chat }) => {
   return (
     <div
       onClick={loadConversation}
-      className="bg-gray-900 w-full h-5/6 py-3 rounded-lg shadow-lg "
+      className="bg-gray-900 w-full space-end h-auto py-3 rounded-lg shadow-lg "
     >
       <li className="py-4 px-6 flex hover:bg-gray-800 cursor-pointer">
         <div className="w-8 h-8 bg-gray-700 rounded-full mr-4">
@@ -34,9 +34,7 @@ const ChatList = ({ chat }) => {
           />
         </div>
         <div className="flex-1 w-full text-white">
-          <div className="pb-1 border-b-2 text-lg">{selectedAIRole.AIName}</div>
-
-          <div className="pt-1">{chat.title}</div>
+          <p className="pt-1 text-xs">{chat.title}</p>
         </div>
       </li>
     </div>

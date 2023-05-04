@@ -27,3 +27,7 @@
     background-position: 0% 50%;
   }
 }
+
+pre:has(div.codeblock) {
+  padding: 0;
+}

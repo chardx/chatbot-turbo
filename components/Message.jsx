@@ -1,8 +1,16 @@
 import React, { useEffect, useCallback } from "react";
-import CodeBlock from "./CodeBlock/CodeBlock";
+// import CodeBlock from "./CodeBlock/CodeBlock";
 import { useTypewriter } from "react-simple-typewriter";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
+
+import { MemoizedReactMarkdown } from "./Markdown/MemoizedReactMarkdown";
+
+import { CodeBlock } from "./Markdown/Codeblock";
+import rehypeMathjax from "rehype-mathjax";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import remarkImages from "remark-images";
 
 const Message = ({ messageContent, activeProfilePic }) => {
   const dispatch = useDispatch();
@@ -11,7 +19,6 @@ const Message = ({ messageContent, activeProfilePic }) => {
     return null;
   }
 
-  console.log("Richard: " + messageContent);
   const aiLayout = "bg-[#40414f] px-5 py-5";
   const userLayout = "bg-[#343541] px-5 py-5 text-right";
 
@@ -61,9 +68,59 @@ const Message = ({ messageContent, activeProfilePic }) => {
           />
         </svg>
       )}
-      <span className="text-lg">
-        {isGPT ? displayResponse(messageContent) : messageContent.message}
-      </span>
+
+      {isGPT ? (
+        <MemoizedReactMarkdown
+          className="prose dark:prose-invert"
+          remarkPlugins={[remarkGfm, remarkMath, remarkImages]}
+          rehypePlugins={[rehypeMathjax]}
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              console.log(className);
+              const match = /language-(\w+)/.exec(className || "");
+              console.log("match: " + match);
+              return !inline ? (
+                <CodeBlock
+                  key={Math.random()}
+                  language={(match && match[1]) || ""}
+                  value={String(children).replace(/\n$/, "")}
+                  {...props}
+                />
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            },
+            table({ children }) {
+              return (
+                <table className="border-collapse border border-black px-3 py-1 dark:border-white">
+                  {children}
+                </table>
+              );
+            },
+            th({ children }) {
+              return (
+                <th className="break-words border border-black bg-gray-500 px-3 py-1 text-white dark:border-white">
+                  {children}
+                </th>
+              );
+            },
+            td({ children }) {
+              return (
+                <td className="break-words border border-black px-3 py-1 dark:border-white">
+                  {children}
+                </td>
+              );
+            },
+          }}
+        >
+          {/* {displayResponse(messageContent)} */}
+          {messageContent.message}
+        </MemoizedReactMarkdown>
+      ) : (
+        messageContent.message
+      )}
       {/* {isGPT && <VoiceCommand message={messageContent.message} />} */}
     </div>
   );

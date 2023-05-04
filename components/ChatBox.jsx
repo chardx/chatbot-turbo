@@ -102,7 +102,7 @@ const ChatBox = () => {
     };
     //Save to FireStore
 
-    const result = await onSaveConversation({
+    await onSaveConversation({
       title: await generateTitle(),
       id: conversation.id.toString(),
       dateCreated: conversation.dateCreated,
@@ -110,7 +110,7 @@ const ChatBox = () => {
       userID: conversation.userID,
       messages: updatedMessages,
     });
-    console.log(result);
+
     setLoading(false);
   };
 
