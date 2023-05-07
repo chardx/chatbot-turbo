@@ -36,6 +36,11 @@ const messagesSlice = createSlice({
 
             state.title = action.payload
         },
+        updateMessageStream(state, action) {
+            //only updates the last message
+            state.messages[state.messages.length - 1].message = action.payload
+
+        }
 
     }
 });

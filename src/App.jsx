@@ -10,7 +10,7 @@ function App() {
     <div className="h-screen w-screen text-white">
       <Header />
       <div className="flex flex-col sm:flex-row">
-        <aside className="sm:w-2/12 sm:h-screen sm:bg-gray-100 hidden">
+        <aside className="sm:w-2/12 sm:h-sc;pppppppppppppppppppppppppppreen sm:bg-gray-100 hidden">
           <ChatHistory />
         </aside>
         <div className="w-full sm:w-7/12 h-screen bg-gray-200">

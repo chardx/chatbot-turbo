@@ -12,7 +12,9 @@ const ChatHistory = () => {
   };
 
   useEffect(() => {
-    handleRefreshConversation();
+    if (import.meta.env.VITE_FIREBASE !== "disabled") {
+      handleRefreshConversation();
+    }
   }, [conversation]);
 
   return (

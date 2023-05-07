@@ -13,11 +13,14 @@ import { v4 as uuidv4 } from "uuid";
 import { processStableDiffusion } from "../functions/processStableDiffusion";
 import { generateChatTitle } from "../functions/generateChatTitle";
 
+import { streamResponseActions } from "../store/stream";
+//Custom Hook
+import { useChatGPT } from "../hooks/useChatGPT";
+
 const ChatBox = () => {
   //Selectors
   const activeAI = useSelector((state) => state.ai.activeAI);
   const newAISelected = useSelector((state) => state.ai.newAISelected);
-  const listOfAI = useSelector((state) => state.ai.aiRoles);
 
   const dispatch = useDispatch();
 
@@ -25,22 +28,28 @@ const ChatBox = () => {
   const conversation = useSelector((state) => state.messages);
   const [loading, setLoading] = useState(false);
 
+  //Custom Hook
+  const [response, startChatStream] = useChatGPT();
+
+  const streamStatus = useSelector((state) => state.stream.status);
   //Refs
   const promptInputRef = useRef();
   const chatRef = useRef(null);
 
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
-    let newMessages = [...messages];
-    console.log(newMessages[0]);
+    // setNewMessages([...messages]);
+    let tempNewMessages = [...messages];
     const updatedMessage = {
-      ...newMessages[0],
+      ...tempNewMessages[0],
       message: activeAI.initialMessage,
     };
 
     // Keep only the first message with the updated message value
-    newMessages = [updatedMessage];
-
+    // setNewMessages([updatedMessage]);
+    tempNewMessages = [updatedMessage];
+    console.log("ako");
+    console.log(tempNewMessages);
     dispatch(
       messagesActions.startNewConversation({
         title: `Conversation with ${activeAI.AIName}`,
@@ -48,7 +57,7 @@ const ChatBox = () => {
         dateCreated: new Date().toLocaleString(),
         selectedAI: activeAI.id,
         userID: "chad",
-        messages: newMessages,
+        messages: tempNewMessages,
       })
     );
   }, [newAISelected]);
@@ -61,9 +70,9 @@ const ChatBox = () => {
       isImage: false,
     };
 
-    const newMessages = [...messages, newMessage];
-    // setMessages(newMessages);
-    dispatch(messagesActions.updateMessage(newMessages));
+    const tempNewMessages = [...messages, newMessage];
+
+    dispatch(messagesActions.updateMessage(tempNewMessages));
 
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
@@ -72,23 +81,34 @@ const ChatBox = () => {
     promptInputRef.current.focus();
 
     let chatGPTResponse;
+
     if (newMessage.message.includes("image")) {
+      //Code for DALLE
       // chatGPTResponse = await processImage(newMessage.message);
+      //Code for StableDiffusion
       chatGPTResponse = await processStableDiffusion(newMessage.message);
     } else if (newMessage.message.includes("google")) {
       chatGPTResponse = await processGoogleSearch(newMessage.message);
     } else {
-      chatGPTResponse = await processMessageToChatGPT(
-        newMessages,
-        activeAI,
-        listOfAI
-      );
+      // chatGPTResponse = await processMessageToChatGPT(newMessages, activeAI);
+
+      //Add add new message temporarily to start streaming
+      const dummyUpdatedMessages = [
+        ...tempNewMessages,
+        { message: "", sender: "ChatGPT" },
+      ];
+      dispatch(messagesActions.updateMessage(dummyUpdatedMessages));
+
+      chatGPTResponse = await startChatStream(tempNewMessages, activeAI);
     }
 
     //Add GPTResponse to Messages
-    const updatedMessages = [...newMessages, chatGPTResponse];
+    const updatedMessages = [...tempNewMessages, chatGPTResponse];
     console.log("New message:" + updatedMessages);
     dispatch(messagesActions.updateMessage(updatedMessages));
+
+    //Stopped Loading
+    setLoading(false);
 
     //Generate Title
     const generateTitle = async () => {
@@ -102,16 +122,16 @@ const ChatBox = () => {
     };
     //Save to FireStore
 
-    await onSaveConversation({
-      title: await generateTitle(),
-      id: conversation.id.toString(),
-      dateCreated: conversation.dateCreated,
-      selectedAI: activeAI.id,
-      userID: conversation.userID,
-      messages: updatedMessages,
-    });
-
-    setLoading(false);
+    if (import.meta.env.VITE_FIREBASE !== "disabled") {
+      await onSaveConversation({
+        title: await generateTitle(),
+        id: conversation.id.toString(),
+        dateCreated: conversation.dateCreated,
+        selectedAI: activeAI.id,
+        userID: conversation.userID,
+        messages: updatedMessages,
+      });
+    }
   };
 
   const handleKeyEnter = (event) => {
@@ -119,6 +139,13 @@ const ChatBox = () => {
       handleSend();
     }
   };
+
+  //Update Messages when stream is getting updates
+  //not best solution - will find alternative way
+  useEffect(() => {
+    if (streamStatus === "idle") return;
+    dispatch(messagesActions.updateMessageStream(response));
+  }, [response]);
 
   useEffect(() => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -152,6 +179,7 @@ const ChatBox = () => {
 
         <div>{loading && <ChatLoad />}</div>
       </div>
+
       <SubmitForm
         inputRef={promptInputRef}
         onHandleSend={handleSend}

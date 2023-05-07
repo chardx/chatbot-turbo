@@ -1,6 +1,5 @@
 
 export const onSaveConversation = async (data) => {
-    console.log(data)
     try {
 
 
@@ -12,9 +11,9 @@ export const onSaveConversation = async (data) => {
             body: JSON.stringify({ data }),
 
         });
-        console.log(response.ok);
+
         // const result = await response.json();
-        // // console.log("Hi!" + result)
+
         // return result;
     } catch (error) {
         console.log(error)

@@ -135,7 +135,7 @@ const DUMMY_ROLES = [
 
 
 //Setting up Active AI and message
-const activeAI = "r9";
+const activeAI = "r0";
 
 const setActiveAI = (id) => {
     const activeAIRole = DUMMY_ROLES.find(ai => ai.id === id);
