@@ -33,15 +33,6 @@ function App() {
         async
         src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"
       ></script>
-
-      <style jsx>{`
-        @media screen and (min-width: 640px) {
-          /* Show ChatHistory and AI_List components */
-          .hidden {
-            display: block;
-          }
-        }
-      `}</style>
     </div>
   );
 }
