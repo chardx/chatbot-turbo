@@ -10,17 +10,17 @@ function App() {
   return (
     <div className="h-screen w-screen text-white">
       <Header />
-      <div className="flex flex-col sm:flex-row">
-        <aside className="bg-zinc-900 sm:w-2/12 sm:h-screen sm:bg-gray-100 hidden">
+      <div className="flex flex-row">
+        <aside className="bg-zinc-900 md:w-3/12 lg:w-2/12 h-screen sm:hidden md:block">
           <ChatHistory />
           <SignInBar />
         </aside>
-        <div className="w-full sm:w-8/12 h-screen bg-gray-200">
+        <div className="w-full md:w-8/12 lg:w-9/12 h-screen bg-gray-200">
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
             <ChatBox />
           </ErrorBoundary>
         </div>
-        <aside className="w-2/12 sm:h-screen sm:bg-gray-100 hidden">
+        <aside className="sm:hidden 2xl:w-2/12 2xl:block">
           <AI_List />
         </aside>
       </div>

@@ -17,9 +17,9 @@ export const processDescribeImage = async (imageUrl) => {
         /* Return GPT Response */
         // // Remove trailing punctuation
 
-        console.log(data.results.generated_text);
+        console.log(data.results.text);
         return {
-            message: data.results.generated_text,
+            message: data.results.text,
             sender: "ChatGPT"
         }
 

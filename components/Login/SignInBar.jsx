@@ -2,7 +2,7 @@ import React from "react";
 
 const SignInBar = () => {
   return (
-    <div className="flex flex-row text-black ">
+    <div className="flex flex-row ">
       <button
         type="button"
         className="w-full group flex cursor-pointer flex-row items-center rounded-md p-2 hover:bg-white/5"
