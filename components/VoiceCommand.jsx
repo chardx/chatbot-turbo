@@ -10,6 +10,7 @@ const VoiceCommand = () => {
   const textToSpeech = useSelector((state) => state.textToSpeech.text);
   const audioUrl = useSelector((state) => state.textToSpeech.audioUrl);
   const activeAI = useSelector((state) => state.ai.activeAI);
+  const newAISelected = useSelector((state) => state.ai.newAISelected);
 
   const dispatch = useDispatch();
   const audioRef = useRef();
@@ -36,7 +37,7 @@ const VoiceCommand = () => {
     audioSrc.then((src) => {
       dispatch(textToSpeechActions.updateAudioUrl(src));
     });
-  }, [textToSpeech, activeVoice, isTextToSpeechEnabled]);
+  }, [textToSpeech, isTextToSpeechEnabled]);
 
   useEffect(() => {
     console.log("First Render");

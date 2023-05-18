@@ -5,15 +5,15 @@ import ChatLoad from "./ChatLoad";
 import SubmitForm from "./SubmitForm";
 import { useDispatch, useSelector } from "react-redux";
 import { messagesActions } from "../store/messages";
-import { processMessageToChatGPT } from "../functions/processMessage";
 import { processImage } from "../functions/processImage";
+import { processDescribeImage } from "../functions/processDescribeImage";
 import { processGoogleSearch } from "../functions/googleSearch";
 import { onSaveConversation } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 import { processStableDiffusion } from "../functions/processStableDiffusion";
 import { generateChatTitle } from "../functions/generateChatTitle";
+import { textToSpeechActions } from "../store/textToSpeech";
 
-import { streamResponseActions } from "../store/stream";
 //Custom Hook
 import { useChatGPT } from "../hooks/useChatGPT";
 
@@ -27,6 +27,9 @@ const ChatBox = () => {
   const messages = useSelector((state) => state.messages.messages);
   const conversation = useSelector((state) => state.messages);
   const [loading, setLoading] = useState(false);
+
+  const [isUserUploadedImage, setIsUserUploadedImage] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState("");
 
   //Custom Hook
   const [response, startChatStream] = useChatGPT();
@@ -60,30 +63,46 @@ const ChatBox = () => {
         messages: tempNewMessages,
       })
     );
+
+    // Update Text to Speech when new AI is selected
+    dispatch(textToSpeechActions.updateText(activeAI.initialMessage));
   }, [newAISelected]);
 
   const handleSend = async (event) => {
+    let imageUrl;
+    if (isUserUploadedImage) {
+      imageUrl = await handleUpload(uploadedImage);
+    }
+
+    // event.preventDefault();
     const newMessage = {
       message: promptInputRef.current.value,
       direction: "outgoing",
       sender: "user",
-      isImage: false,
+      isImage: isUserUploadedImage,
+      image: imageUrl,
+      alt: "",
     };
+
+    //Clear uploaded Image
+    setUploadedImage("");
+    setIsUserUploadedImage(false);
 
     const tempNewMessages = [...messages, newMessage];
 
     dispatch(messagesActions.updateMessage(tempNewMessages));
 
-    // Initial system message to determine ChatGPT functionality
-    // How it responds, how it talks, etc.
     setLoading(true);
     promptInputRef.current.value = "";
+
     promptInputRef.current.focus();
 
     let chatGPTResponse;
 
-    if (newMessage.message.includes("image")) {
-      //Code for DALLE
+    if (isUserUploadedImage) {
+      chatGPTResponse = await processDescribeImage(newMessage.image);
+    } else if (newMessage.message.includes("image")) {
+      // Code for DALLE
       // chatGPTResponse = await processImage(newMessage.message);
       //Code for StableDiffusion
       chatGPTResponse = await processStableDiffusion(newMessage.message);
@@ -104,8 +123,12 @@ const ChatBox = () => {
 
     //Add GPTResponse to Messages
     const updatedMessages = [...tempNewMessages, chatGPTResponse];
-    console.log("New message:" + updatedMessages);
+    console.log("New message:");
+    console.log(updatedMessages);
     dispatch(messagesActions.updateMessage(updatedMessages));
+
+    //Update Text to Speech once stream is complete
+    dispatch(textToSpeechActions.updateText(chatGPTResponse.message));
 
     //Stopped Loading
     setLoading(false);
@@ -134,6 +157,23 @@ const ChatBox = () => {
     }
   };
 
+  const handleUpload = async (blob) => {
+    if (blob) {
+      console.log("Uploading file:", blob);
+
+      try {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.onload = () => resolve(fileReader.result);
+          fileReader.onerror = reject;
+          fileReader.readAsDataURL(blob);
+        });
+      } catch (error) {
+        console.error("Error fetching the image:", error);
+      }
+    }
+  };
+
   const handleKeyEnter = (event) => {
     if (event.key === "Enter" && promptInputRef.current.value) {
       handleSend();
@@ -152,10 +192,7 @@ const ChatBox = () => {
   }, [messages]);
 
   return (
-    <section
-      className="container text-sm mx-auto w-[90%] h-[80%]
-    max-w-4xl"
-    >
+    <section className="container text-sm mx-0 px-0 w-full h-[80%]">
       <div
         className="flex flex-col w-full h-full 
     border-4 border-solid overflow-y-auto bg-[#343541]"
@@ -184,6 +221,9 @@ const ChatBox = () => {
         inputRef={promptInputRef}
         onHandleSend={handleSend}
         onHandleKeyEnter={handleKeyEnter}
+        setIsUserUploadedImage={setIsUserUploadedImage}
+        setUploadedImage={setUploadedImage}
+        uploadedImage={uploadedImage}
       />
     </section>
   );

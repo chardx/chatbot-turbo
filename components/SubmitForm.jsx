@@ -1,7 +1,15 @@
 import React from "react";
 import VoiceCommand from "./VoiceCommand";
 import SpeakCommand from "./SpeakCommand";
-const SubmitForm = ({ inputRef, onHandleSend, onHandleKeyEnter }) => {
+import ImageUploader from "./ImageUploader";
+const SubmitForm = ({
+  inputRef,
+  onHandleSend,
+  onHandleKeyEnter,
+  setIsUserUploadedImage,
+  setUploadedImage,
+  uploadedImage,
+}) => {
   return (
     <div className="flex flex-row justify-center">
       <textarea
@@ -16,6 +24,12 @@ const SubmitForm = ({ inputRef, onHandleSend, onHandleKeyEnter }) => {
         promptInputRef={inputRef}
         handleSend={onHandleSend}
       />
+      <ImageUploader
+        setIsUserUploadedImage={setIsUserUploadedImage}
+        setUploadedImage={setUploadedImage}
+        uploadedImage={uploadedImage}
+      />
+
       <button
         onClick={onHandleSend}
         id="btnSubmit"

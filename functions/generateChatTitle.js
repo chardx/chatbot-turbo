@@ -1,5 +1,5 @@
 export const generateChatTitle = async (messages) => {
-    console.log(prompt)
+    
     try {
         const response = await fetch('http://localhost:3000/api/generateTitle', {
             method: 'POST',
