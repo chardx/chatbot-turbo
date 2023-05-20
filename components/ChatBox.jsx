@@ -8,7 +8,10 @@ import { messagesActions } from "../store/messages";
 import { processImage } from "../functions/processImage";
 import { processDescribeImage } from "../functions/processDescribeImage";
 import { processGoogleSearch } from "../functions/googleSearch";
-import { onSaveConversation } from "../services/firebaseService";
+import {
+  onSaveConversation,
+  onUpdateConversation,
+} from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 import { processStableDiffusion } from "../functions/processStableDiffusion";
 import { generateChatTitle } from "../functions/generateChatTitle";
@@ -146,17 +149,24 @@ const ChatBox = () => {
     //Save to FireStore
 
     if (import.meta.env.VITE_FIREBASE !== "disabled") {
-      await onSaveConversation({
-        title: await generateTitle(),
-        id: conversation.id.toString(),
-        dateCreated: conversation.dateCreated,
-        selectedAI: activeAI.id,
-        userID: conversation.userID,
-        messages: updatedMessages,
-      });
+      if (updatedMessages.length <= 3) {
+        await onSaveConversation({
+          title: await generateTitle(),
+          id: conversation.id.toString(),
+          dateCreated: conversation.dateCreated,
+          selectedAI: activeAI.id,
+          userID: conversation.userID,
+          messages: updatedMessages,
+        });
+      } else if (updatedMessages.length > 3) {
+        console.log("Im here");
+        await onUpdateConversation({
+          id: conversation.id.toString(),
+          messages: updatedMessages,
+        });
+      }
     }
   };
-
   const handleUpload = async (blob) => {
     if (blob) {
       console.log("Uploading file:", blob);
