@@ -11,9 +11,9 @@
     } */
 
 .gradient-background {
-  background: linear-gradient(80deg, #0f766e, #0ad4c2, #03534b);
+  background: linear-gradient(80deg, #343541, #40414f, #0ad4c2, #343541);
   background-size: 180% 180%;
-  animation: gradient-animation 3s ease infinite;
+  animation: gradient-animation 5s ease infinite;
 }
 
 @keyframes gradient-animation {

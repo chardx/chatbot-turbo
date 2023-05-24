@@ -16,8 +16,8 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
   return (
     <li>
       <div
-        className={`flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-lg transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl ${
-          isActive ? "border-x-8 border-gray-700" : ""
+        className={`flex items-center justify-between w-full p-4 bg-zinc-900 rounded-lg shadow-lg transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl ${
+          isActive ? "border-x-8 border-white" : ""
         }`}
         onClick={() => handleUpdateActiveAI(id)}
       >
@@ -29,7 +29,7 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
           />
           <div>
             <h2 className="text-lg font-medium">{AIName}</h2>
-            <p className="text-sm font-light text-gray-600">{description}</p>
+            <p className="text-sm font-dark">{description}</p>
           </div>
         </div>
         <svg

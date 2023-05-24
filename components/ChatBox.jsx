@@ -31,7 +31,7 @@ const ChatBox = () => {
   const conversation = useSelector((state) => state.messages);
   const [loading, setLoading] = useState(false);
 
-  const [isUserUploadedImage, setIsUserUploadedImage] = useState(false);
+  const [isUserUploadedImage, setHasUserUploadedImage] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
 
   //Custom Hook
@@ -89,7 +89,7 @@ const ChatBox = () => {
 
     //Clear uploaded Image
     setUploadedImage("");
-    setIsUserUploadedImage(false);
+    setHasUserUploadedImage(false);
 
     const tempNewMessages = [...messages, newMessage];
 
@@ -202,10 +202,10 @@ const ChatBox = () => {
   }, [messages]);
 
   return (
-    <section className="container text-sm mx-0 px-0 w-full h-[80%]">
+    <section className="relative text-sm mx-0 px-0 w-full h-full">
       <div
-        className="flex flex-col w-full h-full 
-    border-4 border-solid overflow-y-auto bg-[#343541]"
+        className="flex flex-col w-full h-[80%] overflow-y-auto
+     scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 bg-[#343541]"
         ref={chatRef}
       >
         {messages &&
@@ -227,14 +227,16 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <SubmitForm
-        inputRef={promptInputRef}
-        onHandleSend={handleSend}
-        onHandleKeyEnter={handleKeyEnter}
-        setIsUserUploadedImage={setIsUserUploadedImage}
-        setUploadedImage={setUploadedImage}
-        uploadedImage={uploadedImage}
-      />
+      <div className="absolute bottom-20 border-transparent bg-[#343541] w-full h-auto p-4">
+        <SubmitForm
+          inputRef={promptInputRef}
+          onHandleSend={handleSend}
+          onHandleKeyEnter={handleKeyEnter}
+          setHasUserUploadedImage={setHasUserUploadedImage}
+          setUploadedImage={setUploadedImage}
+          uploadedImage={uploadedImage}
+        />
+      </div>
     </section>
   );
 };

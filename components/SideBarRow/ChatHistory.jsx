@@ -8,6 +8,7 @@ const ChatHistory = () => {
   const conversation = useSelector((state) => state.messages);
   const handleRefreshConversation = async () => {
     const history = await getConversationHistory();
+    console.log(history);
     setChatHistory(history);
   };
 
@@ -19,11 +20,13 @@ const ChatHistory = () => {
 
   return (
     <div className="h-auto text-black p-4">
-      <div className="bg-white shadow-lg  rounded-lg overflow-y-scroll h-96">
+      <div
+        className="bg-white shadow-lg  rounded-lg overflow-y-scroll h-96 
+      scrollbar-thin scrollbar-thumb-green-400 scrollbar-track-gray-800"
+      >
         <ul className="divide-y divide-gray-700">
-          {chatHistory.map((chat) => (
-            <ChatList key={chat.id} chat={chat} />
-          ))}
+          {chatHistory &&
+            chatHistory.map((chat) => <ChatList key={chat.id} chat={chat} />)}
         </ul>
       </div>
     </div>

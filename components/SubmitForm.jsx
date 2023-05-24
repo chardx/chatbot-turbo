@@ -6,14 +6,19 @@ const SubmitForm = ({
   inputRef,
   onHandleSend,
   onHandleKeyEnter,
-  setIsUserUploadedImage,
+  setHasUserUploadedImage,
   setUploadedImage,
   uploadedImage,
 }) => {
   return (
-    <div className="flex flex-row justify-center">
+    <div className="flex flex-row  justify-center mx-2 mt-4">
+      <ImageUploader
+        setHasUserUploadedImage={setHasUserUploadedImage}
+        setUploadedImage={setUploadedImage}
+        uploadedImage={uploadedImage}
+      />
       <textarea
-        className="flex-1 w-auto border text-black"
+        className="flex-1 w-auto border text-black ml-2 p-2 rounded-lg"
         placeholder="Enter Text here..."
         ref={inputRef}
         onKeyDown={onHandleKeyEnter}
@@ -24,16 +29,11 @@ const SubmitForm = ({
         promptInputRef={inputRef}
         handleSend={onHandleSend}
       />
-      <ImageUploader
-        setIsUserUploadedImage={setIsUserUploadedImage}
-        setUploadedImage={setUploadedImage}
-        uploadedImage={uploadedImage}
-      />
 
       <button
         onClick={onHandleSend}
         id="btnSubmit"
-        className="w-[30%] px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400"
+        className="w-[240px] text-xl px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400"
       >
         Submit
       </button>

@@ -8,19 +8,20 @@ import "../styles/globals.css";
 
 function App() {
   return (
-    <div className="h-screen w-screen text-white">
-      <Header />
-      <div className="flex flex-row">
-        <aside className="bg-zinc-900 md:w-3/12 lg:w-2/12 h-screen sm:hidden md:block">
+    <main className="flex h-screen w-screen flex-col text-white">
+      <div className="flex h-full w-full pt-[48px] sm:pt-0">
+        <aside className="z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full sm:hidden md:block">
           <ChatHistory />
           <SignInBar />
         </aside>
-        <div className="w-full md:w-8/12 lg:w-9/12 h-screen bg-gray-200">
+        <div className="w-screen md:w-9/12 2xl:w-8/12 h-full bg-gray-200">
+          {/* <Header /> */}
+
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
             <ChatBox />
           </ErrorBoundary>
         </div>
-        <aside className="sm:hidden 2xl:w-2/12 2xl:block">
+        <aside className="bg-zinc-900 w-full h-full sm:hidden 2xl:w-2/12 2xl:block">
           <AI_List />
         </aside>
       </div>
@@ -33,7 +34,7 @@ function App() {
         async
         src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"
       ></script>
-    </div>
+    </main>
   );
 }
 

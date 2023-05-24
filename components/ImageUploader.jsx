@@ -3,7 +3,7 @@ import { PaperClipIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Dropzone from "react-dropzone";
 
 const ImageUploader = ({
-  setIsUserUploadedImage,
+  setHasUserUploadedImage,
   setUploadedImage,
   uploadedImage,
 }) => {
@@ -12,18 +12,32 @@ const ImageUploader = ({
   return (
     <div className="flex flex-row">
       <Dropzone
-        acceptedFiles=".jpg,.jpeg,.png"
+        accept="image/png, image/jpg"
+        acceptedFiles=".jpg,.jpeg,.png,.pdf"
         multiple={false}
         noClick={true}
         onDrop={(acceptedFiles) => {
-          setPreview(URL.createObjectURL(acceptedFiles[0]));
-          setUploadedImage(acceptedFiles[0]);
-          setIsUserUploadedImage(true);
+          if (acceptedFiles.length === 0) return;
+
+          if (acceptedFiles.length > 0) {
+            const file = acceptedFiles[0];
+            if (file.type === "application/pdf") {
+              alert("PDF files uploaded");
+            } else if (
+              file.type === "image/jpeg" ||
+              file.type === "image/png"
+            ) {
+              console.log("User attached an image");
+              setHasUserUploadedImage(true);
+            }
+            setPreview(URL.createObjectURL(acceptedFiles[0]));
+            setUploadedImage(acceptedFiles[0]);
+          }
         }}
       >
         {({ getRootProps, getInputProps, open }) => (
           <div {...getRootProps()}>
-            <input {...getInputProps()} />
+            <input {...getInputProps({ accept: ".jpg,.jpeg,.png,.pdf" })} />
             <PaperClipIcon className="h-12 w-12 text-blue-500" onClick={open} />
           </div>
         )}
@@ -36,7 +50,7 @@ const ImageUploader = ({
             onClick={() => {
               setUploadedImage("");
               setAttachment("");
-              setIsUserUploadedImage(false);
+              setHasUserUploadedImage(false);
             }}
           />
           <img

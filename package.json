@@ -32,6 +32,7 @@
     "remark-images": "^3.1.0",
     "remark-math": "^5.1.1",
     "sse": "github:mpetazzoni/sse.js",
+    "tabler-icons-react": "^1.56.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "autoprefixer": "^10.4.14",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.21",
+    "tailwind-scrollbar": "^3.0.4",
     "tailwindcss": "^3.2.7",
     "vite": "^4.1.0"
   },

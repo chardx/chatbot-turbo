@@ -13,16 +13,14 @@ const AI_List = () => {
   return (
     <div
       id="ai-container"
-      className="bg-gray-100 py-8 text-black glassmorphism"
+      className="py-8 text-white glassmorphism scrollbar-thin scrollbar-thumb-green-400"
       style={{
         maxHeight: "600px",
         overflowY: showScrollbar ? "auto" : "initial",
       }}
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl leading-6 font-medium text-gray-900">
-          List of AI
-        </h2>
+        <h2 className="text-2xl leading-6 font-medium text-white">My Agents</h2>
         <div className="mt-6">
           <ul className="divide-y divide-gray-200">
             {listOfAI.map((role) => {
