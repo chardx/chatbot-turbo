@@ -16,10 +16,15 @@ const FileUploader = ({
     if (acceptedFiles.length === 0) return;
     const file = acceptedFiles[0];
     console.log(file.type);
-    if (file.type === "application/pdf" || file.type === "text/plain") {
+    if (
+      file.type === "application/pdf" ||
+      file.type === "text/plain" ||
+      file.type === "text/csv" ||
+      file.type === "application/json"
+    ) {
       console.log("User attached a Document file");
 
-      alert("PDF files uploaded");
+      alert(`Files uploaded: " ${file.name} - ${file.type}/${file.size}}`);
       setHasUserUploadedPDF(true);
       handleUploadDocuments(file);
     } else if (file.type === "image/jpeg" || file.type === "image/png") {

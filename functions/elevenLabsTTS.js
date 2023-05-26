@@ -1,50 +1,23 @@
 
-const voices = ['ErXwobaYiN019PkySvjV', 'EXAVITQu4vr4xnSDxMaL'];
+const voices = ['cpMNmC1DKZjVkVOrHcqE', 'c1lHY1mgQ5RZmdn3TYmN'];
+const apiKey = import.meta.env.VITE_ELEVEN_LABS_API_KEY
 const ttsHeaders = {
-  Accept: "audio/mpeg",
-  "xi-api-key": key,
+  "Accept": "audio/mpeg",
+  "xi-api-key": apiKey,
   "Content-Type": "application/json",
 };
 
 const BASE_URL = "https://api.elevenlabs.io/v1";
 
-
-export const processTextToSpeech11Labs = async (text, voiceIndex = 0) => {
-  const ttsUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voices[voiceIndex]}`;
-  const message = { text };
-  try {
-    const response = await fetch(ttsUrl, message, { headers: ttsHeaders });
-    if (response.status === 200) {
-      const audioUrl = URL.createObjectURL(new Blob([response.data], { type: 'audio/mpeg' }));
-      // const audioSrc = `data:audio/mp3;base64,${audioUrl.toString(
-      //   "base64"
-      // )}`;
-      // const sound = new Howl({
-      //   src: audioUrl,
-      //   format: 'mp3',
-      //   onend: function () {
-      //     URL.revokeObjectURL(audioUrl);
-      //   }
-      // });
-      // sound.play();
-      console.log("audio SRC: " + audioUrl)
-      return audioUrl;
-    } else {
-      console.log(`Request failed with status code ${response.status}`);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
 export const genAudio = async ({
   text,
-  voiceIndex = 0,
-
-}) => {
+  voice,
+  voiceIndex = 1,
+}
+) => {
   try {
-    const response = await fetch(`${BASE_URL}/text-to-speech/${voices[voiceIndex]}`, {
+
+    const response = await fetch(`${BASE_URL}/text-to-speech/${voice}`, {
       method: "POST",
       headers: ttsHeaders,
       body: JSON.stringify({ text }),
@@ -63,6 +36,26 @@ export const genAudio = async ({
     }
     const blob = await response.blob();
     return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getVoices = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/voices`, {
+      method: "GET",
+      headers: {
+        "xi-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data.voices;
   } catch (error) {
     console.error(error);
     throw error;

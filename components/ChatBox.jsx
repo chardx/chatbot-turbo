@@ -115,12 +115,12 @@ const ChatBox = () => {
       chatGPTResponse = await processTalkWithDocs(tempNewMessages);
     } else if (hasUserUploadedImage) {
       chatGPTResponse = await processDescribeImage(newMessage.image);
-    } else if (newMessage.message.includes("image")) {
+    } else if (newMessage.message.includes("/image")) {
       // Code for DALLE
       // chatGPTResponse = await processImage(newMessage.message);
       //Code for StableDiffusion
       chatGPTResponse = await processStableDiffusion(newMessage.message);
-    } else if (newMessage.message.includes("google")) {
+    } else if (newMessage.message.includes("/google")) {
       chatGPTResponse = await processGoogleSearch(newMessage.message);
     } else {
       // chatGPTResponse = await processMessageToChatGPT(newMessages, activeAI);

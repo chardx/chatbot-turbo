@@ -6,7 +6,7 @@ const Header = () => {
       <header className="bg-teal-700 text-white py-4 gradient-background gradient-animation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div>
-            <h1 className="font-medium text-2xl">Chat Bot Turbo</h1>
+            <h1 className="font-medium text-2xl">ChadGPT Turbo</h1>
           </div>
           <div className="flex items-center">
             <button className="mr-4 text-white hover:text-gray-200 focus:outline-none">

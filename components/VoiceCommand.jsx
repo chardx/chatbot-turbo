@@ -2,9 +2,9 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
-// import { processTextToSpeech } from "../functions/processTextToSpeech";
-import { processTextToSpeech11Labs } from "../functions/elevenLabsTTS";
+import { processTextToSpeech } from "../functions/processTextToSpeech";
 import { genAudio } from "../functions/elevenLabsTTS";
+import { getVoices } from "../functions/elevenLabsTTS";
 
 const VoiceCommand = () => {
   const [isTextToSpeechEnabled, setIsTextToSpeechEnabled] = useState(false);
@@ -24,13 +24,22 @@ const VoiceCommand = () => {
       return;
     }
 
-    console.log("I got called");
     const getAudioSrc = async () => {
-      // const audioSrc = await processTextToSpeech(textToSpeech, activeVoice);
+      let audioSrc = "";
+      if (import.meta.env.VITE_ELEVENLABS !== "disabled") {
+        // Eleven Labs Implementation :
+        const listOfVoices = await getVoices();
+        console.log(listOfVoices);
 
-      // TODO: Eleven Labs Implementation :
-      // const audioSrc = await processTextToSpeech11Labs(textToSpeech);
-      const audioSrc = await genAudio(textToSpeech);
+        console.log(activeAI.voice11labs);
+        audioSrc = await genAudio({
+          text: textToSpeech,
+          voice: activeAI.voice11labs,
+        });
+        // AWS AMAZON POLLY
+      } else {
+        audioSrc = await processTextToSpeech(textToSpeech, activeVoice);
+      }
       console.log(audioSrc);
       return audioSrc;
     };
@@ -68,7 +77,7 @@ const VoiceCommand = () => {
   };
 
   return (
-    <div className="text-black w-12">
+    <div className="text-white w-12 ml-2">
       <audio
         controls
         src={audioUrl}

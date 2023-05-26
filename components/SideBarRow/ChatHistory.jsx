@@ -21,7 +21,7 @@ const ChatHistory = () => {
   return (
     <div className="h-auto text-black p-4">
       <div
-        className="bg-white shadow-lg  rounded-lg overflow-y-scroll h-96 
+        className="bg-zinc-800 shadow-lg  rounded-lg overflow-y-scroll h-96 
       scrollbar-thin scrollbar-thumb-green-400 scrollbar-track-gray-800"
       >
         <ul className="divide-y divide-gray-700">
