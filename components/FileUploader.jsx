@@ -1,39 +1,52 @@
 import React, { useState } from "react";
 import { PaperClipIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Dropzone from "react-dropzone";
+import { processUploadFile } from "../functions/processUploadFile";
 
-const ImageUploader = ({
+const FileUploader = ({
+  setHasUserUploadedPDF,
   setHasUserUploadedImage,
   setUploadedImage,
   uploadedImage,
 }) => {
   const [preview, setPreview] = useState("");
+  const [docsAttachment, setDocsAttachment] = useState("");
 
+  const handleOnDrop = (acceptedFiles) => {
+    if (acceptedFiles.length === 0) return;
+    const file = acceptedFiles[0];
+    console.log(file.type);
+    if (file.type === "application/pdf" || file.type === "text/plain") {
+      console.log("User attached a Document file");
+
+      alert("PDF files uploaded");
+      setHasUserUploadedPDF(true);
+      handleUploadDocuments(file);
+    } else if (file.type === "image/jpeg" || file.type === "image/png") {
+      console.log("User attached an image");
+      setPreview(URL.createObjectURL(file));
+      setUploadedImage(file);
+      setHasUserUploadedImage(true);
+    } else {
+      alert("Invalid file type");
+      return;
+    }
+  };
+
+  const handleUploadDocuments = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(file);
+    const response = await processUploadFile(formData);
+    console.log(response);
+  };
   return (
     <div className="flex flex-row">
       <Dropzone
-        accept="image/png, image/jpg"
-        acceptedFiles=".jpg,.jpeg,.png,.pdf"
+        acceptedFiles=".jpg,.jpeg,.png,.pdf,.csv,.xls,.xlsx,.txt"
         multiple={false}
         noClick={true}
-        onDrop={(acceptedFiles) => {
-          if (acceptedFiles.length === 0) return;
-
-          if (acceptedFiles.length > 0) {
-            const file = acceptedFiles[0];
-            if (file.type === "application/pdf") {
-              alert("PDF files uploaded");
-            } else if (
-              file.type === "image/jpeg" ||
-              file.type === "image/png"
-            ) {
-              console.log("User attached an image");
-              setHasUserUploadedImage(true);
-            }
-            setPreview(URL.createObjectURL(acceptedFiles[0]));
-            setUploadedImage(acceptedFiles[0]);
-          }
-        }}
+        onDrop={handleOnDrop}
       >
         {({ getRootProps, getInputProps, open }) => (
           <div {...getRootProps()}>
@@ -67,4 +80,4 @@ const ImageUploader = ({
   );
 };
 
-export default ImageUploader;
+export default FileUploader;

@@ -1,9 +1,13 @@
 
 const voices = ['ErXwobaYiN019PkySvjV', 'EXAVITQu4vr4xnSDxMaL'];
 const ttsHeaders = {
-  'Content-Type': 'application/json',
-  'xi-api-key': import.meta.env.VITE_ELEVEN_LABS_API_KEY
+  Accept: "audio/mpeg",
+  "xi-api-key": key,
+  "Content-Type": "application/json",
 };
+
+const BASE_URL = "https://api.elevenlabs.io/v1";
+
 
 export const processTextToSpeech11Labs = async (text, voiceIndex = 0) => {
   const ttsUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voices[voiceIndex]}`;
@@ -32,3 +36,35 @@ export const processTextToSpeech11Labs = async (text, voiceIndex = 0) => {
     console.log(error);
   }
 }
+
+
+export const genAudio = async ({
+  text,
+  voiceIndex = 0,
+
+}) => {
+  try {
+    const response = await fetch(`${BASE_URL}/text-to-speech/${voices[voiceIndex]}`, {
+      method: "POST",
+      headers: ttsHeaders,
+      body: JSON.stringify({ text }),
+    });
+    if (!response.ok || !response.body) {
+      const readBody = await response.text();
+      let message = readBody;
+      try {
+        const json = JSON.parse(readBody);
+        message = json.detail.message;
+      } catch (e) { }
+      console.error(
+        `Network response was not ok ${response.ok} ${message} ${response.status}`
+      );
+      return undefined;
+    }
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

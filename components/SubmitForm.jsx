@@ -1,19 +1,21 @@
 import React from "react";
 import VoiceCommand from "./VoiceCommand";
 import SpeakCommand from "./SpeakCommand";
-import ImageUploader from "./ImageUploader";
+import FileUploader from "./FileUploader";
 const SubmitForm = ({
   inputRef,
   onHandleSend,
   onHandleKeyEnter,
   setHasUserUploadedImage,
+  setHasUserUploadedPDF,
   setUploadedImage,
   uploadedImage,
 }) => {
   return (
     <div className="flex flex-row  justify-center mx-2 mt-4">
-      <ImageUploader
+      <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
+        setHasUserUploadedPDF={setHasUserUploadedPDF}
         setUploadedImage={setUploadedImage}
         uploadedImage={uploadedImage}
       />

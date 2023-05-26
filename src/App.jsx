@@ -15,7 +15,7 @@ function App() {
           <SignInBar />
         </aside>
         <div className="w-screen md:w-9/12 2xl:w-8/12 h-full bg-gray-200">
-          {/* <Header /> */}
+          <Header />
 
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
             <ChatBox />

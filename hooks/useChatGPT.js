@@ -15,10 +15,7 @@ const setupActiveAIRole = async (activeAI) => {
 const streamChatGPT = async (chatMessages, activeAI, dispatch) => {
     let result = '';
 
-
     const systemMessage = await setupActiveAIRole(activeAI);
-    console.log("hoy pinoy ako")
-    console.log(chatMessages)
     let apiMessages = chatMessages.map((messageObject) => {
 
         let role = messageObject.sender === 'ChatGPT' ? 'assistant' : 'user';

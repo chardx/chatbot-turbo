@@ -2,8 +2,9 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
-import { processTextToSpeech } from "../functions/processTextToSpeech";
+// import { processTextToSpeech } from "../functions/processTextToSpeech";
 import { processTextToSpeech11Labs } from "../functions/elevenLabsTTS";
+import { genAudio } from "../functions/elevenLabsTTS";
 
 const VoiceCommand = () => {
   const [isTextToSpeechEnabled, setIsTextToSpeechEnabled] = useState(false);
@@ -25,11 +26,12 @@ const VoiceCommand = () => {
 
     console.log("I got called");
     const getAudioSrc = async () => {
-      const audioSrc = await processTextToSpeech(textToSpeech, activeVoice);
+      // const audioSrc = await processTextToSpeech(textToSpeech, activeVoice);
 
       // TODO: Eleven Labs Implementation :
-      // const audioSrc = await processTextToSpeech(textToSpeech);
-
+      // const audioSrc = await processTextToSpeech11Labs(textToSpeech);
+      const audioSrc = await genAudio(textToSpeech);
+      console.log(audioSrc);
       return audioSrc;
     };
 

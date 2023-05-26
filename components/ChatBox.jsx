@@ -8,6 +8,7 @@ import { messagesActions } from "../store/messages";
 import { processImage } from "../functions/processImage";
 import { processDescribeImage } from "../functions/processDescribeImage";
 import { processGoogleSearch } from "../functions/googleSearch";
+import { processTalkWithDocs } from "../functions/processTalkWithDocs";
 import {
   onSaveConversation,
   onUpdateConversation,
@@ -31,7 +32,8 @@ const ChatBox = () => {
   const conversation = useSelector((state) => state.messages);
   const [loading, setLoading] = useState(false);
 
-  const [isUserUploadedImage, setHasUserUploadedImage] = useState(false);
+  const [hasUserUploadedImage, setHasUserUploadedImage] = useState(false);
+  const [hasUserUploadedPDF, setHasUserUploadedPDF] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
 
   //Custom Hook
@@ -72,17 +74,24 @@ const ChatBox = () => {
   }, [newAISelected]);
 
   const handleSend = async (event) => {
+    let userMessage = promptInputRef.current.value;
+    //Check if user has uploaded an image
     let imageUrl;
-    if (isUserUploadedImage) {
+    if (hasUserUploadedImage) {
       imageUrl = await handleUpload(uploadedImage);
     }
 
+    //Check if user has uploaded a PDF
+    // if (hasUserUploadedPDF) {
+    //   userMessage = "User uploaded a PDF file";
+    // }
+
     // event.preventDefault();
     const newMessage = {
-      message: promptInputRef.current.value,
+      message: userMessage,
       direction: "outgoing",
       sender: "user",
-      isImage: isUserUploadedImage,
+      isImage: hasUserUploadedImage,
       image: imageUrl,
       alt: "",
     };
@@ -102,7 +111,9 @@ const ChatBox = () => {
 
     let chatGPTResponse;
 
-    if (isUserUploadedImage) {
+    if (activeAI.id === "r01") {
+      chatGPTResponse = await processTalkWithDocs(tempNewMessages);
+    } else if (hasUserUploadedImage) {
       chatGPTResponse = await processDescribeImage(newMessage.image);
     } else if (newMessage.message.includes("image")) {
       // Code for DALLE
@@ -159,7 +170,6 @@ const ChatBox = () => {
           messages: updatedMessages,
         });
       } else if (updatedMessages.length > 3) {
-        console.log("Im here");
         await onUpdateConversation({
           id: conversation.id.toString(),
           messages: updatedMessages,
@@ -201,6 +211,11 @@ const ChatBox = () => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [messages]);
 
+  useEffect(() => {
+    if (hasUserUploadedPDF) {
+    }
+  }, [hasUserUploadedPDF]);
+
   return (
     <section className="relative text-sm mx-0 px-0 w-full h-full">
       <div
@@ -233,6 +248,7 @@ const ChatBox = () => {
           onHandleSend={handleSend}
           onHandleKeyEnter={handleKeyEnter}
           setHasUserUploadedImage={setHasUserUploadedImage}
+          setHasUserUploadedPDF={setHasUserUploadedPDF}
           setUploadedImage={setUploadedImage}
           uploadedImage={uploadedImage}
         />
