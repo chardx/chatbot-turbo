@@ -34,6 +34,7 @@ export const genAudio = async ({
       );
       return undefined;
     }
+    console.log(response);
     const blob = await response.blob();
     return URL.createObjectURL(blob);
   } catch (error) {
