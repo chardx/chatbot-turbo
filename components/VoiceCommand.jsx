@@ -3,15 +3,17 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { textToSpeechActions } from "../store/textToSpeech";
 import { processTextToSpeech } from "../functions/processTextToSpeech";
-import { genAudio } from "../functions/elevenLabsTTS";
-import { getVoices } from "../functions/elevenLabsTTS";
-
+import { genAudio, getVoices } from "../functions/elevenLabsTTS";
+import { toggleAudio } from "../functions/PlayerActions";
+import stream from "../store/stream";
 const VoiceCommand = () => {
   const [isTextToSpeechEnabled, setIsTextToSpeechEnabled] = useState(false);
   const textToSpeech = useSelector((state) => state.textToSpeech.text);
   const audioUrl = useSelector((state) => state.textToSpeech.audioUrl);
+  const playerState = useSelector((state) => state.textToSpeech.playerState);
   const activeAI = useSelector((state) => state.ai.activeAI);
   const newAISelected = useSelector((state) => state.ai.newAISelected);
+  const streamResponse = useSelector((state) => state.stream.streamResponse);
 
   const dispatch = useDispatch();
   const audioRef = useRef();
@@ -51,8 +53,22 @@ const VoiceCommand = () => {
   }, [textToSpeech, isTextToSpeechEnabled]);
 
   useEffect(() => {
-    console.log("First Render");
-  }, []);
+    if (streamResponse.length !== 10) return;
+
+    const getAudioSrc = async () => {
+      let audioSrc = "";
+
+      audioSrc = await processTextToSpeech(streamResponse, activeVoice);
+
+      console.log(audioSrc);
+      return audioSrc;
+    };
+
+    const audioSrc = getAudioSrc();
+    audioSrc.then((src) => {
+      dispatch(textToSpeechActions.updateAudioUrl(src));
+    });
+  }, [streamResponse]);
 
   useEffect(() => {
     if (audioUrl) {
@@ -73,8 +89,12 @@ const VoiceCommand = () => {
 
   const handleEnableTTS = () => {
     setIsTextToSpeechEnabled((prevState) => !prevState);
-    console.log(isTextToSpeechEnabled);
   };
+
+  // useEffect(() => {
+  //   toggleAudio(playerState);
+
+  // }, [playerState]);
 
   return (
     <div className="text-white w-12 ml-2">

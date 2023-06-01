@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     text: '',
     audioUrl: '',
+    playerState: 'idle',   // idle, playing, paused
 }
 
 

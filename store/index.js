@@ -5,6 +5,7 @@ import aiReducer from './ai';
 import textToSpeechReducer from './textToSpeech';
 import messagesReducer from './messages'
 import streamReducer from './stream'
+import audioStreamReducer from './audioStream'
 
 // Create store using the configureStore() function
 const store = configureStore({
@@ -12,7 +13,8 @@ const store = configureStore({
         messages: messagesReducer,
         ai: aiReducer,
         textToSpeech: textToSpeechReducer,
-        stream: streamReducer
+        stream: streamReducer,
+        audiostream: audioStreamReducer,
     }
 
 })

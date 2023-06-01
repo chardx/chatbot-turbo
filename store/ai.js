@@ -177,7 +177,7 @@ const activeAI = "r0";
 
 const setActiveAI = (id) => {
     const activeAIRole = DUMMY_ROLES.find(ai => ai.id === id);
-    const initialMessage = `Hi I am ${activeAIRole.AIName}.${activeAIRole.description}`
+    const initialMessage = `Hi I am ${activeAIRole.AIName}. ${activeAIRole.description}`
     return { ...activeAIRole, initialMessage }
 
 }

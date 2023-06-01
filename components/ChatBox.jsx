@@ -17,9 +17,12 @@ import { v4 as uuidv4 } from "uuid";
 import { processStableDiffusion } from "../functions/processStableDiffusion";
 import { generateChatTitle } from "../functions/generateChatTitle";
 import { textToSpeechActions } from "../store/textToSpeech";
+import { initPlayback } from "../functions/PlayerActions";
+import { audioStreamActions } from "../store/audioStream";
 
 //Custom Hook
 import { useChatGPT } from "../hooks/useChatGPT";
+import stream from "../store/stream";
 
 const ChatBox = () => {
   //Selectors
@@ -40,6 +43,11 @@ const ChatBox = () => {
   const [response, startChatStream] = useChatGPT();
 
   const streamStatus = useSelector((state) => state.stream.status);
+  const streamResponse = useSelector((state) => state.stream.streamResponse);
+
+  //Audio Stream
+  const audioStream = useSelector((state) => state.audiostream);
+
   //Refs
   const promptInputRef = useRef();
   const chatRef = useRef(null);
@@ -56,8 +64,7 @@ const ChatBox = () => {
     // Keep only the first message with the updated message value
     // setNewMessages([updatedMessage]);
     tempNewMessages = [updatedMessage];
-    console.log("ako");
-    console.log(tempNewMessages);
+
     dispatch(
       messagesActions.startNewConversation({
         title: `Conversation with ${activeAI.AIName}`,
@@ -132,6 +139,15 @@ const ChatBox = () => {
       ];
       dispatch(messagesActions.updateMessage(dummyUpdatedMessages));
 
+      //Get updated value of streamResponse and pass to initPlayback
+      //PENDING
+      // initPlayback(
+      //   streamStatus,
+      //   audioStream,
+      //   audioStreamActions,
+      //   dispatch,
+      //   updateStreamResponse
+      // );
       chatGPTResponse = await startChatStream(tempNewMessages, activeAI);
     }
 
@@ -200,11 +216,20 @@ const ChatBox = () => {
     }
   };
 
+  //PENDING
+  // const updateStreamResponse = () => {
+  //   console.log("Stream Response Updated");
+  //   console.log(streamResponse);
+  //   return streamResponse;
+  // };
+
   //Update Messages when stream is getting updates
   //not best solution - will find alternative way
   useEffect(() => {
     if (streamStatus === "idle") return;
     dispatch(messagesActions.updateMessageStream(response));
+    //PENDING
+    // updateStreamResponse();
   }, [response]);
 
   useEffect(() => {
