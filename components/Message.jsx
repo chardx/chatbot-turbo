@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 // import CodeBlock from "./CodeBlock/CodeBlock";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { MemoizedReactMarkdown } from "./Markdown/MemoizedReactMarkdown";
 
@@ -12,26 +12,34 @@ import remarkImages from "remark-images";
 
 const Message = ({ messageContent, activeProfilePic }) => {
   const dispatch = useDispatch();
-
+  const userPhotoUrl = useSelector((state) => state.auth.userPhotoUrl);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   if (!messageContent) {
     return null;
   }
 
   const aiLayout = "bg-[#40414f] px-5 py-5";
-  const userLayout = "bg-[#343541] px-5 py-5 text-right";
+  const userLayout = "bg-[#343541] px-5 py-5";
 
   let isGPT = messageContent.sender === "ChatGPT";
   const layout = isGPT ? aiLayout : userLayout;
 
   return (
     <div className={`${layout} flex flex-row justify-items-center`}>
-      <div>
-        {isGPT ? (
+      <div className="ml-5 pr-4">
+        {isGPT && (
           <img
             src={`..${activeProfilePic}`}
             className="w-20 h-20 rounded-full mr-2"
           />
-        ) : (
+        )}
+        {!isGPT && isLoggedIn && (
+          <img
+            src={`${userPhotoUrl}`}
+            className="w-20 h-20 rounded-full mr-2"
+          />
+        )}
+        {!isGPT && !isLoggedIn && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -48,7 +56,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
           </svg>
         )}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center px-3">
         {isGPT ? (
           <MemoizedReactMarkdown
             className="prose dark:prose-invert w-full"

@@ -1,31 +1,92 @@
-import ChatBox from "../components/ChatBox";
-import AI_List from "../components/SideBarRow/AI_List";
-import ChatHistory from "../components/SideBarRow/ChatHistory";
-import Header from "../components/Header";
-import SignInBar from "../components/Login/SignInBar";
-import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
-import "../styles/globals.css";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/auth";
+
+import HomePage from "../pages/Home";
+import RootLayout from "../pages/Root";
+import LoginPage from "../pages/Login";
+import ErrorPage from "../pages/Error";
+
+//React Router DOM
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/auth/login/success`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Data");
+
+          console.log(data.user._json);
+          const userDisplayName = data.user._json.name;
+          const userPhotoUrl = data.user._json.picture;
+          setUser(data.user._json);
+          //Update value of Login to True
+          dispatch(
+            authActions.updateLoginStatus({
+              loginStatus: true,
+              userDisplayName,
+              userPhotoUrl,
+            })
+          );
+        } else {
+          dispatch(
+            authActions.updateLoginStatus({
+              loginStatus: false,
+              userDisplayName: "",
+              userPhotoUrl: "",
+            })
+          );
+          throw new Error("Authentication has failed!");
+        }
+      } catch (err) {
+        dispatch(
+          authActions.updateLoginStatus({
+            loginStatus: false,
+            userDisplayName: "",
+            userPhotoUrl: "",
+          })
+        );
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        { path: "/", index: true, element: <HomePage /> },
+
+        { path: "/login", element: <LoginPage /> },
+        { path: "/store", element: <p>Store</p> },
+      ],
+    },
+  ]);
+
   return (
-    <main className="flex h-screen w-screen flex-col text-white">
-      <div className="flex h-full w-full pt-[48px] sm:pt-0">
-        <aside className="z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full sm:hidden md:block">
-          <ChatHistory />
-          <SignInBar />
-        </aside>
-        <div className="w-screen md:w-9/12 2xl:w-8/12 h-full bg-gray-200">
-          <Header />
-
-          <ErrorBoundary fallback={<p>Something went wrong</p>}>
-            <ChatBox />
-          </ErrorBoundary>
-        </div>
-        <aside className="bg-zinc-900 w-full h-full sm:hidden 2xl:w-2/12 2xl:block">
-          <AI_List />
-        </aside>
-      </div>
-
+    <>
+      <RouterProvider router={router} />
       <script
         async
         src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"
@@ -34,7 +95,7 @@ function App() {
         async
         src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"
       ></script>
-    </main>
+    </>
   );
 }
 

@@ -27,6 +27,19 @@
     background-position: 0% 50%;
   }
 }
+.fading-hr {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
 
 pre:has(div.codeblock) {
   padding: 0;
