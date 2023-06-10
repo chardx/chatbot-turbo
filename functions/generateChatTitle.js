@@ -1,7 +1,7 @@
 export const generateChatTitle = async (messages) => {
-    
+
     try {
-        const response = await fetch('http://localhost:3000/api/generateTitle', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/generateTitle`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

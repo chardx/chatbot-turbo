@@ -1,7 +1,7 @@
 export const processUploadFile = async (formData) => {
 
     try {
-        const response = await fetch('http://localhost:3000/api/fileUploader', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/fileUploader`, {
             method: 'POST',
             body: formData,
 

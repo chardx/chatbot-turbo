@@ -1,6 +1,6 @@
 export const processStableDiffusion = async (prompt) => {
     try {
-        const response = await fetch('http://localhost:3000/api/stableDummy', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/stableDummy`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

@@ -3,7 +3,7 @@ export const onSaveConversation = async (data) => {
     try {
 
 
-        const response = await fetch('http://localhost:3000/api/firebase/add/', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/firebase/add/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -27,7 +27,7 @@ export const getConversationHistory = async (userID) => {
     const userIdParams = userID ? `?userID=${userID}` : '';
     try {
 
-        const response = await fetch(`http://localhost:3000/api/firebase${userIdParams}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/firebase${userIdParams}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -44,7 +44,7 @@ export const onUpdateConversation = async (data) => {
     //Get the last two messages (user last message and chatbot last message)
     const filteredMessages = data.messages.slice(-2);
     try {
-        const response = await fetch(`http://localhost:3000/api/firebase/update/${id}/`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/firebase/update/${id}/`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"

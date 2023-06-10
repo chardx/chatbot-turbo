@@ -66,15 +66,16 @@ const ChatList = ({ chat }) => {
         <div className="flex-1 w-full text-white">
           <p className="pt-1 text-xs">{chat.title}</p>
         </div>
-
-        <div className="right-1 z-10 flex text-gray-300">
-          <SidebarActionButton>
-            <IconPencil size={18} />
-          </SidebarActionButton>
-          <SidebarActionButton>
-            <IconTrash size={18} />
-          </SidebarActionButton>
-        </div>
+        {isActiveChat && (
+          <div className="right-1 z-10 flex text-gray-300">
+            <SidebarActionButton>
+              <IconPencil size={18} />
+            </SidebarActionButton>
+            <SidebarActionButton>
+              <IconTrash size={18} />
+            </SidebarActionButton>
+          </div>
+        )}
       </li>
     </div>
   );

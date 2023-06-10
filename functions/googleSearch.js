@@ -1,6 +1,6 @@
 export const processGoogleSearch = async (prompt) => {
     try {
-        const response = await fetch('http://localhost:3000/api/google', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/google`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

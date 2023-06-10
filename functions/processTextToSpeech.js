@@ -1,7 +1,7 @@
 export const processTextToSpeech = async (message, activeVoice) => {
 
     try {
-        const response = await fetch('http://localhost:3000/api/awspolly', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/awspolly`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
