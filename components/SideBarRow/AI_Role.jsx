@@ -2,6 +2,7 @@ import React from "react";
 import { aiActions } from "../../store/ai";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { chatHistoryActions } from "../../store/chatHistory";
 
 const AI_Roles = ({ AIName, id, description, content, picture }) => {
   const dispatch = useDispatch();
@@ -12,6 +13,9 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
 
   const handleUpdateActiveAI = (id) => {
     dispatch(aiActions.updateNewSelectedAI(id));
+
+    //Set active ChatID to null
+    dispatch(chatHistoryActions.setActiveChatID(null));
   };
   return (
     <li>

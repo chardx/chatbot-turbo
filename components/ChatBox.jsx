@@ -194,13 +194,18 @@ const ChatBox = () => {
         await onSaveConversation(newConversation);
         //Update Chat History Redux
         dispatch(chatHistoryActions.addNewConversation(newConversation));
+
+        //Set active ChatID
+        dispatch(
+          chatHistoryActions.setActiveChatID(conversation.id.toString())
+        );
       } else if (updatedMessages.length > 3) {
         //Handles Patch which only updates 2 new conversation
         await onUpdateConversation({
           id: conversation.id.toString(),
           messages: updatedMessages,
         });
-        //SORT Chat history by dateLastUpdated
+        //Add new message and SORT Chat history by dateLastUpdated
         dispatch(
           chatHistoryActions.sortChatHistory({
             id: conversation.id.toString(),

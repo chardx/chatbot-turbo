@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //Initial state
 const initialState = {
+    activeChatID: '',
     history: [{
         dateCreated: '',
         dateLastUpdated: '',
@@ -31,11 +32,15 @@ const chatHistoryslice = createSlice({
             state.history.unshift(action.payload)
         },
         sortChatHistory(state, action) {
+
             const filteredMessages = action.payload.messages.slice(-2);
             state.history.find(history => history.id === action.payload.id).messages.push(...filteredMessages)
             //Sort the history by dateLastUpdated
             state.history.find(history => history.id === action.payload.id).dateLastUpdated = new Date().toLocaleString();
             state.history.sort((a, b) => new Date(b.dateLastUpdated) - new Date(a.dateLastUpdated))
+        },
+        setActiveChatID(state, action) {
+            state.activeChatID = action.payload
         }
     }
 });

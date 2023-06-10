@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messagesActions } from "../../store/messages";
 import { aiActions } from "../../store/ai";
+import { chatHistoryActions } from "../../store/chatHistory";
 import {
   IconCheck,
   IconMessage,
@@ -15,7 +16,17 @@ const ChatList = ({ chat }) => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const dispatch = useDispatch();
   const selectedAIRole = listOfAI.find((ai) => ai.id === chat.selectedAI);
+  const activeUserID = useSelector((state) => state.auth.userInfo.userID);
+  const activeChatID = useSelector((state) => state.chatHistory.activeChatID);
   if (!selectedAIRole) return;
+
+  //Check if the current component is Active Chat
+  const isActiveChat = activeChatID === chat.id;
+  console.log(activeChatID);
+  console.log(chat.id);
+  console.log("isActiveChat");
+  console.log(isActiveChat);
+
   const loadConversation = () => {
     dispatch(
       messagesActions.startNewConversation({
@@ -24,18 +35,29 @@ const ChatList = ({ chat }) => {
         dateCreated: chat.dateCreated,
         dateLastUpdated: chat.dateLastUpdated,
         selectedAI: chat.selectedAI,
-        userID: "chad",
+        userID: activeUserID,
         messages: chat.messages,
       })
     );
+
+    //Set active ChatID
+    dispatch(chatHistoryActions.setActiveChatID(chat.id));
 
     //Update Active AI
     dispatch(aiActions.loadSaveConversation(chat.selectedAI));
   };
   return (
-    <div onClick={loadConversation} className="bg-zinc-900 w-full h-auto py-3 ">
-      <li className="py-4 px-6 flex hover:bg-gray-800 cursor-pointer">
-        <div className="w-8 h-8 bg-gray-700 rounded-full mr-4">
+    <div
+      onClick={loadConversation}
+      className={`w-full h-auto py-3 
+      ${isActiveChat ? "bg-gray-800" : "bg-zinc-900"} 
+      `}
+    >
+      <li
+        className={`py-4 px-6 flex hover:bg-gray-800 cursor-pointer
+      `}
+      >
+        <div className="w-8 h-8 rounded-full mr-4">
           <img
             src={`../..${selectedAIRole.picture}`}
             alt={selectedAIRole.AIName}
