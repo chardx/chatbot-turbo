@@ -33,24 +33,31 @@ function App() {
           const data = await response.json();
           console.log("Data");
 
-          console.log(data.user._json);
-          const userDisplayName = data.user._json.name;
-          const userPhotoUrl = data.user._json.picture;
-          setUser(data.user._json);
+          console.log(data.user);
+          const userID = data.user.userID;
+          const userDisplayName = data.user.user;
+          const userPhotoUrl = data.user.picture;
+          setUser(data.user);
           //Update value of Login to True
           dispatch(
             authActions.updateLoginStatus({
               loginStatus: true,
-              userDisplayName,
-              userPhotoUrl,
+              userInfo: {
+                userID,
+                displayName: userDisplayName,
+                photoUrl: userPhotoUrl,
+              },
             })
           );
         } else {
           dispatch(
             authActions.updateLoginStatus({
               loginStatus: false,
-              userDisplayName: "",
-              userPhotoUrl: "",
+              userInfo: {
+                userID: "",
+                displayName: "",
+                photoUrl: "",
+              },
             })
           );
           throw new Error("Authentication has failed!");
@@ -59,8 +66,11 @@ function App() {
         dispatch(
           authActions.updateLoginStatus({
             loginStatus: false,
-            userDisplayName: "",
-            userPhotoUrl: "",
+            userInfo: {
+              userID: "",
+              displayName: "",
+              photoUrl: "",
+            },
           })
         );
         console.log(err);

@@ -19,6 +19,7 @@ import { generateChatTitle } from "../functions/generateChatTitle";
 import { textToSpeechActions } from "../store/textToSpeech";
 import { initPlayback } from "../functions/PlayerActions";
 import { audioStreamActions } from "../store/audioStream";
+import { chatHistoryActions } from "../store/chatHistory";
 
 //Custom Hook
 import { useChatGPT } from "../hooks/useChatGPT";
@@ -48,6 +49,10 @@ const ChatBox = () => {
   //Audio Stream
   const audioStream = useSelector((state) => state.audiostream);
 
+  // User Auth
+  const userID = useSelector((state) => state.auth.userInfo.userID);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   //Refs
   const promptInputRef = useRef();
   const chatRef = useRef(null);
@@ -64,14 +69,14 @@ const ChatBox = () => {
     // Keep only the first message with the updated message value
     // setNewMessages([updatedMessage]);
     tempNewMessages = [updatedMessage];
-
     dispatch(
       messagesActions.startNewConversation({
         title: `Conversation with ${activeAI.AIName}`,
         id: uuidv4(),
         dateCreated: new Date().toLocaleString(),
+        dateLastUpdated: new Date().toLocaleString(),
         selectedAI: activeAI.id,
-        userID: "chad",
+        userID: userID,
         messages: tempNewMessages,
       })
     );
@@ -177,19 +182,31 @@ const ChatBox = () => {
 
     if (import.meta.env.VITE_FIREBASE !== "disabled") {
       if (updatedMessages.length <= 3) {
-        await onSaveConversation({
+        const newConversation = {
           title: await generateTitle(),
           id: conversation.id.toString(),
           dateCreated: conversation.dateCreated,
+          dateLastUpdated: conversation.dateLastUpdated,
           selectedAI: activeAI.id,
-          userID: conversation.userID,
+          userID,
           messages: updatedMessages,
-        });
+        };
+        await onSaveConversation(newConversation);
+        //Update Chat History Redux
+        dispatch(chatHistoryActions.addNewConversation(newConversation));
       } else if (updatedMessages.length > 3) {
+        //Handles Patch which only updates 2 new conversation
         await onUpdateConversation({
           id: conversation.id.toString(),
           messages: updatedMessages,
         });
+        //SORT Chat history by dateLastUpdated
+        dispatch(
+          chatHistoryActions.sortChatHistory({
+            id: conversation.id.toString(),
+            messages: updatedMessages,
+          })
+        );
       }
     }
   };

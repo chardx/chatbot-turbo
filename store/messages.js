@@ -6,6 +6,7 @@ const initialMessagesState = {
     id: '',
     title: '',
     dateCreated: '',
+    dateLastUpdated: '',
     selectedAI: '',
     userID: '',
     messages: [{
@@ -24,6 +25,7 @@ const messagesSlice = createSlice({
             state.title = action.payload.title
             state.id = action.payload.id
             state.dateCreated = action.payload.dateCreated
+            state.dateLastUpdated = action.payload.dateLastUpdated
             state.selectedAI = action.payload.selectedAI
             state.userID = action.payload.userID
             state.messages = [...action.payload.messages]

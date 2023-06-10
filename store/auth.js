@@ -3,8 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 //Initial state
 const initialState = {
     isLoggedIn: false,
-    userDisplayName: '',
-    userPhotoUrl: '',
+    userInfo: {
+        userID: '',
+        displayName: '',
+        photoUrl: ''
+
+    },
 
 }
 
@@ -16,8 +20,8 @@ const authSlice = createSlice({
     reducers: {
         updateLoginStatus(state, action) {
             state.isLoggedIn = action.payload.loginStatus
-            state.userDisplayName = action.payload.userDisplayName
-            state.userPhotoUrl = action.payload.userPhotoUrl
+            state.userInfo = action.payload.userInfo
+
         },
     }
 });

@@ -21,10 +21,13 @@ export const onSaveConversation = async (data) => {
 
 }
 
-export const getConversationHistory = async () => {
+export const getConversationHistory = async (userID) => {
+    console.log("getConversationHistory")
+    console.log(userID)
+    const userIdParams = userID ? `?userID=${userID}` : '';
     try {
 
-        const response = await fetch('http://localhost:3000/api/firebase/', {
+        const response = await fetch(`http://localhost:3000/api/firebase${userIdParams}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -50,9 +53,9 @@ export const onUpdateConversation = async (data) => {
 
         });
 
-        const result = await response.json();
 
-        return result;
+
+        return response;
     } catch (error) {
         console.log(error)
     }

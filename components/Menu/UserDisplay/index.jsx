@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 const UserDisplay = () => {
-  const userDisplayName = useSelector((state) => state.auth.userDisplayName);
-  const userPhotoUrl = useSelector((state) => state.auth.userPhotoUrl);
+  const userDisplayName = useSelector(
+    (state) => state.auth.userInfo.displayName
+  );
+  const userPhotoUrl = useSelector((state) => state.auth.userInfo.photoUrl);
   return (
     <>
       <div className="fading-hr m-2"></div>

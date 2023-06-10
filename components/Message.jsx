@@ -12,7 +12,7 @@ import remarkImages from "remark-images";
 
 const Message = ({ messageContent, activeProfilePic }) => {
   const dispatch = useDispatch();
-  const userPhotoUrl = useSelector((state) => state.auth.userPhotoUrl);
+  const userPhotoUrl = useSelector((state) => state.auth.userInfo.photoUrl);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   if (!messageContent) {
     return null;

@@ -15,12 +15,14 @@ const ChatList = ({ chat }) => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const dispatch = useDispatch();
   const selectedAIRole = listOfAI.find((ai) => ai.id === chat.selectedAI);
+  if (!selectedAIRole) return;
   const loadConversation = () => {
     dispatch(
       messagesActions.startNewConversation({
         title: chat.title,
         id: chat.id,
         dateCreated: chat.dateCreated,
+        dateLastUpdated: chat.dateLastUpdated,
         selectedAI: chat.selectedAI,
         userID: "chad",
         messages: chat.messages,
