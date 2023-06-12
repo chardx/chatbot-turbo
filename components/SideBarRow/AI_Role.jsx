@@ -28,7 +28,7 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
         <div className="flex items-center space-x-4">
           <img
             className="w-16 h-16 object-cover rounded-full"
-            src={`../..${picture}`}
+            src={picture}
             alt={AIName}
           />
           <div>

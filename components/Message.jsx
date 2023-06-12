@@ -29,7 +29,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
       <div className="ml-5 pr-4">
         {isGPT && (
           <img
-            src={`..${activeProfilePic}`}
+            src={`${activeProfilePic}`}
             className="w-20 h-20 rounded-full mr-2"
           />
         )}

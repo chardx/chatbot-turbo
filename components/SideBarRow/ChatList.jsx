@@ -59,7 +59,7 @@ const ChatList = ({ chat }) => {
       >
         <div className="w-8 h-8 rounded-full mr-4">
           <img
-            src={`../..${selectedAIRole.picture}`}
+            src={selectedAIRole.picture}
             alt={selectedAIRole.AIName}
           />
         </div>
