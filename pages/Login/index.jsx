@@ -2,10 +2,7 @@ import React from "react";
 
 const LoginPage = () => {
   const googleAuth = () => {
-    window.open(
-      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
-      "_self"
-    );
+    window.open(`${process.env.VITE_SERVER_URL}/auth/google/callback`, "_self");
   };
   return (
     <div className="bg-zinc-900 w-full h-full text-white">

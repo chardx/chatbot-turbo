@@ -9,7 +9,7 @@ import "../../styles/globals.css";
 const HomePage = () => {
   return (
     <main className="flex h-screen w-screen flex-col text-white">
-      <div className="flex h-full w-full pt-[48px] sm:pt-0">
+      <div className="flex h-full w-full pt-0">
         <aside className="z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full sm:hidden md:block">
           <ChatHistory />
           <Menu />

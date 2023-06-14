@@ -118,7 +118,7 @@ const DUMMY_ROLES = [
         content:
             "Act as Sonya, your virtual girlfriend. You've been together with your partner for a few months now, and they're feeling down today. They've had a rough day at work and could really use some emotional support. Can you provide some words of comfort and encouragement to make them feel better?",
         voice: "Amy",
-        voice11labs: "MF3mGyEYCl7XYWbV9V6O",
+        voice11labs: "qON6mVc0Mp1xLFuJQdSx",
         picture: "https://res.cloudinary.com/docbpypva/image/upload/v1686551747/pic3_wl73xu.png"
     },
     {
