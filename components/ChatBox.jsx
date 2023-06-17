@@ -57,6 +57,8 @@ const ChatBox = () => {
   const promptInputRef = useRef();
   const chatRef = useRef(null);
 
+  const [userInput, setUserInput] = useState("");
+
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
     // setNewMessages([...messages]);
@@ -117,9 +119,6 @@ const ChatBox = () => {
     dispatch(messagesActions.updateMessage(tempNewMessages));
 
     setLoading(true);
-    promptInputRef.current.value = "";
-
-    promptInputRef.current.focus();
 
     let chatGPTResponse;
 
@@ -233,8 +232,18 @@ const ChatBox = () => {
   };
 
   const handleKeyEnter = (event) => {
+    if (event.key === "Enter" && promptInputRef.current.value.trim() === "")
+      return;
     if (event.key === "Enter" && promptInputRef.current.value) {
+      console.log("Enter key pressed");
+
+      event.preventDefault();
+      promptInputRef.current.focus();
+      setUserInput("");
       handleSend();
+
+      // Clear Values
+      // promptInputRef.current.value = "";
     }
   };
 
@@ -292,6 +301,8 @@ const ChatBox = () => {
       <div className="absolute bottom-20 border-transparent bg-[#343541] w-full h-auto p-4">
         <SubmitForm
           inputRef={promptInputRef}
+          userInput={userInput}
+          setUserInput={setUserInput}
           onHandleSend={handleSend}
           onHandleKeyEnter={handleKeyEnter}
           setHasUserUploadedImage={setHasUserUploadedImage}

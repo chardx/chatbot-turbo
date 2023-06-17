@@ -4,6 +4,8 @@ import SpeakCommand from "./SpeakCommand";
 import FileUploader from "./FileUploader";
 const SubmitForm = ({
   inputRef,
+  userInput,
+  setUserInput,
   onHandleSend,
   onHandleKeyEnter,
   setHasUserUploadedImage,
@@ -11,6 +13,10 @@ const SubmitForm = ({
   setUploadedImage,
   uploadedImage,
 }) => {
+  const handleChange = (e) => {
+    const value = e.target.vaue;
+    setUserInput(value);
+  };
   return (
     <div className="flex flex-row  justify-center mx-2 mt-4">
       <FileUploader
@@ -23,8 +29,12 @@ const SubmitForm = ({
         className="flex-1 w-auto border text-black ml-2 p-2 rounded-lg"
         placeholder="Enter Text here..."
         ref={inputRef}
+        value={userInput}
+        rows={2}
         onKeyDown={onHandleKeyEnter}
+        onChange={handleChange}
       ></textarea>
+
       <VoiceCommand className="w-2" />
       <SpeakCommand
         className="w-2"
@@ -35,7 +45,7 @@ const SubmitForm = ({
       <button
         onClick={onHandleSend}
         id="btnSubmit"
-        className="p-1 rounded-md md:bottom-3 md:p-2 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors disabled:opacity-40"
+        className="p-1 rounded-md md:bottom-3 md:p-2 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors disabled:opacity-40 bg-[#4ADE80]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
