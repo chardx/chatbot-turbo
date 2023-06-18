@@ -274,7 +274,7 @@ const ChatBox = () => {
 
   return (
     <section
-      className="h-[calc(100vh-20vh)] sm:h-[90%]
+      className="h-[calc(100vh-10vh)] sm:h-[90%]
     bg-[#343541] text-sm mx-0 px-0 w-full"
     >
       <div
@@ -301,7 +301,7 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <div className="bottom-20 border-transparent bg-[#343541] w-full h-auto p-4">
+      <div className="w-full h-auto bottom-20 border-transparent bg-[#343541] ">
         <SubmitForm
           inputRef={promptInputRef}
           userInput={userInput}

@@ -18,7 +18,7 @@ const SubmitForm = ({
     setUserInput(value);
   };
   return (
-    <div className="flex flex-row h-30  justify-center mx-2 mt-4">
+    <div className="flex h-30 justify-center mx-2 mt-4">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}
@@ -33,15 +33,15 @@ const SubmitForm = ({
         rows={2}
         onKeyDown={onHandleKeyEnter}
         onChange={handleChange}
-      ></textarea>
-      <div className="flex flex-col sm:flex-row">
+      />
+      <div className="flex flex-col justify-center gap-2 sm:flex-row">
         <VoiceCommand />
         <SpeakCommand promptInputRef={inputRef} handleSend={onHandleSend} />
       </div>
       <button
         onClick={onHandleSend}
         id="btnSubmit"
-        className="px-1 rounded-md md:bottom-3 md:p-2 
+        className="rounded-md md:bottom-3 md:p-2 
         md:right-3 dark:hover:bg-gray-900 
         dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors 
         disabled:opacity-40 bg-[#4ADE80]"

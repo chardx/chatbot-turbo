@@ -113,7 +113,7 @@ const VoiceCommand = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 sm:w-12 sm:h-12"
+            className="w-6 h-6 sm:w-12 sm:h-12"
           >
             <path
               strokeLinecap="round"
@@ -128,7 +128,7 @@ const VoiceCommand = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-8 h-8 sm:w-12 sm:h-12"
+            className="w-6 h-6 sm:w-12 sm:h-12"
           >
             <path
               strokeLinecap="round"
