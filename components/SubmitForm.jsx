@@ -26,7 +26,7 @@ const SubmitForm = ({
         uploadedImage={uploadedImage}
       />
       <textarea
-        className="flex-1 w-full border text-black ml-2 p-2 rounded-lg"
+        className="w-[80%] border text-black ml-2 p-2 rounded-lg"
         placeholder="Enter Text here..."
         ref={inputRef}
         value={userInput}
@@ -34,7 +34,7 @@ const SubmitForm = ({
         onKeyDown={onHandleKeyEnter}
         onChange={handleChange}
       />
-      <div className="flex flex-col justify-center gap-2 sm:flex-row">
+      <div className="flex flex-col justify-center gap-2 px-2 sm:flex-row sm:gap-0">
         <VoiceCommand />
         <SpeakCommand promptInputRef={inputRef} handleSend={onHandleSend} />
       </div>

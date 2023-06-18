@@ -56,7 +56,10 @@ const FileUploader = ({
         {({ getRootProps, getInputProps, open }) => (
           <div {...getRootProps()}>
             <input {...getInputProps({ accept: ".jpg,.jpeg,.png,.pdf" })} />
-            <PaperClipIcon className="h-12 w-12 text-blue-500" onClick={open} />
+            <PaperClipIcon
+              className="h-8 w-8 sm:h-12 sm:w-12 text-blue-500"
+              onClick={open}
+            />
           </div>
         )}
       </Dropzone>
