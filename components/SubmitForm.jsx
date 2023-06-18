@@ -39,7 +39,10 @@ const SubmitForm = ({
         <SpeakCommand promptInputRef={inputRef} handleSend={onHandleSend} />
       </div>
       <button
-        onClick={onHandleSend}
+        onClick={() => {
+          const enterKeyEvent = new KeyboardEvent("keydown", { key: "Enter" });
+          onHandleKeyEnter(enterKeyEvent);
+        }}
         id="btnSubmit"
         className="rounded-md md:bottom-3 md:p-2 
         md:right-3 dark:hover:bg-gray-900 

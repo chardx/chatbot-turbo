@@ -232,6 +232,7 @@ const ChatBox = () => {
   };
 
   const handleKeyEnter = (event) => {
+    console.log(event.key);
     if (event.key === "Enter" && promptInputRef.current.value.trim() === "")
       return;
     if (event.key === "Enter" && promptInputRef.current.value) {
