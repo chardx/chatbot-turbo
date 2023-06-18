@@ -35,9 +35,9 @@ const SubmitForm = ({
         onChange={handleChange}
       ></textarea>
 
-      <VoiceCommand className="w-2" />
+      <VoiceCommand className="w-2 h-2" />
       <SpeakCommand
-        className="w-2"
+        className="w-2 h-2"
         promptInputRef={inputRef}
         handleSend={onHandleSend}
       />
@@ -45,13 +45,16 @@ const SubmitForm = ({
       <button
         onClick={onHandleSend}
         id="btnSubmit"
-        className="p-1 rounded-md md:bottom-3 md:p-2 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors disabled:opacity-40 bg-[#4ADE80]"
+        className="px-1 rounded-md md:bottom-3 md:p-2 
+        md:right-3 dark:hover:bg-gray-900 
+        dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors 
+        disabled:opacity-40 bg-[#4ADE80]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
           fill="none"
-          className="h-10 w-10 m-1 md:m-0"
+          className="h-4 w-4 m-1 md:m-0 sm:h-10 sm:w-10"
           strokeWidth="2"
         >
           <path

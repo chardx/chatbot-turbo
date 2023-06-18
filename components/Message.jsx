@@ -26,18 +26,12 @@ const Message = ({ messageContent, activeProfilePic }) => {
 
   return (
     <div className={`${layout} flex flex-row justify-items-center`}>
-      <div className="ml-5 pr-4">
+      <div className="w-14 h-14 ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
-          <img
-            src={`${activeProfilePic}`}
-            className="w-20 h-20 rounded-full mr-2"
-          />
+          <img src={`${activeProfilePic}`} className="rounded-full mr-2" />
         )}
         {!isGPT && isLoggedIn && (
-          <img
-            src={`${userPhotoUrl}`}
-            className="w-20 h-20 rounded-full mr-2"
-          />
+          <img src={`${userPhotoUrl}`} className="rounded-full mr-2" />
         )}
         {!isGPT && !isLoggedIn && (
           <svg
@@ -46,7 +40,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-20 h-20 rounded-full mr-2"
+            className="rounded-full mr-2"
           >
             <path
               strokeLinecap="round"
@@ -56,10 +50,10 @@ const Message = ({ messageContent, activeProfilePic }) => {
           </svg>
         )}
       </div>
-      <div className="flex justify-center px-3">
+      <div className="flex justify-center px-1  text-lg">
         {isGPT ? (
           <MemoizedReactMarkdown
-            className="text-white prose dark:prose-invert w-full"
+            className="prose-invert w-full"
             remarkPlugins={[remarkGfm, remarkMath, remarkImages]}
             rehypePlugins={[rehypeMathjax]}
             components={{
