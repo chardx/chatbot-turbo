@@ -18,7 +18,7 @@ const SubmitForm = ({
     setUserInput(value);
   };
   return (
-    <div className="flex flex-row  justify-center mx-2 mt-4">
+    <div className="flex flex-row h-30  justify-center mx-2 mt-4">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}
@@ -26,7 +26,7 @@ const SubmitForm = ({
         uploadedImage={uploadedImage}
       />
       <textarea
-        className="flex-1 w-auto border text-black ml-2 p-2 rounded-lg"
+        className="flex-1 w-full border text-black ml-2 p-2 rounded-lg"
         placeholder="Enter Text here..."
         ref={inputRef}
         value={userInput}
@@ -34,14 +34,10 @@ const SubmitForm = ({
         onKeyDown={onHandleKeyEnter}
         onChange={handleChange}
       ></textarea>
-
-      <VoiceCommand className="w-2 h-2" />
-      <SpeakCommand
-        className="w-2 h-2"
-        promptInputRef={inputRef}
-        handleSend={onHandleSend}
-      />
-
+      <div className="flex flex-col sm:flex-row">
+        <VoiceCommand />
+        <SpeakCommand promptInputRef={inputRef} handleSend={onHandleSend} />
+      </div>
       <button
         onClick={onHandleSend}
         id="btnSubmit"

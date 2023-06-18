@@ -273,10 +273,10 @@ const ChatBox = () => {
   }, [hasUserUploadedPDF]);
 
   return (
-    <section className="relative text-sm mx-0 px-0 w-full h-full">
+    <section className="bg-[#343541] text-sm mx-0 px-0 w-full h-[90%]">
       <div
-        className="flex flex-col w-full h-[80%] overflow-y-auto
-     scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 bg-[#343541]"
+        className="flex flex-col w-full h-[83%] overflow-y-auto
+     scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
         ref={chatRef}
       >
         {messages &&
@@ -298,7 +298,7 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <div className="absolute bottom-20 border-transparent bg-[#343541] w-full h-auto p-4">
+      <div className="bottom-20 border-transparent bg-[#343541] w-full h-auto p-4">
         <SubmitForm
           inputRef={promptInputRef}
           userInput={userInput}

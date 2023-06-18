@@ -14,7 +14,7 @@ const HomePage = () => {
           <ChatHistory />
           <Menu />
         </aside>
-        <div className="w-screen md:w-9/12 2xl:w-8/12 h-full bg-gray-200">
+        <div className="w-full h-full md:w-9/12 2xl:w-8/12  bg-gray-200">
           <Header />
 
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
