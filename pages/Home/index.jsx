@@ -47,7 +47,7 @@ const HomePage = () => {
         <aside
           className={`${
             rightDrawerOpen ? "block" : "hidden"
-          } absolute  bg-zinc-900 w-[50%] right-0 sm:w-full h-full sm:static 2xl:w-2/12 2xl:block`}
+          } absolute  bg-zinc-900 w-[70%] right-0 sm:w-full h-full sm:static 2xl:w-2/12 2xl:block`}
         >
           <AI_List />
         </aside>

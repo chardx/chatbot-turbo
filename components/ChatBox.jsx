@@ -279,8 +279,8 @@ const ChatBox = () => {
     bg-[#343541] text-sm mx-0 px-0 w-full"
     >
       <div
-        className="flex flex-col w-full h-[83%] overflow-y-auto
-     scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
+        className="flex flex-col w-full h-[83%] overflow-y-auto scrollbar-thin
+     sm:scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
         ref={chatRef}
       >
         {messages &&
