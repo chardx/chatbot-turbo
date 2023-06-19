@@ -20,7 +20,7 @@ import { textToSpeechActions } from "../store/textToSpeech";
 import { initPlayback } from "../functions/PlayerActions";
 import { audioStreamActions } from "../store/audioStream";
 import { chatHistoryActions } from "../store/chatHistory";
-
+import { uiActions } from "../store/ui";
 //Custom Hook
 import { useChatGPT } from "../hooks/useChatGPT";
 import stream from "../store/stream";
@@ -85,6 +85,9 @@ const ChatBox = () => {
 
     // Update Text to Speech when new AI is selected
     dispatch(textToSpeechActions.updateText(activeAI.initialMessage));
+
+    //Close Right drawer when AI is selected
+    dispatch(uiActions.updateRightDrawerOpen(false));
   }, [newAISelected]);
 
   const handleSend = async (event) => {
