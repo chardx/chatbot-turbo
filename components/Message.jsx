@@ -26,7 +26,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
 
   return (
     <div className={`${layout} flex flex-row justify-items-center`}>
-      <div className="w-14 h-14 ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
+      <div className="w-14 h-14 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
           <img src={`${activeProfilePic}`} className="rounded-full mr-2" />
         )}
@@ -50,10 +50,10 @@ const Message = ({ messageContent, activeProfilePic }) => {
           </svg>
         )}
       </div>
-      <div className="flex justify-center px-1  text-lg">
+      <div className="flex justify-center prose prose-invert px-1 text-lg">
         {isGPT ? (
           <MemoizedReactMarkdown
-            className="prose-invert w-full"
+            className="prose prose-invert w-full"
             remarkPlugins={[remarkGfm, remarkMath, remarkImages]}
             rehypePlugins={[rehypeMathjax]}
             components={{

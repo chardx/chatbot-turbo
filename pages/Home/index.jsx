@@ -21,7 +21,7 @@ const HomePage = () => {
             <ChatBox />
           </ErrorBoundary>
         </div>
-        <aside className="bg-zinc-900 w-full h-full hidden 2xl:w-2/12 2xl:block">
+        <aside className="hidden absolute  bg-zinc-900 w-full h-full sm:static 2xl:w-2/12 2xl:block">
           <AI_List />
         </aside>
       </div>
