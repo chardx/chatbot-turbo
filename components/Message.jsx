@@ -26,7 +26,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
 
   return (
     <div className={`${layout} flex flex-row justify-items-center`}>
-      <div className="w-14 h-14 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
+      <div className="w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
           <img src={`${activeProfilePic}`} className="rounded-full mr-2" />
         )}
