@@ -47,7 +47,7 @@ const AI_List = () => {
             </svg>
           </button>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 h-full">
           <ul className="divide-y divide-gray-200">
             {listOfAI.map((role) => {
               return (

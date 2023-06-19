@@ -18,15 +18,17 @@ const Message = ({ messageContent, activeProfilePic }) => {
     return null;
   }
 
-  const aiLayout = "bg-[#40414f] px-5 py-5";
-  const userLayout = "bg-[#343541] px-5 py-5";
+  const aiLayout = "bg-[#40414f]";
+  const userLayout = "bg-[#343541]";
 
   let isGPT = messageContent.sender === "ChatGPT";
   const layout = isGPT ? aiLayout : userLayout;
 
   return (
-    <div className={`${layout} flex flex-row justify-items-center`}>
-      <div className="w-10 min-w-0 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
+    <div
+      className={`${layout} px-2 sm:px-5 py-5 flex flex-row justify-items-center`}
+    >
+      <div className="w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
           <img src={`${activeProfilePic}`} className="rounded-full mr-2" />
         )}
@@ -50,7 +52,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
           </svg>
         )}
       </div>
-      <div className="flex justify-center prose prose-invert px-1 text-lg">
+      <div className="flex justify-center prose prose-invert px-1">
         {isGPT ? (
           <MemoizedReactMarkdown
             className="prose prose-invert w-full"
