@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({ onRightHamburgerClick }) => {
   return (
     <header className="h-[8%] sm:h-[10%] bg-teal-700 text-white py-4 gradient-background gradient-animation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -8,7 +8,10 @@ const Header = () => {
           <h1 className="font-medium text-2xl">ChadGPT Turbo</h1>
         </div>
         <div className="flex items-center">
-          <button className="mr-4 text-white hover:text-gray-200 focus:outline-none">
+          <button
+            onClick={onRightHamburgerClick}
+            className="mr-4 text-white hover:text-gray-200 focus:outline-none"
+          >
             <svg
               className="h-6 w-6"
               fill="none"

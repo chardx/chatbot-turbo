@@ -8,6 +8,8 @@ import streamReducer from './stream'
 import audioStreamReducer from './audioStream'
 import authReducer from './auth'
 import chatHistoryReducer from './chatHistory'
+import uiReducer from './ui'
+
 
 // Create store using the configureStore() function
 const store = configureStore({
@@ -19,6 +21,7 @@ const store = configureStore({
         textToSpeech: textToSpeechReducer,
         stream: streamReducer,
         audiostream: audioStreamReducer,
+        ui: uiReducer,
     }
 
 })
