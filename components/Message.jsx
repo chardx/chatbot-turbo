@@ -30,10 +30,16 @@ const Message = ({ messageContent, activeProfilePic }) => {
     >
       <div className="w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
-          <img src={`${activeProfilePic}`} className="rounded-full mr-2" />
+          <img
+            src={`${activeProfilePic}`}
+            className="object-cover rounded-full mr-2"
+          />
         )}
         {!isGPT && isLoggedIn && (
-          <img src={`${userPhotoUrl}`} className="rounded-full mr-2" />
+          <img
+            src={`${userPhotoUrl}`}
+            className="object-cover rounded-full mr-2"
+          />
         )}
         {!isGPT && !isLoggedIn && (
           <svg
@@ -42,7 +48,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="rounded-full mr-2"
+            className="object-cover rounded-full mr-2"
           >
             <path
               strokeLinecap="round"

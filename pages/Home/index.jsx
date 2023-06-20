@@ -76,7 +76,7 @@ const HomePage = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`${
             rightDrawerOpen ? "block" : "hidden"
-          }  bg-zinc-900 w-[70%] right-0 sm:w-full h-[80%] sm:static 2xl:w-2/12 2xl:block`}
+          } absolute  bg-zinc-900 w-[70%] right-0 sm:w-full h-[80%] sm:static 2xl:w-2/12 2xl:block`}
         >
           <AI_List />
         </motion.aside>
