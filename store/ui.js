@@ -15,14 +15,18 @@ const uiSlice = createSlice({
     reducers: {
         updateRightDrawerOpen(state, action) {
             state.rightDrawerOpen = action.payload
+            state.leftDrawerOpen = false
 
 
         },
         updateLeftDrawerOpen(state, action) {
             state.leftDrawerOpen = action.payload
-
-
+            state.rightDrawerOpen && (state.rightDrawerOpen = false)
         },
+        closeAllDrawers(state) {
+            state.rightDrawerOpen && (state.rightDrawerOpen = false)
+            state.leftDrawerOpen && (state.leftDrawerOpen = false)
+        }
     }
 });
 

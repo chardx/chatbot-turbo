@@ -2,6 +2,8 @@ import React from "react";
 import VoiceCommand from "./VoiceCommand";
 import SpeakCommand from "./SpeakCommand";
 import FileUploader from "./FileUploader";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../store/ui";
 const SubmitForm = ({
   inputRef,
   userInput,
@@ -13,9 +15,15 @@ const SubmitForm = ({
   setUploadedImage,
   uploadedImage,
 }) => {
+  const uiDispatch = useDispatch();
+
   const handleChange = (e) => {
     const value = e.target.vaue;
     setUserInput(value);
+  };
+
+  const handleFocus = () => {
+    uiDispatch(uiActions.closeAllDrawers());
   };
   return (
     <div className="flex h-30 justify-center mx-2 mt-4">
@@ -33,6 +41,7 @@ const SubmitForm = ({
         rows={2}
         onKeyDown={onHandleKeyEnter}
         onChange={handleChange}
+        onFocus={handleFocus}
       />
       <div className="flex flex-col justify-center gap-2 px-2 sm:flex-row sm:gap-0">
         <VoiceCommand />

@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { messagesActions } from "../../store/messages";
 import { aiActions } from "../../store/ai";
 import { chatHistoryActions } from "../../store/chatHistory";
+import { uiActions } from "../../store/ui";
+
 import {
   IconCheck,
   IconMessage,
@@ -15,6 +17,8 @@ import SidebarActionButton from "../Buttons/SidebarActionButton";
 const ChatList = ({ chat }) => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const dispatch = useDispatch();
+  const uiDispatch = useDispatch();
+
   const selectedAIRole = listOfAI.find((ai) => ai.id === chat.selectedAI);
   const activeUserID = useSelector((state) => state.auth.userInfo.userID);
   const activeChatID = useSelector((state) => state.chatHistory.activeChatID);
@@ -45,6 +49,9 @@ const ChatList = ({ chat }) => {
 
     //Update Active AI
     dispatch(aiActions.loadSaveConversation(chat.selectedAI));
+
+    //Close Left Drawer on mobile
+    uiDispatch(uiActions.updateLeftDrawerOpen(false));
   };
   return (
     <div
@@ -58,10 +65,7 @@ const ChatList = ({ chat }) => {
       `}
       >
         <div className="w-8 h-8 rounded-full mr-4">
-          <img
-            src={selectedAIRole.picture}
-            alt={selectedAIRole.AIName}
-          />
+          <img src={selectedAIRole.picture} alt={selectedAIRole.AIName} />
         </div>
         <div className="flex-1 w-full text-white">
           <p className="pt-1 text-xs">{chat.title}</p>
