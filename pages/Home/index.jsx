@@ -7,6 +7,7 @@ import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 import "../../styles/globals.css";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
   const rightDrawerOpen = useSelector((state) => state.ui.rightDrawerOpen);
@@ -44,13 +45,17 @@ const HomePage = () => {
             <ChatBox />
           </ErrorBoundary>
         </div>
-        <aside
+        <motion.aside
+          initial={{ x: "100%" }}
+          animate={{ x: rightDrawerOpen ? "0%" : "100%" }}
+          exit={{ x: "100%" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`${
             rightDrawerOpen ? "block" : "hidden"
           } absolute  bg-zinc-900 w-[70%] right-0 sm:w-full h-full sm:static 2xl:w-2/12 2xl:block`}
         >
           <AI_List />
-        </aside>
+        </motion.aside>
       </div>
     </main>
   );
