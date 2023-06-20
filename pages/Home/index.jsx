@@ -11,7 +11,20 @@ import { motion } from "framer-motion";
 
 const HomePage = () => {
   const rightDrawerOpen = useSelector((state) => state.ui.rightDrawerOpen);
+  const leftDrawerOpen = useSelector((state) => state.ui.leftDrawerOpen);
+
   const dispatch = useDispatch();
+
+  const handleLeftHamburgerClick = () => {
+    console.log("I was clicked!");
+    if (!rightDrawerOpen) {
+      console.log("I am in Mobile");
+      dispatch(uiActions.updateLeftDrawerOpen(true));
+    } else if (rightDrawerOpen) {
+      console.log("I am not in Mobile");
+      dispatch(uiActions.updateLeftDrawerOpen(false));
+    }
+  };
 
   const handleRightHamburgerClick = () => {
     console.log("I was clicked!");
@@ -34,12 +47,23 @@ const HomePage = () => {
   return (
     <main className="flex h-screen w-screen flex-col text-white">
       <div className="flex h-full w-full pt-0">
-        <aside className="z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full hidden md:block">
+        <motion.aside
+          initial={{ x: "-100%" }}
+          animate={{ x: leftDrawerOpen ? "0%" : "-100%" }}
+          exit={{ x: "-100%" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className={`${
+            leftDrawerOpen ? "block" : "hidden"
+          } absolute z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full md:static md:block`}
+        >
           <ChatHistory />
           <Menu />
-        </aside>
+        </motion.aside>
         <div className="w-full h-full md:w-9/12 2xl:w-8/12  bg-gray-200">
-          <Header onRightHamburgerClick={handleRightHamburgerClick} />
+          <Header
+            onLeftHamburgerClick={handleLeftHamburgerClick}
+            onRightHamburgerClick={handleRightHamburgerClick}
+          />
 
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
             <ChatBox />

@@ -18,6 +18,11 @@ const uiSlice = createSlice({
 
 
         },
+        updateLeftDrawerOpen(state, action) {
+            state.leftDrawerOpen = action.payload
+
+
+        },
     }
 });
 
