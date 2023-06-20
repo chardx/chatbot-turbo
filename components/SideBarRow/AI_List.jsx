@@ -19,7 +19,7 @@ const AI_List = () => {
   return (
     <div
       id="ai-container"
-      className="py-8 text-white glassmorphism 
+      className="h-[60%] py-8 text-white glassmorphism 
       scrollbar-thin scrollbar-thumb-green-400"
       style={{
         maxHeight: "600px",
