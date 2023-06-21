@@ -71,7 +71,7 @@ const HomePage = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`flex-auto ${
             rightDrawerOpen ? "block md:static md:block" : "hidden"
-          } absolute  bg-zinc-900 w-[70%] right-0 md:max-w-md h-[80%]   2xl:w-2/12 `}
+          } absolute  bg-zinc-900 w-[70%] right-0 md:max-w-md h-full   2xl:w-2/12 `}
         >
           <AI_List />
         </motion.aside>
