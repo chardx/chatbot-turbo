@@ -45,7 +45,7 @@ const HomePage = () => {
   };
 
   return (
-    <main className="flex h:[75vh] sm:h-screen w-screen flex-col text-white">
+    <main className="flex h-[70vh] md:h-screen w-screen flex-col text-white">
       <div className="flex h-full w-full pt-0">
         <motion.aside
           initial={{ x: "-100%" }}
