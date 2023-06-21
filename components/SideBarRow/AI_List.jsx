@@ -26,7 +26,7 @@ const AI_List = () => {
         overflowY: showScrollbar ? "auto" : "initial",
       }}
     >
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto">
+      <div className="max-w-3xl max-h-max mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto">
         <div className="flex justify-between">
           <h2 className="text-2xl leading-6 font-medium text-white">
             My Agents
