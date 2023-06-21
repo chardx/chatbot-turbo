@@ -26,7 +26,7 @@ const Header = ({ onLeftHamburgerClick, onRightHamburgerClick }) => {
           </button>
         </div>
         <div>
-          <h1 className="font-medium text-2xl">ChadGPT Turbo</h1>
+          <h1 className="text-lg md:font-medium md:text-2xl">ChadGPT Turbo</h1>
         </div>
         <div className="flex items-center">
           <button

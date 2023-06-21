@@ -278,7 +278,7 @@ const ChatBox = () => {
 
   return (
     <section
-      className="h-[calc(100vh-8vh)] sm:h-[90%]
+      className="h-[calc(100vh-6vh)] sm:h-[90%]
     bg-[#343541] text-sm mx-0 px-0 w-full"
     >
       <div
