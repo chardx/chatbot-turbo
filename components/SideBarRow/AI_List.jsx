@@ -49,7 +49,7 @@ const AI_List = () => {
           </button>
         </div>
         <div className="mt-6">
-          <ul className="divide-y divide-gray-200 overflow-y-auto">
+          <ul className="divide-y divide-gray-200">
             {listOfAI.map((role) => {
               return (
                 <AI_Role
