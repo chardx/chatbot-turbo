@@ -278,12 +278,12 @@ const ChatBox = () => {
 
   return (
     <section
-      className="h-[calc(100vh-6vh)] sm:h-[90%]
+      className="h-[calc(100vh-6vh)] md:h-[90%]
     bg-[#343541] text-sm mx-0 px-0 w-full"
     >
       <div
         className="flex flex-col w-full h-[83%] overflow-y-auto scrollbar-thin
-     sm:scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
+     md:scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
         ref={chatRef}
       >
         {messages &&

@@ -3,7 +3,7 @@ import React from "react";
 const Header = ({ onLeftHamburgerClick, onRightHamburgerClick }) => {
   return (
     <header className="h-[8%] sm:h-[10%] bg-teal-700 text-white py-4 gradient-background gradient-animation">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex  justify-between">
         <div className="flex items-center">
           <button
             onClick={onLeftHamburgerClick}

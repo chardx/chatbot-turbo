@@ -1,8 +1,9 @@
+import { isMobile } from "react-device-detect";
 import { createSlice } from "@reduxjs/toolkit";
 
 //Initial state
 const initialState = {
-    isMobile: false,
+    isMobile: isMobile,
     rightDrawerOpen: false,
     leftDrawerOpen: false,
 }
@@ -15,17 +16,20 @@ const uiSlice = createSlice({
     reducers: {
         updateRightDrawerOpen(state, action) {
             state.rightDrawerOpen = action.payload
-            state.leftDrawerOpen = false
+            isMobile && (state.leftDrawerOpen = false)
 
 
         },
         updateLeftDrawerOpen(state, action) {
             state.leftDrawerOpen = action.payload
-            state.rightDrawerOpen && (state.rightDrawerOpen = false)
+            isMobile && (state.rightDrawerOpen = false)
         },
         closeAllDrawers(state) {
-            state.rightDrawerOpen && (state.rightDrawerOpen = false)
-            state.leftDrawerOpen && (state.leftDrawerOpen = false)
+            isMobile && (state.rightDrawerOpen = false)
+            isMobile && (state.leftDrawerOpen = false)
+        },
+        updateMobileState(state, action) {
+            state.isMobile = action.payload
         }
     }
 });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/auth";
+import { uiActions } from "../store/ui";
 
 import HomePage from "../pages/Home";
 import RootLayout from "../pages/Root";
@@ -13,6 +14,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 function App() {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
+  const uiDispatch = useDispatch();
 
   useEffect(() => {
     const getUser = async () => {
@@ -79,6 +81,17 @@ function App() {
 
     getUser();
   }, []);
+
+  // //Checks if the window is resized to mobile size
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     console.log("I am in Mobile");
+  //     uiDispatch(uiActions.updateMobileState(window.innerWidth < 768));
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   const router = createBrowserRouter([
     {
