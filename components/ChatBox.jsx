@@ -59,6 +59,8 @@ const ChatBox = () => {
 
   const [userInput, setUserInput] = useState("");
 
+  const isMobile = useSelector((state) => state.ui.isMobile);
+
   //updates the initial Message whenever new AI is selected
   useEffect(() => {
     // setNewMessages([...messages]);
@@ -86,8 +88,12 @@ const ChatBox = () => {
     // Update Text to Speech when new AI is selected
     dispatch(textToSpeechActions.updateText(activeAI.initialMessage));
 
-    //Close Right drawer when AI is selected
-    dispatch(uiActions.updateRightDrawerOpen(false));
+    //Close Right drawer when AI is selected if on Mobile
+    if (isMobile) {
+      console.log("Mobile");
+      console.log(isMobile);
+      dispatch(uiActions.updateRightDrawerOpen(false));
+    }
   }, [newAISelected]);
 
   const handleSend = async (event) => {

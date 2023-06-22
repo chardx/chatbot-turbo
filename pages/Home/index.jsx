@@ -8,7 +8,6 @@ import "../../styles/globals.css";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui";
 import { motion } from "framer-motion";
-import { isMobile } from "react-device-detect";
 
 const HomePage = () => {
   const rightDrawerOpen = useSelector((state) => state.ui.rightDrawerOpen);
@@ -71,7 +70,7 @@ const HomePage = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`flex-auto ${
             rightDrawerOpen ? "block md:static md:block" : "hidden"
-          } absolute  bg-zinc-900 w-[70%] right-0 md:max-w-md h-[90vh]   2xl:w-2/12 `}
+          } absolute  bg-zinc-900 w-[70%] right-0 md:max-w-md h-screen   2xl:w-2/12 `}
         >
           <AI_List />
         </motion.aside>

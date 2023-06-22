@@ -19,7 +19,7 @@ const AI_List = () => {
   return (
     <div
       id="ai-container"
-      className="overflow-y-auto h-[90vh] max-h-[600px] py-8 text-white glassmorphism 
+      className="overflow-y-scroll h-[90vh] max-h-[600px] py-8 text-white glassmorphism 
       scrollbar-thin scrollbar-thumb-green-400"
     >
       <div className="px-4 sm:px-6 lg:px-8 overflow-y-auto">
