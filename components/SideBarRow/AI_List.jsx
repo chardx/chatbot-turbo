@@ -19,12 +19,8 @@ const AI_List = () => {
   return (
     <div
       id="ai-container"
-      className="h-screen max-h-max py-8 text-white glassmorphism 
+      className="overflow-y-auto h-[90vh] max-h-[600px] py-8 text-white glassmorphism 
       scrollbar-thin scrollbar-thumb-green-400"
-      style={{
-        maxHeight: "600px",
-        overflowY: showScrollbar ? "auto" : "initial",
-      }}
     >
       <div className="px-4 sm:px-6 lg:px-8 overflow-y-auto">
         <div className="flex justify-between">
