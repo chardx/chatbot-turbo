@@ -26,7 +26,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
 
   return (
     <div
-      className={`${layout} px-2 sm:px-5 py-5 flex flex-row justify-items-center`}
+      className={`${layout} px-2 sm:px-5 py-5 flex flex-row items-center justify-items-center space-between`}
     >
       <div className="w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (

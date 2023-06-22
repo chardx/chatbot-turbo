@@ -20,7 +20,7 @@ const AI_Roles = ({ AIName, id, description, content, picture }) => {
   return (
     <li>
       <div
-        className={`flex items-center justify-between w-full p-4 bg-zinc-900 rounded-lg shadow-lg transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl ${
+        className={`flex items-center w-full p-4 bg-zinc-900 rounded-lg shadow-lg transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl ${
           isActive ? "border-x-8 border-white" : ""
         }`}
         onClick={() => handleUpdateActiveAI(id)}
