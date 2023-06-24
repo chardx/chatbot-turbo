@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from "react";
+import UnknownUser from "./UI/Svg/UnknownUser";
 // import CodeBlock from "./CodeBlock/CodeBlock";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,9 +27,11 @@ const Message = ({ messageContent, activeProfilePic }) => {
 
   return (
     <div
-      className={`${layout} px-2 sm:px-5 py-5 flex flex-row items-center justify-items-center space-between`}
+      className={`w-full ${layout} px-2 sm:px-5 py-5 flex flex-row justify-start`}
     >
-      <div className="w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
+      <div className="flex-0 hidden w-[10%] md:w-[15%] md:block"></div>
+
+      <div className="flex-0 w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (
           <img
             src={`${activeProfilePic}`}
@@ -41,27 +44,12 @@ const Message = ({ messageContent, activeProfilePic }) => {
             className="object-cover rounded-full mr-2"
           />
         )}
-        {!isGPT && !isLoggedIn && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="object-cover rounded-full mr-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-        )}
+        {!isGPT && !isLoggedIn && <UnknownUser />}
       </div>
-      <div className="flex justify-center prose prose-invert px-1">
+      <div className="flex flex-1 items-center prose prose-invert lg:prose-lg xl:prose-xl px-1">
         {isGPT ? (
           <MemoizedReactMarkdown
-            className="prose prose-invert w-full"
+            className="prose prose-invert lg:prose-lg xl:prose-xl w-screen"
             remarkPlugins={[remarkGfm, remarkMath, remarkImages]}
             rehypePlugins={[rehypeMathjax]}
             components={{

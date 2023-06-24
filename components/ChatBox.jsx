@@ -284,11 +284,11 @@ const ChatBox = () => {
 
   return (
     <section
-      className="h-[calc(100vh-6vh)] md:h-[90%]
-    bg-[#343541] text-sm mx-0 px-0 w-full"
+      className="flex flex-col items-center w-auto h-[calc(100vh-6vh)] md:h-[90%]
+    bg-[#343541] text-sm mx-0 px-0 "
     >
       <div
-        className="flex flex-col w-full h-[83%] overflow-y-auto scrollbar-thin
+        className="flex flex-col align-center items-center w-full h-[83%] overflow-y-auto scrollbar-thin
      md:scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-800 "
         ref={chatRef}
       >
@@ -311,7 +311,7 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <div className="w-full h-auto bottom-20 border-transparent bg-[#343541] ">
+      <div className="flex w-full h-auto justify-center items-center bottom-20 border-transparent bg-[#343541]">
         <SubmitForm
           inputRef={promptInputRef}
           userInput={userInput}

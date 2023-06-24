@@ -16,9 +16,9 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const handleLeftHamburgerClick = () => {
-    if (!rightDrawerOpen) {
+    if (!leftDrawerOpen) {
       dispatch(uiActions.updateLeftDrawerOpen(true));
-    } else if (rightDrawerOpen) {
+    } else if (leftDrawerOpen) {
       dispatch(uiActions.updateLeftDrawerOpen(false));
     }
   };

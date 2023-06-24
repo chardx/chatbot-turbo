@@ -4,6 +4,7 @@ import SpeakCommand from "./SpeakCommand";
 import FileUploader from "./FileUploader";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../store/ui";
+import SubmitButton from "./UI/Svg/SubmitButton";
 const SubmitForm = ({
   inputRef,
   userInput,
@@ -26,7 +27,7 @@ const SubmitForm = ({
     uiDispatch(uiActions.closeAllDrawers());
   };
   return (
-    <div className="flex h-30 justify-center mx-2 mt-4">
+    <div className="flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-4">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}
@@ -34,11 +35,11 @@ const SubmitForm = ({
         uploadedImage={uploadedImage}
       />
       <textarea
-        className="w-[80%] border text-black ml-2 p-2 rounded-lg"
+        className="w-[80%] h-full border text-black ml-2 p-2 rounded-lg"
         placeholder="Enter Text here..."
         ref={inputRef}
         value={userInput}
-        rows={2}
+        rows={3}
         onKeyDown={onHandleKeyEnter}
         onChange={handleChange}
         onFocus={handleFocus}
@@ -58,18 +59,7 @@ const SubmitForm = ({
         dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors 
         disabled:opacity-40 bg-[#4ADE80]"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="none"
-          className="h-4 w-4 m-1 md:m-0 sm:h-10 sm:w-10"
-          strokeWidth="2"
-        >
-          <path
-            d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z"
-            fill="currentColor"
-          ></path>
-        </svg>
+        <SubmitButton />
       </button>
     </div>
   );
