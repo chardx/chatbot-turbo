@@ -295,7 +295,7 @@ const ChatBox = () => {
               </React.Fragment>
             );
           })}
-
+        <div className="w-full bg-[#343541] px-2 sm:px-5 py-5"></div>
         <div>{loading && <ChatLoad />}</div>
       </div>
 
