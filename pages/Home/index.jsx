@@ -53,7 +53,7 @@ const HomePage = () => {
           <ChatHistory />
           <Menu />
         </motion.aside>
-        <div className="flex-auto w-full h-full md:w-9/12 2xl:w-8/12  bg-gray-200">
+        <div className="fixed top-0 md:static flex-auto w-full h-full md:w-9/12 2xl:w-8/12  bg-gray-200">
           <Header
             onLeftHamburgerClick={handleLeftHamburgerClick}
             onRightHamburgerClick={handleRightHamburgerClick}
