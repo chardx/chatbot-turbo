@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import autosize from "autosize";
+
 import VoiceCommand from "./VoiceCommand";
 import SpeakCommand from "./SpeakCommand";
 import FileUploader from "./FileUploader";
@@ -10,7 +12,7 @@ const SubmitForm = ({
   userInput,
   setUserInput,
   onHandleSend,
-  onHandleKeyEnter,
+
   setHasUserUploadedImage,
   setHasUserUploadedPDF,
   setUploadedImage,
@@ -26,6 +28,35 @@ const SubmitForm = ({
   const handleFocus = () => {
     uiDispatch(uiActions.closeAllDrawers());
   };
+
+  const handleKeyDown = (e) => {
+    e.target.style.height = "inherit";
+    e.target.style.height = `${e.target.scrollHeight}px`;
+    // In case you have a limitation
+    // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
+  };
+
+  const handleKeyEnter = (event) => {
+    console.log(event.key);
+    if (event.key === "Enter" && inputRef.current.value.trim() === "") return;
+
+    if (event.key === "Enter" && inputRef.current.value && !event.shiftKey) {
+      console.log("Enter key pressed");
+
+      event.preventDefault();
+      inputRef.current.focus();
+      setUserInput("");
+      onHandleSend();
+
+      // Clear Values
+      // promptInputRef.current.value = "";
+    }
+  };
+
+  useEffect(() => {
+    autosize(inputRef.current);
+  }, [userInput]);
+
   return (
     <div className="flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-6">
       <FileUploader
@@ -35,12 +66,14 @@ const SubmitForm = ({
         uploadedImage={uploadedImage}
       />
       <textarea
-        className="w-[80%] h-full border text-black ml-2 p-2 rounded-lg"
+        className="w-[80%] h-full border  bg-transparent
+         text-white ml-2 p-2 rounded-lg"
+        style={{ maxHeight: "200px", overflowY: "hidden" }}
         placeholder="Enter Text here..."
         ref={inputRef}
         value={userInput}
-        rows={3}
-        onKeyDown={onHandleKeyEnter}
+        rows={1}
+        onKeyDown={handleKeyEnter}
         onChange={handleChange}
         onFocus={handleFocus}
       />
@@ -51,7 +84,7 @@ const SubmitForm = ({
       <button
         onClick={() => {
           const enterKeyEvent = new KeyboardEvent("keydown", { key: "Enter" });
-          onHandleKeyEnter(enterKeyEvent);
+          handleKeyEnter(enterKeyEvent);
         }}
         id="btnSubmit"
         className="rounded-md md:bottom-3 md:p-2 

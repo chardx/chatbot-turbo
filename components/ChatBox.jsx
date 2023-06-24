@@ -240,23 +240,6 @@ const ChatBox = () => {
     }
   };
 
-  const handleKeyEnter = (event) => {
-    console.log(event.key);
-    if (event.key === "Enter" && promptInputRef.current.value.trim() === "")
-      return;
-    if (event.key === "Enter" && promptInputRef.current.value) {
-      console.log("Enter key pressed");
-
-      event.preventDefault();
-      promptInputRef.current.focus();
-      setUserInput("");
-      handleSend();
-
-      // Clear Values
-      // promptInputRef.current.value = "";
-    }
-  };
-
   //PENDING
   // const updateStreamResponse = () => {
   //   console.log("Stream Response Updated");
@@ -317,7 +300,6 @@ const ChatBox = () => {
           userInput={userInput}
           setUserInput={setUserInput}
           onHandleSend={handleSend}
-          onHandleKeyEnter={handleKeyEnter}
           setHasUserUploadedImage={setHasUserUploadedImage}
           setHasUserUploadedPDF={setHasUserUploadedPDF}
           setUploadedImage={setUploadedImage}
