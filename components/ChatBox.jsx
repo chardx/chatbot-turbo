@@ -94,6 +94,9 @@ const ChatBox = () => {
       console.log(isMobile);
       dispatch(uiActions.updateRightDrawerOpen(false));
     }
+
+    //Set Focus on Prompt Input
+    promptInputRef.current.focus();
   }, [newAISelected]);
 
   const handleSend = async (event) => {
@@ -258,6 +261,8 @@ const ChatBox = () => {
 
   useEffect(() => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    //Set Focus on Prompt Input
+    promptInputRef.current.focus();
   }, [messages]);
 
   useEffect(() => {
