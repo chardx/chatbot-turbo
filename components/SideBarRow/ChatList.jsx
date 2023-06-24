@@ -22,6 +22,9 @@ const ChatList = ({ chat }) => {
   const selectedAIRole = listOfAI.find((ai) => ai.id === chat.selectedAI);
   const activeUserID = useSelector((state) => state.auth.userInfo.userID);
   const activeChatID = useSelector((state) => state.chatHistory.activeChatID);
+
+  const isMobile = useSelector((state) => state.ui.isMobile);
+
   if (!selectedAIRole) return;
 
   //Check if the current component is Active Chat
@@ -51,7 +54,7 @@ const ChatList = ({ chat }) => {
     dispatch(aiActions.loadSaveConversation(chat.selectedAI));
 
     //Close Left Drawer on mobile
-    uiDispatch(uiActions.updateLeftDrawerOpen(false));
+    if (isMobile) uiDispatch(uiActions.updateLeftDrawerOpen(false));
   };
   return (
     <div

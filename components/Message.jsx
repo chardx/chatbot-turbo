@@ -49,7 +49,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
       <div className="flex flex-1 items-center prose prose-invert lg:prose-lg xl:prose-xl px-1">
         {isGPT ? (
           <MemoizedReactMarkdown
-            className="prose prose-invert lg:prose-lg xl:prose-xl w-screen"
+            className="prose prose-invert lg:prose-lg xl:prose-xl w-full"
             remarkPlugins={[remarkGfm, remarkMath, remarkImages]}
             rehypePlugins={[rehypeMathjax]}
             components={{

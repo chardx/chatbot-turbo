@@ -39,7 +39,7 @@ const HomePage = () => {
   // };
 
   return (
-    <main className="flex h-[65vh] md:h-screen w-screen flex-col text-white">
+    <main className="flex h-[75vh] md:h-screen w-screen flex-col text-white">
       <div className="flex h-full w-full pt-0">
         <motion.aside
           initial={{ x: "-100%" }}
@@ -48,7 +48,7 @@ const HomePage = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`${
             leftDrawerOpen ? "block md:static md:block" : "hidden"
-          } absolute z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full  `}
+          } absolute z-50 bg-zinc-900 md:w-3/12 2xl:w-2/12 h-full`}
         >
           <ChatHistory />
           <Menu />

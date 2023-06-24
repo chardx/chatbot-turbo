@@ -27,7 +27,7 @@ const SubmitForm = ({
     uiDispatch(uiActions.closeAllDrawers());
   };
   return (
-    <div className="flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-4">
+    <div className="flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-6">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}

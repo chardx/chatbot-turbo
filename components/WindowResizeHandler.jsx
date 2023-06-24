@@ -15,7 +15,7 @@ const WindowResizeHandler = () => {
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return null; // or <></> for React fragments
+  return null;
 };
 
 export default WindowResizeHandler;
