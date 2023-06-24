@@ -58,7 +58,7 @@ const SubmitForm = ({
   }, [userInput]);
 
   return (
-    <div className="flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-6">
+    <div className="fixed bottom-5 flex h-30 w-screen max-w-7xl justify-center items-center mx-2 mt-6">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}
@@ -67,7 +67,7 @@ const SubmitForm = ({
       />
       <textarea
         className="w-[80%] h-full border  bg-transparent
-         text-white ml-2 p-2 rounded-lg"
+         text-white ml-2 p-2 rounded-lg focus:outline-none"
         style={{ maxHeight: "200px", overflowY: "hidden" }}
         placeholder="Enter Text here..."
         ref={inputRef}
