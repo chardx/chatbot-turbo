@@ -298,7 +298,9 @@ const ChatBox = () => {
             );
           })}
         <div className="w-full bg-[#343541] px-20 sm:px-5 py-5"></div>
-        <div>{loading && <ChatLoad />}</div>
+        <div className="fixed bottom-20 md:static">
+          {loading && <ChatLoad />}
+        </div>
       </div>
 
       <div className="bottom-0 flex w-full h-auto justify-center items-center border-transparent bg-[#343541]">
