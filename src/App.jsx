@@ -6,7 +6,7 @@ import HomePage from "../pages/Home";
 import RootLayout from "../pages/Root";
 import LoginPage from "../pages/Login";
 import ErrorPage from "../pages/Error";
-import WindowResizeHandler from "../components/WindowResizeHandler";
+
 //React Router DOM
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -97,7 +97,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <WindowResizeHandler />
       <script
         async
         src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"

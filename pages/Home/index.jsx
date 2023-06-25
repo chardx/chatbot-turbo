@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import ChatBox from "../../components/ChatBox";
 import AI_List from "../../components/SideBarRow/AI_List";
 import ChatHistory from "../../components/SideBarRow/ChatHistory";
@@ -8,12 +9,26 @@ import "../../styles/globals.css";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui";
 import { motion } from "framer-motion";
+import { useWindowSize } from "../../hooks/useWindowSize.js";
 
 const HomePage = () => {
   const rightDrawerOpen = useSelector((state) => state.ui.rightDrawerOpen);
   const leftDrawerOpen = useSelector((state) => state.ui.leftDrawerOpen);
+  const isMobile = useSelector((state) => state.ui.isMobile);
 
   const dispatch = useDispatch();
+
+  const [width, height] = useWindowSize();
+  //Custom hook to handle updating of isMobile state
+  useEffect(() => {
+    if (!isMobile && width < 768) {
+      console.log("Updated to Mobile");
+      dispatch(uiActions.updateMobileState(true));
+    } else if (isMobile && width >= 768) {
+      console.log("Updated to Desktop");
+      dispatch(uiActions.updateMobileState(false));
+    }
+  }, [width, height]);
 
   const handleLeftHamburgerClick = () => {
     if (!leftDrawerOpen) {

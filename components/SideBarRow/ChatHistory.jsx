@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ChatList from "./ChatList";
 import { getConversationHistory } from "../../services/firebaseService";
 import { chatHistoryActions } from "../../store/chatHistory";
 import { uiActions } from "../../store/ui";
 
-const ChatHistory = () => {
+const ChatHistory = memo(() => {
   // const [chatHistory, setChatHistory] = useState([]);
   const chatHistory = useSelector((state) => state.chatHistory.history);
   const userID = useSelector((state) => state.auth.userInfo.userID);
@@ -71,6 +71,6 @@ const ChatHistory = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ChatHistory;

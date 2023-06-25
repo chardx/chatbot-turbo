@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messagesActions } from "../../store/messages";
 import { aiActions } from "../../store/ai";
@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react";
 import SidebarActionButton from "../Buttons/SidebarActionButton";
 
-const ChatList = ({ chat }) => {
+const ChatList = memo(({ chat }) => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   const dispatch = useDispatch();
   const uiDispatch = useDispatch();
@@ -29,10 +29,6 @@ const ChatList = ({ chat }) => {
 
   //Check if the current component is Active Chat
   const isActiveChat = activeChatID === chat.id;
-  console.log(activeChatID);
-  console.log(chat.id);
-  console.log("isActiveChat");
-  console.log(isActiveChat);
 
   const loadConversation = () => {
     dispatch(
@@ -86,6 +82,6 @@ const ChatList = ({ chat }) => {
       </li>
     </div>
   );
-};
+});
 
 export default ChatList;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import Message from "../components/Message";
 import Image from "../components/Image";
 import ChatLoad from "./ChatLoad";
@@ -93,6 +93,8 @@ const ChatBox = () => {
       console.log("Mobile");
       console.log(isMobile);
       dispatch(uiActions.updateRightDrawerOpen(false));
+    } else {
+      console.log("Not Mobile");
     }
 
     //Set Focus on Prompt Input
@@ -272,7 +274,7 @@ const ChatBox = () => {
 
   return (
     <section
-      className="flex flex-col items-center w-auto h-[calc(100vh-6vh)] md:h-[90%]
+      className="relative flex flex-col items-center w-auto h-[calc(100vh-6vh)] md:h-[90%]
     bg-[#343541] text-sm mx-0 px-0 "
     >
       <div
@@ -299,7 +301,7 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <div className="flex w-full h-auto justify-center items-center bottom-20 border-transparent bg-[#343541]">
+      <div className="relative bottom-0 flex w-full h-auto justify-center items-center border-transparent bg-[#343541]">
         <SubmitForm
           inputRef={promptInputRef}
           userInput={userInput}
