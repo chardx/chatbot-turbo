@@ -6,7 +6,7 @@ const SubmitButton = () => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
       fill="none"
-      className="h-14 w-10 m-1 md:m-0 sm:h-10 sm:w-10"
+      className="h-8 w-8 m-1 md:m-0 sm:h-10 sm:w-10"
       strokeWidth="2"
     >
       <path
