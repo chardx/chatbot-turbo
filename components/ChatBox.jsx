@@ -301,7 +301,7 @@ const ChatBox = () => {
         <div>{loading && <ChatLoad />}</div>
       </div>
 
-      <div className="relative bottom-0 flex w-full h-auto justify-center items-center border-transparent bg-[#343541]">
+      <div className="bottom-0 flex w-full h-auto justify-center items-center border-transparent bg-[#343541]">
         <SubmitForm
           inputRef={promptInputRef}
           userInput={userInput}

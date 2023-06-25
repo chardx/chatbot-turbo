@@ -58,7 +58,7 @@ const SubmitForm = ({
   }, [userInput]);
 
   return (
-    <div className="fixed bottom-2 md:bottom-5 flex h-30 w-full max-w-7xl justify-center items-center mx-2 mt-6">
+    <div className="fixed md:absolute bottom-2 flex h-30 w-full max-w-7xl justify-center items-center px-4 mx-2 mt-6">
       <FileUploader
         setHasUserUploadedImage={setHasUserUploadedImage}
         setHasUserUploadedPDF={setHasUserUploadedPDF}

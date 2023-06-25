@@ -4,8 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 //Initial state
 const initialState = {
     isMobile: isMobile,
-    rightDrawerOpen: false,
-    leftDrawerOpen: false,
+    rightDrawerOpen: isMobile ? false : true,
+    leftDrawerOpen: isMobile ? false : true,
 }
 
 
@@ -27,6 +27,10 @@ const uiSlice = createSlice({
         closeAllDrawers(state) {
             state.isMobile && (state.rightDrawerOpen = false)
             state.isMobile && (state.leftDrawerOpen = false)
+        },
+        openAllDrawers(state) {
+            !state.isMobile && (state.rightDrawerOpen = true)
+            !state.isMobile && (state.leftDrawerOpen = true)
         },
         updateMobileState(state, action) {
             state.isMobile = action.payload

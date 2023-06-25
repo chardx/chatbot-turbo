@@ -29,7 +29,7 @@ const Message = ({ messageContent, activeProfilePic }) => {
     <div
       className={`w-full ${layout} px-2 sm:px-5 py-5 flex flex-row justify-start`}
     >
-      <div className="flex-0 hidden w-[10%] md:w-[15%] md:block"></div>
+      {/* <div className="flex-0 hidden w-[10%] md:w-[15%] lg:block"></div> */}
 
       <div className="flex-0 w-10 h-10 sm:ml-5 pr-2 sm:w-20 sm:h-20 sm:pr-6">
         {isGPT && (

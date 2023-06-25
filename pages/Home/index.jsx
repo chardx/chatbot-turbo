@@ -24,9 +24,11 @@ const HomePage = () => {
     if (!isMobile && width < 768) {
       console.log("Updated to Mobile");
       dispatch(uiActions.updateMobileState(true));
+      dispatch(uiActions.closeAllDrawers());
     } else if (isMobile && width >= 768) {
       console.log("Updated to Desktop");
       dispatch(uiActions.updateMobileState(false));
+      dispatch(uiActions.openAllDrawers());
     }
   }, [width, height]);
 
@@ -85,7 +87,7 @@ const HomePage = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`flex-auto ${
             rightDrawerOpen ? "block md:static md:block" : "hidden"
-          } absolute  bg-zinc-900 w-[70%] right-0 md:max-w-md h-screen`}
+          } absolute  bg-zinc-900 w-[70%] right-0 md:w-[25%] md:text-xs md:max-w-sm h-screen`}
         >
           <AI_List />
         </motion.aside>
