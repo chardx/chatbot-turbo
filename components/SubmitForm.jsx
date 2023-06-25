@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import autosize from "autosize";
-
+import { useSelector } from "react-redux";
 import VoiceCommand from "./VoiceCommand";
 import SpeakCommand from "./SpeakCommand";
 import FileUploader from "./FileUploader";
@@ -18,6 +18,7 @@ const SubmitForm = ({
   setUploadedImage,
   uploadedImage,
 }) => {
+  const isMobile = useSelector((state) => state.ui.isMobile);
   const uiDispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -44,7 +45,7 @@ const SubmitForm = ({
       console.log("Enter key pressed");
 
       event.preventDefault();
-      inputRef.current.focus();
+      if (!isMobile) inputRef.current.focus();
       setUserInput("");
       onHandleSend();
 

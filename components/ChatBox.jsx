@@ -97,8 +97,8 @@ const ChatBox = () => {
       console.log("Not Mobile");
     }
 
-    //Set Focus on Prompt Input
-    promptInputRef.current.focus();
+    //Set Focus on Prompt Input only if it's not on mobile for UX
+    if (!isMobile) promptInputRef.current.focus();
   }, [newAISelected]);
 
   const handleSend = async (event) => {
@@ -264,7 +264,7 @@ const ChatBox = () => {
   useEffect(() => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
     //Set Focus on Prompt Input
-    promptInputRef.current.focus();
+    if (!isMobile) promptInputRef.current.focus();
   }, [messages]);
 
   useEffect(() => {
