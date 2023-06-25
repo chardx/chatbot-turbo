@@ -78,7 +78,7 @@ const SubmitForm = ({
         onChange={handleChange}
         onFocus={handleFocus}
       />
-      <div className="flex flex-col justify-center gap-2 px-2 sm:flex-row sm:gap-0">
+      <div className="flex flex-row justify-center gap-0 px-2 sm:flex-row">
         <VoiceCommand />
         <SpeakCommand promptInputRef={inputRef} handleSend={onHandleSend} />
       </div>
