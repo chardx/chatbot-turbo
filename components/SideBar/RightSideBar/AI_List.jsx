@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import CloseButton from "../UI/Svg/CloseButton";
+import React, { useState, useEffect, useRef } from "react";
+import CloseButton from "../../UI/Svg/CloseButton";
 import { useSelector, useDispatch } from "react-redux";
 import AI_Role from "./AI_Role";
-import { uiActions } from "../../store/ui";
+import { uiActions } from "../../../store/ui";
 
 const AI_List = () => {
   const uiDispatch = useDispatch();
+  const divRef = useRef(null);
+
   const [showScrollbar, setShowScrollbar] = useState(false);
   const listOfAI = useSelector((state) => state.ai.aiRoles);
   useEffect(() => {
@@ -13,12 +15,27 @@ const AI_List = () => {
     setShowScrollbar(container.scrollHeight > container.clientHeight);
   }, [listOfAI]);
 
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (divRef.current && !divRef.current.contains(event.target)) {
+        console.log("Triggered outside click");
+      }
+
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    };
+  }, []);
+
   const handleCloseRightDrawer = () => {
     uiDispatch(uiActions.updateRightDrawerOpen(false));
   };
 
   return (
     <div
+      ref={divRef}
       id="ai-container"
       className="overflow-y-scroll h-[90vh] max-h-[600px] py-8 text-white glassmorphism 
       scrollbar-thin scrollbar-thumb-green-400"

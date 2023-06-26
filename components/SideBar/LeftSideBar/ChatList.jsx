@@ -1,9 +1,9 @@
 import React, { memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { messagesActions } from "../../store/messages";
-import { aiActions } from "../../store/ai";
-import { chatHistoryActions } from "../../store/chatHistory";
-import { uiActions } from "../../store/ui";
+import { messagesActions } from "../../../store/messages";
+import { aiActions } from "../../../store/ai";
+import { chatHistoryActions } from "../../../store/chatHistory";
+import { uiActions } from "../../../store/ui";
 
 import {
   IconCheck,
@@ -12,7 +12,7 @@ import {
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
-import SidebarActionButton from "../Buttons/SidebarActionButton";
+import SidebarActionButton from "../../Buttons/SidebarActionButton";
 
 const ChatList = memo(({ chat }) => {
   const listOfAI = useSelector((state) => state.ai.aiRoles);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ChatBox from "../../components/ChatBox";
-import AI_List from "../../components/SideBarRow/AI_List";
-import ChatHistory from "../../components/SideBarRow/ChatHistory";
+import AI_List from "../../components/SideBar/RightSideBar/AI_List";
+import ChatHistory from "../../components/SideBar/LeftSideBar/ChatHistory";
 import Header from "../../components/Header";
 import Menu from "../../components/Menu";
 import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";

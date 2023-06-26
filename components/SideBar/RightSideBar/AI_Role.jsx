@@ -1,9 +1,9 @@
 import React from "react";
-import { aiActions } from "../../store/ai";
+import { aiActions } from "../../../store/ai";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { chatHistoryActions } from "../../store/chatHistory";
-import ArrowRight from "../UI/Svg/ArrowRight";
+import { chatHistoryActions } from "../../../store/chatHistory";
+import ArrowRight from "../../UI/Svg/ArrowRight";
 const AI_Roles = ({ AIName, id, description, content, picture }) => {
   const dispatch = useDispatch();
   const activeAI = useSelector((state) => state.ai.activeAI);

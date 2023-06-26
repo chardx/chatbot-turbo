@@ -1,9 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ChatList from "./ChatList";
-import { getConversationHistory } from "../../services/firebaseService";
-import { chatHistoryActions } from "../../store/chatHistory";
-import { uiActions } from "../../store/ui";
+import { getConversationHistory } from "../../../services/firebaseService";
+import { chatHistoryActions } from "../../../store/chatHistory";
+import { uiActions } from "../../../store/ui";
 
 const ChatHistory = memo(() => {
   // const [chatHistory, setChatHistory] = useState([]);
