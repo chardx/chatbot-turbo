@@ -17,13 +17,17 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       try {
+        const cookies = document.cookie; // Retrieve the cookies
+        console.log(cookies);
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_URL}/auth/login/success`,
           {
             method: "POST",
             credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
+              Cookie: cookies,
             },
           }
         );
