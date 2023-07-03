@@ -25,6 +25,7 @@ function App() {
 
             headers: {
               "Content-Type": "application/json",
+              Accept: "application/json",
             },
           }
         );
