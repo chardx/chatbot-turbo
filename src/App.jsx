@@ -24,7 +24,6 @@ function App() {
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
-              Accept: "application/json",
             },
           }
         );
