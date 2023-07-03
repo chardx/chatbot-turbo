@@ -77,6 +77,7 @@ function App() {
     };
 
     getUser();
+    console.log("logging in...");
   }, []);
 
   const router = createBrowserRouter([
