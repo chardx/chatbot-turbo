@@ -18,6 +18,7 @@ function App() {
     const getUser = async () => {
       try {
         const cookies = document.cookie; // Retrieve the cookies
+        console.log("Cookies");
         console.log(cookies);
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_URL}/auth/login/success`,
@@ -27,8 +28,8 @@ function App() {
 
             headers: {
               "Content-Type": "application/json",
-              Cookie: cookies,
             },
+            body: JSON.stringify({ Cookie: cookies }),
           }
         );
 
