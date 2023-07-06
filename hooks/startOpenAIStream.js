@@ -1,5 +1,5 @@
 import { SSE } from 'sse';
-import { getCurrentWeather, getClothingRecommendations, processTextToImage } from '../functions/openAIFunctions';
+import { getCurrentWeather, getClothingRecommendations, processTextToImage, processGoogleSearch } from '../functions/openAIFunctions';
 
 import { streamResponseActions } from '../store/stream';
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -70,6 +70,7 @@ export const startOpenAIStream = async (url, apiRequestBody, dispatch) => {
                     const function_name = func_call.name;
                     const function_arguments = JSON.parse(func_call.arguments);
 
+
                     switch (function_name) {
                         case "get_current_weather":
                             let weatherArgs = function_arguments;
@@ -88,6 +89,12 @@ export const startOpenAIStream = async (url, apiRequestBody, dispatch) => {
                             let promptArgs = function_arguments;
                             function_response = await processTextToImage(
                                 promptArgs.prompt
+                            );
+                            break;
+                        case "process_google_search":
+                            let searchArgs = function_arguments;
+                            function_response = await processGoogleSearch(
+                                searchArgs.searchString
                             );
                             break;
                         default:

@@ -1,6 +1,9 @@
 import { get_current_weather } from "./getCurrentWeather";
 import { get_clothing_recommendations } from "./getClothingRecommendations";
 import { process_text_to_image } from "./processTextToImage";
+import { process_google_search } from "./processGoogleSearch";
+
+
 
 export class OpenAIFunction {
     constructor(func) {
@@ -15,7 +18,9 @@ export class OpenAIFunction {
 let openAIFunctions = [
     new OpenAIFunction(get_current_weather),
     new OpenAIFunction(get_clothing_recommendations),
-    new OpenAIFunction(process_text_to_image)
+    new OpenAIFunction(process_text_to_image),
+    new OpenAIFunction(process_google_search)
+
 
 ]
 
@@ -35,7 +40,10 @@ console.log(functionsArray)
 export const getCurrentWeather = openAIFunctions[0].function;
 export const getClothingRecommendations = openAIFunctions[1].function;
 export const processTextToImage = openAIFunctions[2].function;
+export const processGoogleSearch = openAIFunctions[3].function;
+
 
 console.log(getCurrentWeather)
 console.log(getClothingRecommendations)
 console.log(processTextToImage)
+console.log(processGoogleSearch)
