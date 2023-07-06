@@ -10,7 +10,7 @@ export const get_clothing_recommendations = (temperature) => {
     return JSON.stringify({ recommendation: recommendation });
 }
 
-Object.defineProperty(get_clothing_recommendations, "object", {
+Object.defineProperty(get_clothing_recommendations, "property", {
     get: () => ({
         name: "get_clothing_recommendations",
         description: "Get clothing recommendation based on temperature",

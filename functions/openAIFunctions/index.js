@@ -1,33 +1,41 @@
-const folderPath = './openAIFunctions/';
+import { get_current_weather } from "./getCurrentWeather";
+import { get_clothing_recommendations } from "./getClothingRecommendations";
+import { process_text_to_image } from "./processTextToImage";
 
-export const get_all_openAIFunctions = async () => {
-    const allFunctions = [];
-
-    const files = await fetchFolderFiles();
-
-    for (const file of files) {
-        const module = await import(file);
-
-        for (const key in module) {
-            const func = module[key];
-            if (typeof func === 'function' && func.description) {
-                descriptions.push(func.description);
-            }
-        }
+export class OpenAIFunction {
+    constructor(func) {
+        this.function = func;
+        this.properties = func.property;
     }
+    getProperties() {
+        return this.properties;
+    }
+}
 
-    return allFunctions;
-};
+let openAIFunctions = [
+    new OpenAIFunction(get_current_weather),
+    new OpenAIFunction(get_clothing_recommendations),
+    new OpenAIFunction(process_text_to_image)
 
-const fetchFolderFiles = async (folderPath) => {
-    const response = await fetch(folderPath);
-    const fileNames = await response.json();
+]
 
-    const filePromises = fileNames.map(async (fileName) => {
-        const filePath = `${folderPath}/${fileName}`;
-        const module = await import(filePath);
-        return module.default;
-    });
+export const functionsArray = openAIFunctions.map((func) => func.properties);
+console.log("Functions Props")
+console.log(functionsArray)
 
-    return Promise.all(filePromises);
-};
+// openAIFunctions.forEach((func) => {
+//     console.log(func.properties.name)
+//     const functionName = func.properties.name;
+//     exports[functionName] = func.function;
+// });
+
+
+
+
+export const getCurrentWeather = openAIFunctions[0].function;
+export const getClothingRecommendations = openAIFunctions[1].function;
+export const processTextToImage = openAIFunctions[2].function;
+
+console.log(getCurrentWeather)
+console.log(getClothingRecommendations)
+console.log(processTextToImage)

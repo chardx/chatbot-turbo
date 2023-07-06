@@ -1,56 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { startOpenAIStream } from './startOpenAIStream';
-import { get_all_openAIFunctions } from '../functions/openAIFunctions/index.js'
+import { functionsArray } from '../functions/openAIFunctions';
 
-
-const functionsArray = [
-    {
-        name: "get_current_weather",
-        description: "Get the current weather in a given location",
-        parameters: {
-            type: "object",
-            properties: {
-                location: {
-                    type: "string",
-                    description: "The city and state, e.g. San Francisco, CA",
-                },
-                unit: { type: "string", enum: ["celsius", "fahrenheit"] },
-            },
-            required: ["location"],
-        },
-    },
-    {
-        name: "get_clothing_recommendations",
-        description: "Get clothing recommendation based on temperature",
-        parameters: {
-            type: "object",
-            properties: {
-                temperature: {
-                    type: "string",
-                    description: "The current temperature",
-                },
-            },
-            required: ["temperature"],
-        },
-    },
-    {
-        name: "process_text_to_image",
-        description: "Convert a given text prompt to an image",
-        parameters: {
-            type: "object",
-            properties: {
-                prompt: {
-                    type: "string",
-                    description: "The text that describes the image to convert",
-                },
-
-            },
-            required: ["prompt"],
-        },
-    },
-
-]
 const setupActiveAIRole = async (activeAI) => {
     // this returns an object format that is only accepted by OpenAI API
     return {

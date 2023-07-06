@@ -29,7 +29,7 @@ export const process_text_to_image = async (prompt) => {
 }
 
 
-Object.defineProperty(process_text_to_image, "object", {
+Object.defineProperty(process_text_to_image, "property", {
     get: () => ({
         name: "process_text_to_image",
         description: "Convert a given text prompt to an image",

@@ -1,7 +1,5 @@
 import { SSE } from 'sse';
-import { get_current_weather } from '../functions/openAIFunctions/getCurrentWeather';
-import { get_clothing_recommendations } from '../functions/openAIFunctions/getClothingRecommendations';
-import { process_text_to_image } from '../functions/openAIFunctions/processTextToImage';
+import { getCurrentWeather, getClothingRecommendations, processTextToImage } from '../functions/openAIFunctions';
 
 import { streamResponseActions } from '../store/stream';
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -33,7 +31,7 @@ export const startOpenAIStream = async (url, apiRequestBody, dispatch) => {
         source.addEventListener('message', async (e) => {
             dispatch(streamResponseActions.updateStreamStatus('streaming'));
             // console.log("Define property")
-            // console.log(get_current_weather.description)
+            // console.log(getCurrentWeather.description)
             if (e.data != '[DONE]') {
                 let payload = JSON.parse(e.data);
                 let text = payload.choices[0].delta.content || undefined;
@@ -45,6 +43,7 @@ export const startOpenAIStream = async (url, apiRequestBody, dispatch) => {
                         func_call.name = delta.function_call.name;
                         console.log("func_call.name")
                         console.log(func_call.name)
+                        dispatch(streamResponseActions.updateStreamResponse(func_call.name));
                     }
 
                     if (delta.function_call.hasOwnProperty("arguments")) {
@@ -74,20 +73,20 @@ export const startOpenAIStream = async (url, apiRequestBody, dispatch) => {
                     switch (function_name) {
                         case "get_current_weather":
                             let weatherArgs = function_arguments;
-                            function_response = get_current_weather(
+                            function_response = getCurrentWeather(
                                 weatherArgs.location,
                                 weatherArgs.unit
                             );
                             break;
                         case "get_clothing_recommendations":
                             let recommendationArgs = function_arguments;
-                            function_response = get_clothing_recommendations(
+                            function_response = getClothingRecommendations(
                                 recommendationArgs.temperature
                             );
                             break;
                         case "process_text_to_image":
                             let promptArgs = function_arguments;
-                            function_response = await process_text_to_image(
+                            function_response = await processTextToImage(
                                 promptArgs.prompt
                             );
                             break;
