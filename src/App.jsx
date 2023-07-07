@@ -28,7 +28,7 @@ function App() {
           `${import.meta.env.VITE_SERVER_URL}/auth/login/success`,
           {
             method: "POST",
-
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${jwtToken}`,
