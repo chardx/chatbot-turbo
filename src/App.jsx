@@ -10,22 +10,26 @@ import ErrorPage from "../pages/Error";
 //React Router DOM
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { useCookies } from "react-cookie";
+
 function App() {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
+  const [cookies, setCookie, removeCookie] = useCookies(["jwtToken"]);
+
   useEffect(() => {
+    const jwtToken = cookies.jwtToken;
     const getUser = async () => {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_URL}/auth/login/success`,
           {
             method: "POST",
-            credentials: "include",
 
             headers: {
               "Content-Type": "application/json",
-              Accept: "application/json",
+              Authorization: `Bearer ${jwtToken}`,
             },
           }
         );
