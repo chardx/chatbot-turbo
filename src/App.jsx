@@ -20,6 +20,8 @@ function App() {
 
   useEffect(() => {
     const jwtToken = cookies.jwtToken;
+    console.log("Token");
+    console.log(jwtToken);
     const getUser = async () => {
       try {
         const response = await fetch(
