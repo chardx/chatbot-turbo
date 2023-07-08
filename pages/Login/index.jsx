@@ -1,8 +1,23 @@
 import React from "react";
 
 const LoginPage = () => {
-  const googleAuth = () => {
-    window.open(`${process.env.VITE_SERVER_URL}/auth/google/callback`, "_self");
+  const googleAuth = async () => {
+    const response = await fetch(
+      `${process.env.VITE_SERVER_URL}/auth/login/initialize`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const { token } = await response.json();
+    console.log(token);
+
+    // Redirect the user to the Google login page, including the generated token as a query parameter
+    window.location.href = `${process.env.VITE_SERVER_URL}/auth/google/callback?token=${token}`;
+
+    // window.open(`${process.env.VITE_SERVER_URL}/auth/google/callback`, "_self");
   };
   return (
     <div className="bg-zinc-900 w-full h-full text-white">

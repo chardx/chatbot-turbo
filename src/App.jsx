@@ -17,11 +17,15 @@ function App() {
   const dispatch = useDispatch();
 
   const [cookies, setCookie, removeCookie] = useCookies(["jwtToken"]);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   useEffect(() => {
     const jwtToken = cookies.jwtToken;
     console.log("Token");
     console.log(jwtToken);
+
+    localStorage.setItem("token", jwtToken);
+
     const getUser = async () => {
       try {
         const response = await fetch(

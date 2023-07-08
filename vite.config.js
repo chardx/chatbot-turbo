@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { Meat } from 'tabler-icons-react'
 
 
 // https://vitejs.dev/config/
@@ -11,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://localhost:8080',
+        target: import.meta.env.VITE_SERVER_URL,
         changeOrigin: true,
         secure: false,
         ws: true,
