@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: import.meta.env.VITE_SERVER_URL,
+        target: 'https://chatbot-server-vo8v.onrender.com',
         changeOrigin: true,
         secure: false,
         ws: true,
