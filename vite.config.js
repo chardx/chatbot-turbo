@@ -9,16 +9,4 @@ export default defineConfig({
   define: {
     _global: ({}),
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://chatbot-server-vo8v.onrender.com',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-        rewrite: path => path.replace(/^\/api/, '')
-
-      }
-    }
-  }
 })
