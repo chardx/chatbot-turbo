@@ -145,8 +145,8 @@ const ChatBox = () => {
       // chatGPTResponse = await processImage(newMessage.message);
       //Code for StableDiffusion
       chatGPTResponse = await processStableDiffusion(newMessage.message);
-    } else if (newMessage.message.includes("/google")) {
-      chatGPTResponse = await processGoogleSearch(newMessage.message);
+      // } else if (newMessage.message.includes("/google")) {
+      //   chatGPTResponse = await processGoogleSearch(newMessage.message);
     } else {
       // chatGPTResponse = await processMessageToChatGPT(newMessages, activeAI);
 

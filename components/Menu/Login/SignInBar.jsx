@@ -12,6 +12,7 @@ const SignInBar = () => {
   };
 
   const handleSignout = async () => {
+    localStorage.removeItem("token");
     window.open(`${import.meta.env.VITE_SERVER_URL}/auth/logout`, "_self");
   };
   return (

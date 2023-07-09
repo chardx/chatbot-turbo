@@ -10,21 +10,33 @@ import ErrorPage from "../pages/Error";
 //React Router DOM
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { useCookies } from "react-cookie";
-
 function App() {
   const [user, setUser] = useState(null);
+  const [counter, setCounter] = useState(0);
   const dispatch = useDispatch();
 
-  const [cookies, setCookie, removeCookie] = useCookies(["jwtToken"]);
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
-
   useEffect(() => {
-    const jwtToken = cookies.jwtToken;
+    setCounter((prev) => prev + 1);
+    console.log(`App rendered: ${counter} time/s`);
+
+    let jwtToken;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.size);
+    if (urlParams.size > 0) {
+      jwtToken = urlParams.get("token");
+
+      localStorage.setItem("token", jwtToken);
+    } else {
+      console.log(jwtToken);
+      jwtToken = localStorage.getItem("token");
+    }
+    const urlWithoutToken = window.location.href.split("?")[0]; // Extract the current URL without the token parameter
+    const newUrl = `${urlWithoutToken}`; // URL with updated token parameter
+
+    window.history.replaceState({}, document.title, newUrl);
     console.log("Token");
     console.log(jwtToken);
-
-    localStorage.setItem("token", jwtToken);
 
     const getUser = async () => {
       try {
