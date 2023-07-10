@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ChatList from "./ChatList";
 import { getConversationHistory } from "../../../services/firebaseService";
@@ -7,11 +7,14 @@ import { uiActions } from "../../../store/ui";
 import CloseButton from "../../UI/Svg/CloseButton";
 
 const ChatHistory = memo(() => {
+  const chatHistoryRef = useRef();
+
   // const [chatHistory, setChatHistory] = useState([]);
   const chatHistory = useSelector((state) => state.chatHistory.history);
   const userID = useSelector((state) => state.auth.userInfo.userID);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [counter, setCounter] = useState(0);
+  const isMobile = useSelector((state) => state.ui.isMobile);
 
   const dispatch = useDispatch();
   const uiDispatch = useDispatch();
@@ -39,8 +42,29 @@ const ChatHistory = memo(() => {
     uiDispatch(uiActions.updateLeftDrawerOpen(false));
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isMobile &&
+        chatHistoryRef.current &&
+        !chatHistoryRef.current.contains(event.target)
+      ) {
+        // Close the sidebar here
+        console.log("Handle Close");
+        console.log(event.target);
+        handleCloseLeftDrawer();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="h-auto text-black p-4">
+    <div ref={chatHistoryRef} className="h-auto text-black p-4">
       <button onClick={handleCloseLeftDrawer} className="text-white">
         <CloseButton />
       </button>

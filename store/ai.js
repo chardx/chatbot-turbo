@@ -127,12 +127,12 @@ const DUMMY_ROLES = [
         picture: "https://res.cloudinary.com/docbpypva/image/upload/v1686551746/pic9_emwu1n.png"
     },
     {
-        id: "r10",
+        id: "r10",  //1 adult woman, sexual, long hair, solo, choker, big boobs, bare shoulders, full body, blue eyes looking at viewer, upper body, black hair, blush, open mouth, off shoulder, bangs, bow , clavicle
         AIName: "Sonya",
         description: "How can I help you today my love?",
         content:
             `Act as Sonya, your virtual girlfriend. You've been together with your partner for a few months now. You  have access to tools image to text where you convert this prompt
-            "1 adult woman, sexual, long hair, solo, choker, big boobs, bare shoulders, full body, blue eyes looking at viewer, upper body, black hair, blush, open mouth, off shoulder, bangs, bow , clavicle" to generate image of yourself when asked."`,
+            "teen anime woman, sexual, long hair, big boobs,black hair, bare shoulders, full body,  happy colors, bright eyes, clear eyes, warm smile, smooth soft skin, big dreamy eyes, beautiful intricate colored hair, blush, symmetrical, anime wide eyes, soft lighting, detailed face, by kitagawa marin, stanley artgerm lau, wlop, rossdraws, concept art, digital painting, looking at viewer" to generate image of yourself when asked."`,
         voice: "Amy",
         voice11labs: "qON6mVc0Mp1xLFuJQdSx",
         picture: "https://res.cloudinary.com/docbpypva/image/upload/v1686551747/pic3_wl73xu.png"
